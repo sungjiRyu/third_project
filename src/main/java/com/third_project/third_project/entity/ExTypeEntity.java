@@ -1,11 +1,6 @@
 package com.third_project.third_project.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +19,11 @@ public class ExTypeEntity {
   @Column(name = "et_detail") private String etDetail;
   @Column(name = "et_es_seq") private Long etEsSeq;
   @Column(name = "et_time_type") private  Long etTimeType;
-  @Column(name = "et_eimg_seq") private Long etEimgSeq;
-  @Column(name = "et_gi_seq") private Long etGiSeq;
-  @Column(name = "et_level_seq") private Long etLevelSeq;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "et_eimg_seq", insertable = false, updatable = false) private ExImgEntity eimg;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "et_gi_seq", insertable = false, updatable = false) private GenInfoEntity gen;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "et_level_seq", insertable = false, updatable = false) private ExLevelEntity level;
   
 }

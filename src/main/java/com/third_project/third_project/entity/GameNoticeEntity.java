@@ -21,6 +21,8 @@ public class GameNoticeEntity {
     @Column(name = "gn_title")   private String gnTitle;
     @Column(name = "gn_content")   private String gnContent;
     @Column(name = "gn_reg_dt")   private LocalDate gnRegDt;
-    @Column(name = "gn_mi_seq")   private Long gnMiSeq;
-    @Column(name = "gn_ev_seq")   private Long gnEvSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gn_mi_seq", insertable = false, updatable = false)   private MemberInfoEntity member;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gn_ev_seq", insertable = false, updatable = false)   private ExVideoEntity video;
 }

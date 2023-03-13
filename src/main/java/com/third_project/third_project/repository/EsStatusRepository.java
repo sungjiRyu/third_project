@@ -2,8 +2,8 @@ package com.third_project.third_project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.third_project.third_project.entity.EsStatusEntity;
+import com.third_project.third_project.entity.ExStatusEntity;
 
-public interface EsStatusRepository extends JpaRepository<EsStatusEntity,Long> {
+public interface EsStatusRepository extends JpaRepository<ExStatusEntity,Long> {
   
 }

@@ -21,8 +21,12 @@ public class MemberInfoEntity {
     @Column(name="mi_weight")       private Integer miWeight;
     @Column(name="mi_nickname")     private String miNickname;
     @Column(name="mi_role")         private String miRole;
-    @Column(name="mi_gi_seq")       private Long miGiSeq;
-    @Column(name="mi_class_seq")    private Long miClassSeq;
-    @Column(name="mi_es_seq")       private Long miEsSeq;
-    @Column(name="mi_mimg_seq")     private Long miMimgSeq;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="mi_gi_seq", insertable = false, updatable = false)       private GenInfoEntity gen;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="mi_class_seq", insertable = false, updatable = false)    private ClassInfoEntity classNum;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="mi_es_seq", insertable = false, updatable = false)       private ExStatusEntity exStatus;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="mi_mimg_seq", insertable = false, updatable = false)     private MemberImgEntity mimg;
 }

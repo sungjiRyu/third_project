@@ -18,8 +18,10 @@ import java.time.LocalTime;
 public class GameScoreEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gs_seq")   private Long gsSeq;
-    @Column(name = "gs_mi_seq")   private Long gsMiSeq;
-    @Column(name = "gs_et_seq")   private Long gsEtSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gs_mi_seq", insertable = false, updatable = false)   private MemberInfoEntity member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gs_et_seq", insertable = false, updatable = false)   private ExTypeEntity exType;
     @Column(name = "gs_reg_dt")   private LocalDate gsRegDt;
     @Column(name = "gs_time")   private LocalTime gsTime;
 }
