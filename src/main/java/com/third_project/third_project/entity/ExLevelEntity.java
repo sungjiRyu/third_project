@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class ExLevelEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "level_seq")    private Long levelSeq;
-    @Column(name = "level_type")    private Integer levelType;
+    @Column(name = "level_type")    private String levelType;
 
 }
