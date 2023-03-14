@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberAddVO {
+public class MemberAddResponseVO {
     private String id;
     private String pwd;
     private Integer tall;
@@ -28,7 +28,7 @@ public class MemberAddVO {
     private String message;
     private HttpStatus code;
 
-    public MemberAddVO(MemberInfoEntity entity) {
+    public MemberAddResponseVO(MemberInfoEntity entity) {
         this.id       = entity.getMiId();
         this.pwd      = entity.getMiPwd();
         this.tall     = entity.getMiTall();
@@ -36,7 +36,7 @@ public class MemberAddVO {
         this.nickname = entity.getMiNickname();
         this.role     = entity.getMiRole();
         this.giSeq    = entity.getGen().getGiSeq();
-        this.ciSeq  = entity.getClassNum().getCiSeq();
+        this.ciSeq    = entity.getClassNum().getCiSeq();
         this.esSeq    = entity.getExStatus().getEsSeq();
         this.mimgSeq  = entity.getMimg().getMimgSeq();
 

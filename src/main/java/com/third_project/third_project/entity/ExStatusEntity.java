@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "es_status")
+@Table(name = "ex_status")
 public class ExStatusEntity {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "es_seq") private Long esSeq;  

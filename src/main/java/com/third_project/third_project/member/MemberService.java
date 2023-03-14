@@ -1,12 +1,10 @@
 package com.third_project.third_project.member;
 
 import com.third_project.third_project.entity.MemberInfoEntity;
-import com.third_project.third_project.member.VO.MemberAddVO;
+import com.third_project.third_project.member.VO.MemberAddResponseVO;
 import com.third_project.third_project.repository.*;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -24,7 +22,7 @@ public class MemberService {
 
 
     // Create
-    public MemberAddVO addMember(MemberAddVO data) {
+    public MemberAddResponseVO addMember(MemberAddResponseVO data) {
         MemberInfoEntity miEntity = MemberInfoEntity.builder()
                 .miId(data.getId())
                 .miPwd(data.getPwd())
@@ -39,12 +37,12 @@ public class MemberService {
                 .build();
         miRepo.save(miEntity);
 
-        MemberAddVO addMemberVO = MemberAddVO.builder()
+        MemberAddResponseVO ResponseVO = MemberAddResponseVO.builder()
                 .status(true)
                 .message("추가하였습니다")
                 .code(HttpStatus.ACCEPTED)
                 .build();
-        return addMemberVO;
+        return ResponseVO;
 
     }
     // Read
