@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class GenInfoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gi_seq")   private Long giSeq;
-    @Column(name = "gi_status")   private Integer giStatus;
+    @Column(name = "gi_status")   private String giStatus;
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@Tag(name = "회원관련", description = "회원 CRUD")
+@Tag(name = "회원관련", description = "회원 CRUD")
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor

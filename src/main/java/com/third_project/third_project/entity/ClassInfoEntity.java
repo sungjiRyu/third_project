@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class ClassInfoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ci_seq")   private Long ciSeq;
-    @Column(name = "ci_number")   private Integer ciNumber;
+    @Column(name = "ci_number")   private String ciNumber;
 }
