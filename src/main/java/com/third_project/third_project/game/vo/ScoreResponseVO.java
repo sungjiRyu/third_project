@@ -13,4 +13,5 @@ public class ScoreResponseVO {
     private String message;
     @JsonIgnore
     private HttpStatus code;
+
 }
