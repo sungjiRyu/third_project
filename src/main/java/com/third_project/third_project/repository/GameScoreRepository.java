@@ -5,5 +5,5 @@ import com.third_project.third_project.entity.MemberInfoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameScoreRepository extends JpaRepository<GameScoreEntity, Long> {
-
+    GameScoreEntity findByMember(MemberInfoEntity member);
 }
