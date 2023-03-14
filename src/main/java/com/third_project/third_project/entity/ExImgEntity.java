@@ -18,5 +18,5 @@ public class ExImgEntity {
     @Column(name = "eimg_name")    private String eimgName;
     @Column(name = "eimg_url")    private String eimgUrl;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "eimg_et_seq", insertable = false, updatable = false)    private ExImgEntity eimg;
+    @JoinColumn(name = "eimg_et_seq", insertable = false, updatable = false)    private ExTypeEntity type;
 }
