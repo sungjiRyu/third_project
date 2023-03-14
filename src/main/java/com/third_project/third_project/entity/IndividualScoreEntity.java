@@ -18,10 +18,8 @@ import java.time.LocalTime;
 public class IndividualScoreEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="is_seq")     private Long isSeq;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="is_mi_seq", insertable = false, updatable = false)  private MemberInfoEntity member;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="is_et_seq", insertable = false, updatable = false)  private ExTypeEntity exType;
+    @ManyToOne(fetch = FetchType.LAZY)  @JoinColumn(name="is_mi_seq", insertable = true, updatable = true)  private MemberInfoEntity member;
+    @ManyToOne(fetch = FetchType.LAZY)  @JoinColumn(name="is_et_seq", insertable = true, updatable = true)  private ExTypeEntity exType;
     @Column(name="is_reg_dt")  private LocalDate isRegDt;
     @Column(name="is_time")    private LocalTime isTime;
 }
