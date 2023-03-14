@@ -19,9 +19,9 @@ public class GameScoreEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gs_seq")   private Long gsSeq;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gs_mi_seq", insertable = false, updatable = false)   private MemberInfoEntity member;
+    @JoinColumn(name = "gs_mi_seq")   private MemberInfoEntity member;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gs_et_seq", insertable = false, updatable = false)   private ExTypeEntity exType;
+    @JoinColumn(name = "gs_et_seq")   private ExTypeEntity exType;
     @Column(name = "gs_reg_dt")   private LocalDate gsRegDt;
     @Column(name = "gs_time")   private LocalTime gsTime;
 }

@@ -16,7 +16,7 @@ public class CertificationVideoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cv_seq")    private Long cvSeq;
     @ManyToOne
-    @JoinColumn(name = "cv_mi_seq", insertable = false, updatable = false)    private MemberInfoEntity member;
+    @JoinColumn(name = "cv_mi_seq")    private MemberInfoEntity member;
     @Column(name = "cv_url")    private String cvUrl;
     @Column(name = "cv_name")    private String cvName;
 }

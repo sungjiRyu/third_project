@@ -22,11 +22,11 @@ public class MemberInfoEntity {
     @Column(name="mi_nickname")     private String miNickname;
     @Column(name="mi_role")         private String miRole;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_gi_seq", insertable = false, updatable = false)       private GenInfoEntity gen;
+    @JoinColumn(name="mi_gi_seq")       private GenInfoEntity gen;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_class_seq", insertable = false, updatable = false)    private ClassInfoEntity classNum;
+    @JoinColumn(name="mi_class_seq")    private ClassInfoEntity classNum;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_es_seq", insertable = false, updatable = false)       private ExStatusEntity exStatus;
+    @JoinColumn(name="mi_es_seq")       private ExStatusEntity exStatus;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_mimg_seq", insertable = false, updatable = false)     private MemberImgEntity mimg;
+    @JoinColumn(name="mi_mimg_seq")     private MemberImgEntity mimg;
 }
