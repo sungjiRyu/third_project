@@ -20,5 +20,5 @@ public class StampInfoEntity {
     @JoinColumn(name="stamp_mi_seq", insertable = false, updatable = false)  private MemberInfoEntity member;
     @Column(name="stamp_total")  private Integer stampTotal;
     @Column(name="stamp_ava")    private Integer stampAva;
-    @Column(name="stamp_use")    private Integer use;
+    @Column(name="stamp_use")    private Integer stampUse;
 }

@@ -15,7 +15,6 @@ public class StampInfoResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
-    private MemberInfoEntity member;
     private Integer total;
     private Integer ava;
     private Integer use;
