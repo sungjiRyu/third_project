@@ -79,7 +79,7 @@ public class StampService {
                 entity.setStampUse(0);
                 sRepo.save(entity);
             }
-            /////
+            /////  MemberGoodsEntity 에 조인 걸고 서비스 다시 손 봐야 할듯...
             if(use == 5){
                 GoodsInfoEntity goods = goodsRepo.findByGoodsSeq(1L);
                 StampResponseVO response = StampResponseVO.builder()

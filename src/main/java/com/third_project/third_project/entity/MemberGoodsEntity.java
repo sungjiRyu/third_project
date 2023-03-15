@@ -17,5 +17,5 @@ public class MemberGoodsEntity {
     @Column(name = "mg_seq") private Long mgSeq;
     @Column(name = "mg_mi_seq") private Long MgMiSeq;
 
-    @Column(name = "goods_seq") private Long GoodsSeq;
+    @Column(name = "mg_goods_seq") private Long GoodsSeq;
 }
