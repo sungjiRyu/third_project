@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +41,39 @@ public class ScoreService {
         }
 
         if(msentity.getEtTimeType()==1){
-          
+            List<MemberScoreView> times = msRepo.findAllByOrderByGsTimeAsc();
+            int rank = (int) times.stream()
+                    .filter(time -> time.getGsTime() == msentity.getGsTime())
+                    .count();
 
+            ScoreResponseVO response = ScoreResponseVO.builder()
+                    .status(true)
+                    .message("지난주의 성적입니다")
+                    .code(HttpStatus.OK)
+                    .score(msentity.getGsTime())
+                    .name(msentity.getMiNickName())
+                    .grade(rank+1)
+                    .build();
+
+            return response;
+
+        }
+        if(msentity.getEtTimeType()==2){
+            List<MemberScoreView> times = msRepo.findAllByOrderByGsTimeDesc();
+            int rank = (int) times.stream()
+                    .filter(time -> time.getGsTime() == msentity.getGsTime())
+                    .count();
+
+            ScoreResponseVO response = ScoreResponseVO.builder()
+                    .status(true)
+                    .message("지난주의 성적입니다")
+                    .code(HttpStatus.OK)
+                    .score(msentity.getGsTime())
+                    .name(msentity.getMiNickName())
+                    .grade(rank+1)
+                    .build();
+
+            return response;
         }
 
         return null;
