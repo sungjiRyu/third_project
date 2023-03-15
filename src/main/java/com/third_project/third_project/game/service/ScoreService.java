@@ -1,35 +1,35 @@
 package com.third_project.third_project.game.service;
 
+import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.GameScoreEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.game.vo.ScorePercentResponseVO;
+import com.third_project.third_project.entity.MemberScoreView;
 import com.third_project.third_project.game.vo.ScoreResponseVO;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.GameScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
+import com.third_project.third_project.repository.MemberScoreViewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-<<<<<<< HEAD
-=======
 import java.time.LocalDate;
->>>>>>> hia7
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ScoreService {
     private final GameScoreRepository gsRepo;
     private final MemberInfoRepository miRepo;
-    private final ExTypeRepository exRepo;
+    private final MemberScoreViewRepository msRepo;
 
-<<<<<<< HEAD
     public ScoreResponseVO getMemberScore(Long seq) { //회원 게임점수 조회
         MemberInfoEntity member = miRepo.findByMiSeq(seq); //입력받은 번호에 해당하는 회원 조회
-        GameScoreEntity entity = gsRepo.findByMember(member);
-        if(entity == null) {
+        GameScoreEntity mentity = gsRepo.findByMember(member);
+        MemberScoreView msentity = msRepo.findByMiSeq(seq);
+
+
+        if(mentity == null) {
             ScoreResponseVO response = ScoreResponseVO.builder()
                     .status(false)
                     .message("조회된 회원 정보가 없습니다")
@@ -38,22 +38,14 @@ public class ScoreService {
 
             return response;
         }
-//        GameScoreEntity time = exRepo.findByEtTimeType();
-        
-        List<GameScoreEntity> mgrade = gsRepo.findAllByOrderByGsTimeAsc();
-        int ranking = mgrade.indexOf(gsRepo.findByGsTime(entity.getGsTime())) + 1;
 
-        ScoreResponseVO response = ScoreResponseVO.builder()
-                .status(true)
-                        .message("저번주 회원의 게임 성적입니다")
-                                .code(HttpStatus.OK)
-                                        .name(member.getMiNickname())
-                                                .score(entity.getGsTime())
-                                                    .grade(ranking)
-                                                        .build();
-        return response;
+        if(msentity.getEtTimeType()==1){
+          
+
+        }
+
+        return null;
     }
-=======
     // 게임 성적 상위 몇 퍼센트인지 조회 기능
 //    public ScorePercentResponseVO getMemberPercent(LocalDate day, Long seq){
 //        MemberInfoEntity member = miRepo.findByMiSeq(seq);
@@ -85,21 +77,4 @@ public class ScoreService {
 //
 //
 //
-//    public ScoreResponseVO getMemberScore(Long seq) { //회원 게임점수 조회
-//        MemberInfoEntity member = miRepo.findByMiSeq(seq); //입력받은 번호에 해당하는 회원 조회
-//        GameScoreEntity entity = gsRepo.findByMember(member);
-//        if(entity == null) {
-//            ScoreResponseVO response = ScoreResponseVO.builder()
-//                    .status(false)
-//                    .message("조회된 회원 정보가 없습니다")
-//                    .code(HttpStatus.BAD_REQUEST)
-//                    .build();
-//
-//            return response;
-//        }
-//
-//
-//        return null;
-//    }
->>>>>>> hia7
 }
