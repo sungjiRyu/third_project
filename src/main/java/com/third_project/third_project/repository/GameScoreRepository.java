@@ -18,10 +18,7 @@ public interface GameScoreRepository extends JpaRepository<GameScoreEntity, Long
     GameScoreEntity findByExType (ExTypeEntity exType);
     GameScoreEntity findByGsTime(LocalTime gsTime);
     List<GameScoreEntity> findAllByOrderByGsTimeAsc();
-
 //    List<GameScoreEntity> findByGsTimeOrderByAsc(LocalTime gsTime);
 //    List<GameScoreEntity> findByGsTimeOrderByDesc(LocalTime gsTime);
     List<GameScoreEntity> findByGsRegDt(LocalDate gsRegDt);
-
-
 }
