@@ -14,4 +14,5 @@ public class StampResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
+    private String goods;
 }
