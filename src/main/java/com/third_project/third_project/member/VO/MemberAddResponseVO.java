@@ -36,7 +36,7 @@ public class MemberAddResponseVO {
         this.nickname = entity.getMiNickname();
         this.role     = entity.getMiRole();
         this.giSeq    = entity.getGen().getGiSeq();
-        this.ciSeq    = entity.getClassNum().getCiSeq();
+        
         this.esSeq    = entity.getExStatus().getEsSeq();
         this.mimgSeq  = entity.getMimg().getMimgSeq();
 

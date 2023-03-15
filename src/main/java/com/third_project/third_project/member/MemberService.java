@@ -16,7 +16,7 @@ public class MemberService {
 
     private final MemberInfoRepository miRepo;
     private final GenInfoRepository giRepo;
-    private final ClassInfoRepository ciRepo;
+    
     private final ExStatusRepository esRepo;
     private final MemberImgRepository mimgRepo;
 
@@ -31,7 +31,7 @@ public class MemberService {
                 .miNickname(data.getNickname())
                 .miRole(data.getRole())
                 .gen(giRepo.findByGiSeq(data.getGiSeq()))
-                .classNum(ciRepo.findByCiSeq(data.getCiSeq()))
+                
                 .exStatus(esRepo.findByEsSeq(data.getEsSeq()))
                 .mimg(mimgRepo.findByMimgSeq(data.getMimgSeq()))
                 .build();

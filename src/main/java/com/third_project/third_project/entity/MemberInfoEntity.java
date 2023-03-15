@@ -21,10 +21,9 @@ public class MemberInfoEntity {
     @Column(name="mi_weight")       private Integer miWeight;
     @Column(name="mi_nickname")     private String miNickname;
     @Column(name="mi_role")         private String miRole;
+    @Column(name="mi_class")        private String miClass;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_gi_seq")       private GenInfoEntity gen;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_class_seq")    private ClassInfoEntity classNum;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_es_seq")       private ExStatusEntity exStatus;
     @OneToOne(fetch = FetchType.LAZY)
