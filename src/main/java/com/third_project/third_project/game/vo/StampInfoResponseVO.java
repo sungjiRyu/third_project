@@ -16,6 +16,6 @@ public class StampInfoResponseVO {
     private String message;
     private HttpStatus code;
     private Integer total;
-    private Integer ava;
+    private Integer available;
     private Integer use;
 }
