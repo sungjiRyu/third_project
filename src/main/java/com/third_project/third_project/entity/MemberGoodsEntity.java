@@ -1,5 +1,6 @@
 package com.third_project.third_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,10 @@ import lombok.NoArgsConstructor;
 public class MemberGoodsEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mg_seq") private Long mgSeq;
-    @Column(name = "mg_mi_seq") private Long MgMiSeq;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mg_mi_seq") private MemberInfoEntity member;
 
-    @Column(name = "mg_goods_seq") private Long GoodsSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mg_goods_seq") private GoodsInfoEntity Goods;
 }
