@@ -1,6 +1,7 @@
 package com.third_project.third_project.game.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.third_project.third_project.entity.TripleRankingView;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +12,7 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-public class ScoreResponseVO {
-    private Boolean status;
-    private String message;
-    @JsonIgnore
-
-    @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
-    private HttpStatus code;
+public class RankListResponseVO {
     @Schema(description = "회원 닉네임", example = "침착맨")
     private String name;
     @Schema(description = "회원 등수", example = "3")
@@ -28,4 +23,12 @@ public class ScoreResponseVO {
     private String url;
     @Schema(description = "회원 반", example = "3학년 2반")
     private String ban;
+
+    public RankListResponseVO(TripleRankingView data) {
+        this.name = data.getMiNickName();
+        this.rank = data.getRank();
+        this.score = data.getGsTime();
+        this.url = data.getMingUrl();
+        this.ban = data.getMiClass();
+    }
 }
