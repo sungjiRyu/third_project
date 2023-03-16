@@ -1,6 +1,7 @@
 package com.third_project.third_project.game.controller;
 
 import com.third_project.third_project.game.service.StampService;
+import com.third_project.third_project.game.vo.GoodsResponseVO;
 import com.third_project.third_project.game.vo.StampInfoResponseVO;
 import com.third_project.third_project.game.vo.StampResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,13 @@ public class StampAPIController {
     @PatchMapping("/use/{seq}")
     public ResponseEntity<StampResponseVO> patchStampUse(@Parameter(description = "회원번호",example = "1") @PathVariable Long seq){
         StampResponseVO response = sService.patchStampUse(seq);
+        return new ResponseEntity<>(response, response.getCode());
+    }
+
+    @Operation(summary = "회원의 보유 상품 정보 조회", description = "회원 번호를 통해 보유한 상품 정보 조회")
+    @GetMapping("/goods/{seq}")
+    public ResponseEntity<GoodsResponseVO> getMemberGoods(@Parameter(description = "회원번호", example = "1") @PathVariable Long seq){
+        GoodsResponseVO response = sService.getMemberGoods(seq);
         return new ResponseEntity<>(response, response.getCode());
     }
 }

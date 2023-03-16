@@ -1,6 +1,6 @@
 package com.third_project.third_project.game.vo;
 
-import com.third_project.third_project.entity.MemberInfoEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +11,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StampInfoResponseVO {
+public class ScorePercentResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
-    private Integer total;
-    private Integer available;
-    private Integer use;
+    private Double percent;
 }

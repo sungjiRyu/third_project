@@ -2,10 +2,15 @@ package com.third_project.third_project.Detail.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
+import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
+import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.IndividualScoreEntity;
+import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.IndividualScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
@@ -40,7 +45,20 @@ public class IndividualScoreService {
       
     }
     return IndividualScoreResponseVO.builder().code(HttpStatus.OK).message("저장되었습니다.").status(true).build();
+  }
 
-  
+  public IndividualScoreResponseVO updateIndividualScore(updateIndividualScoreInsertVO data,Long siSeq){
+    
+    IndividualScoreEntity entity = isRepo.findById(siSeq).get();
+    if(data.getUpateIsEtSeq() == null){
+      data.setUpateIsEtSeq(entity.getExType().getEtSeq());
+    }
+    if(data.getUpateIsTime() == null){
+      data.setUpateIsTime(entity.getIsTime());
+    }
+    entity.setExType(etRepo.findById(data.getUpateIsEtSeq()).get());
+    entity.setIsTime(data.getUpateIsTime());
+    isRepo.save(entity);
+    return IndividualScoreResponseVO.builder().code(HttpStatus.OK).message("수정되었습니다.").status(true).build();
   }
 }
