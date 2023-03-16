@@ -32,7 +32,6 @@ public class ScoreService {
 
             return response;
         }
-//        GameScoreEntity time = exRepo.findByEtTimeType();
         
         List<GameScoreEntity> mgrade = gsRepo.findAllByOrderByGsTimeAsc();
         int ranking = mgrade.indexOf(gsRepo.findByGsTime(entity.getGsTime())) + 1;

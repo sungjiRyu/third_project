@@ -20,7 +20,7 @@ public class ScoreAPIController {
 
     private final ScoreService scoreService;
 
-    @Operation(summary = "회원 게임성적 조희", description = "seq 통해 해당 회원의 게임성적을 조회합니다")
+    @Operation(summary = "회원 게임성적 조회", description = "seq 통해 해당 회원의 게임성적을 조회합니다")
     @GetMapping("/{seq}")
     public ResponseEntity<ScoreResponseVO> getUserInfo(
             @PathVariable Long seq){

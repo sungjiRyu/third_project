@@ -18,5 +18,6 @@ public class ExVideoEntity {
     @Column(name = "ev_name")    private String evName;
     @Column(name = "ev_url")    private String evUrl;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ev_et_seq")    private ExTypeEntity type;
+    @JoinColumn(name = "ev_et_seq",insertable = false, updatable = false)    private ExTypeEntity type;
+    @Column(name = "ev_et_seq")    private Long evEtSeq;
 }
