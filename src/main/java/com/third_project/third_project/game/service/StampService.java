@@ -4,6 +4,8 @@ import com.third_project.third_project.entity.GoodsInfoEntity;
 import com.third_project.third_project.entity.MemberGoodsEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.StampInfoEntity;
+import com.third_project.third_project.game.vo.GoodsResponseVO;
+import com.third_project.third_project.game.vo.MemberGoodsResponseVO;
 import com.third_project.third_project.game.vo.StampInfoResponseVO;
 import com.third_project.third_project.game.vo.StampResponseVO;
 import com.third_project.third_project.repository.GoodsInfoRepository;
@@ -13,6 +15,9 @@ import com.third_project.third_project.repository.StampInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -79,7 +84,6 @@ public class StampService {
                 entity.setStampUse(0);
                 sRepo.save(entity);
             }
-            /////  MemberGoodsEntity 에 조인 걸고 서비스 다시 손 봐야 할듯...
             if(use == 5){
                 GoodsInfoEntity goods = goodsRepo.findByGoodsSeq(1L);
                 StampResponseVO response = StampResponseVO.builder()
@@ -88,8 +92,8 @@ public class StampService {
                         .code(HttpStatus.ACCEPTED)
                         .goods(goods.getGoodsName()+"이(가) 상품 목록에 담겼습니다.")
                         .build();
-                mg.setMgMiSeq(member.getMiSeq());
-                mg.setGoodsSeq(1L);
+                mg.setMember(member);
+                mg.setGoods(goods);
                 mgRepo.save(mg);
                 return response;
             }
@@ -101,8 +105,8 @@ public class StampService {
                         .code(HttpStatus.ACCEPTED)
                         .goods(goods.getGoodsName()+"이(가) 상품 목록에 담겼습니다.")
                         .build();
-                mg.setMgMiSeq(member.getMiSeq());
-                mg.setGoodsSeq(2L);
+                mg.setMember(member);
+                mg.setGoods(goods);
                 mgRepo.save(mg);
                 return response;
             }
@@ -114,8 +118,8 @@ public class StampService {
                         .code(HttpStatus.ACCEPTED)
                         .goods(goods.getGoodsName()+"이(가) 상품 목록에 담겼습니다.")
                         .build();
-                mg.setMgMiSeq(member.getMiSeq());
-                mg.setGoodsSeq(3L);
+                mg.setMember(member);
+                mg.setGoods(goods);
                 mgRepo.save(mg);
                 return response;
             }
@@ -127,8 +131,8 @@ public class StampService {
                         .code(HttpStatus.ACCEPTED)
                         .goods(goods.getGoodsName()+"이(가) 상품 목록에 담겼습니다.")
                         .build();
-                mg.setMgMiSeq(member.getMiSeq());
-                mg.setGoodsSeq(4L);
+                mg.setMember(member);
+                mg.setGoods(goods);
                 mgRepo.save(mg);
                 return response;
             }
@@ -139,5 +143,36 @@ public class StampService {
                 .code(HttpStatus.ACCEPTED)
                 .build();
         return response;
+    }
+
+    // 회원이 보유한 상품 정보 조회 기능
+    public GoodsResponseVO getMemberGoods(Long seq){
+        MemberInfoEntity member = mRepo.findByMiSeq(seq);
+        List<MemberGoodsEntity> list = mgRepo.findByMember(member);
+        List<MemberGoodsResponseVO> goods = new ArrayList<>();
+
+        for(int i = 0; i < list.size(); i++){
+            MemberGoodsResponseVO vo =MemberGoodsResponseVO.builder()
+                    .name(list.get(i).getGoods().getGoodsName())
+                    .build();
+                    goods.add(vo);
+        }
+
+        if(list.isEmpty()){
+            GoodsResponseVO response = GoodsResponseVO.builder()
+                    .status(false)
+                    .message("조회된 회원 정보가 없습니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+            GoodsResponseVO response = GoodsResponseVO.builder()
+                    .status(true)
+                    .message("조회된 회원의 보유 상품 정보 조회!!")
+                    .code(HttpStatus.OK)
+                    .list(goods)
+                    .build();
+            return response;
+
     }
 }
