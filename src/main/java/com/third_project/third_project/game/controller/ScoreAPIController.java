@@ -3,6 +3,8 @@ package com.third_project.third_project.game.controller;
 import com.third_project.third_project.game.service.ScoreService;
 import com.third_project.third_project.game.vo.GameScoreRecordVO;
 import com.third_project.third_project.game.vo.RankListResponseVO;
+import com.third_project.third_project.game.vo.BasicResponseVO;
+import com.third_project.third_project.game.vo.ScorePercentResponseVO;
 import com.third_project.third_project.game.vo.ScoreResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 import java.util.List;
 
@@ -40,4 +45,18 @@ public class ScoreAPIController {
     public ResponseEntity<GameScoreRecordVO> userJoin(@RequestBody GameScoreRecordVO data , @RequestParam Long seq) {
         return new ResponseEntity<>(scoreService.recordGameScore(data, seq), HttpStatus.OK);
     }
+
+    @Operation(summary = "회원 게임성적 상위 % 조회", description = "운동 번호와 회원 번호를 통해 저번 주 게임 성적 상위 % 조회 기능")
+    @GetMapping("/percent/{seq}/{miSeq}")
+    public ResponseEntity<ScorePercentResponseVO> getMemberPercent(@Parameter(description = "운동 번호", example = "1") @PathVariable Long seq,
+                                                                   @Parameter(description = "회원 번호", example = "1") @PathVariable Long miSeq){
+        ScorePercentResponseVO response = scoreService.getMemberPercent(seq, miSeq);
+        return new ResponseEntity<>(response, response.getCode());
+    }
+
+//    @GetMapping("/available/{seq}")
+//    public ResponseEntity<BasicResponseVO> setAvailableStamp(@PathVariable Long seq){
+//        BasicResponseVO response = scoreService.setAvailableStamp(seq);
+//        return new ResponseEntity<>(response, response.getCode());
+//    }
 }
