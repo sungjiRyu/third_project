@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -22,6 +24,8 @@ public class GameScoreEntity {
     @JoinColumn(name = "gs_mi_seq")   private MemberInfoEntity member;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gs_et_seq")   private ExTypeEntity exType;
-    @Column(name = "gs_reg_dt")   private LocalDate gsRegDt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "gs_reg_dt")   private Date gsRegDt;
+    @DateTimeFormat(pattern = "HH:mm:ss.SSS")
     @Column(name = "gs_time")   private LocalTime gsTime;
 }

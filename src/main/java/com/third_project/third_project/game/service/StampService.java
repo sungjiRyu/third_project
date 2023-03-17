@@ -173,6 +173,5 @@ public class StampService {
                     .list(goods)
                     .build();
             return response;
-
     }
 }

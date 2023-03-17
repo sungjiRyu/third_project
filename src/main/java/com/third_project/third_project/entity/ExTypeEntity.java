@@ -18,9 +18,7 @@ public class ExTypeEntity {
   @Column(name = "et_name") private String etName;
   @Column(name = "et_detail") private String etDetail;
   @Column(name = "et_es_seq") private Long etEsSeq;
-  @Column(name = "et_time_type") private  Long etTimeType;
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "et_eimg_seq") private ExImgEntity eimg;
+  @Column(name = "et_time_type") private  Integer etTimeType;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "et_gi_seq") private GenInfoEntity gen;
   @ManyToOne(fetch = FetchType.LAZY)
