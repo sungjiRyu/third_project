@@ -17,6 +17,7 @@ public class ExImgEntity {
     @Column(name = "eimg_seq")    private Long eimgSeq;
     @Column(name = "eimg_name")    private String eimgName;
     @Column(name = "eimg_url")    private String eimgUrl;
+    // @Column(name = "eimg_et_seq") private Long eimgEtSeq;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "eimg_et_seq")    private ExTypeEntity type;
 }

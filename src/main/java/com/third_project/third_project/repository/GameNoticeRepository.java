@@ -17,4 +17,7 @@ public interface GameNoticeRepository extends JpaRepository<GameNoticeEntity, Lo
     public List<GetNoticeVO> findAllBy(PageRequest pageRequest);
     // 공지사항 글 번호로 검색(상세보기)
     public GetDetailNoticeVO findByGnSeq(Long gnSeq);
+    // 공지사항 삭제
+    public GameNoticeEntity findBygnSeq(Long gnSeq);
+
 }

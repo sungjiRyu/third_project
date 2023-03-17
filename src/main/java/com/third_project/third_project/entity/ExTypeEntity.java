@@ -19,11 +19,10 @@ public class ExTypeEntity {
   @Column(name = "et_detail") private String etDetail;
   @Column(name = "et_es_seq") private Long etEsSeq;
   @Column(name = "et_time_type") private  Long etTimeType;
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "et_eimg_seq") private ExImgEntity eimg;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "et_gi_seq") private GenInfoEntity gen;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "et_level_seq") private ExLevelEntity level;
-  
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "type")
+  private ExImgEntity img;
 }

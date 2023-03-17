@@ -6,4 +6,5 @@ import com.third_project.third_project.entity.ExTypeEntity;
 
 public interface ExTypeRepository extends JpaRepository<ExTypeEntity,Long> {
   public ExTypeEntity findByEtTimeType(Long etTimeType);
+  public ExTypeEntity findByEtSeq(Long etSeq);
 }
