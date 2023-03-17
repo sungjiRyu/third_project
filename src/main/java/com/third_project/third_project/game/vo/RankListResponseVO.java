@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class RankListResponseVO {
     @Schema(description = "회원 닉네임", example = "침착맨")
-    private String name;
+    private String nickname;
     @Schema(description = "회원 등수", example = "3")
     private Integer rank;
     @Schema(description = "회원 운동 기록", example = "00:09:00")
@@ -25,7 +25,7 @@ public class RankListResponseVO {
     private String ban;
 
     public RankListResponseVO(TripleRankingView data) {
-        this.name = data.getMiNickName();
+        this.nickname = data.getMiNickName();
         this.rank = data.getRank();
         this.score = data.getGsTime();
         this.url = data.getMingUrl();
