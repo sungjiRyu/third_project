@@ -30,12 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-@Tag(name = "게임 공지사항 API" , description ="게임 공지사항 등록/조회 API.")
+
+@Tag(name = "게임 공지사항 API" , description ="게임 공지사항 등록/조회(리스트)/상세조회/수정/삭제")
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("api/notice")
 public class NoticeAPIController {
     @Autowired NoticeService noticeService;
 
@@ -46,7 +48,7 @@ public class NoticeAPIController {
         return new ResponseEntity<>(response, (HttpStatusCode)response.getCode());
     }
 
-    @Operation(summary = "게임 공지사항 조회(제목과 등록일, 운동종목이 출력)", description = "게임 공지사항 제목이 리스트로 출력됩니다.")
+    @Operation(summary = "게임 공지사항 조회(제목과 등록일, 운동종목이 출력)", description = "페이지와 사이즈를 입력하면 게임 공지사항 제목이 리스트로 출력됩니다.")
     @GetMapping("")
     public ResponseEntity<List<GetNoticeVO>> getArticle(
         @Parameter(description = "page default=0", example = "0") @RequestParam @Nullable Integer page,

@@ -19,7 +19,7 @@ public class UPDATEGameNoticeVO {
     private String gnTitle;
     @Schema(description = "내용", example = "testContent")  
     private String gnContent;
-    @Schema(description = "운동 종목 설정", example = "1")
+    @Schema(description = "운동 종목", example = "1")
     private Long gnEtSeq;
     @Schema(description = "영상 파일")
     private MultipartFile files;

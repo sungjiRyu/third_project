@@ -76,7 +76,6 @@ public class NoticeService{
             throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("게임용 운동을 선택해주세요.")));
 
         else{
-
             try{
                 String contentType = data.getFiles().getContentType();
                 String originalFileExtension = "";
@@ -139,7 +138,7 @@ public class NoticeService{
         public GetDetailNoticeVO GetDetailNotice(Long gnSeq){
             GetDetailNoticeVO notice = null;
             notice = gameNoticeRepo.findByGnSeq(gnSeq);
-            if(notice == null)       throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("없는 글번호입니다.")));
+            if(notice == null)  throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("없는 글번호입니다.")));
             return notice;
         }
 
