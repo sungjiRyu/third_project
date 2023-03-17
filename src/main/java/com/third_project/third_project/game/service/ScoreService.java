@@ -88,7 +88,7 @@ public class ScoreService {
                     .message("지난주의 성적입니다")
                     .code(HttpStatus.OK)
                     .score(mrentity.getGsTime())
-                    .name(mrentity.getMiNickName())
+                    .nickname(mrentity.getMiNickName())
                     .rank(mrentity.getRank())
                     .url(mrentity.getMingUrl())
                     .ban(mrentity.getMiClass())
@@ -98,7 +98,6 @@ public class ScoreService {
     }
 
     public List<RankListResponseVO> getTotalScore(Long seq) { // 전체 1~3등 순위 조회
-//        TripleRankingView tentity = tRepo.findByEtSeq(seq);
         List<RankListResponseVO> list = new ArrayList<RankListResponseVO>();
 
         for(TripleRankingView data : tRepo.findByEtSeq(seq)) {
@@ -107,5 +106,7 @@ public class ScoreService {
         }
         return list;
     }
+
+
 }
 

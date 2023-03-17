@@ -15,11 +15,10 @@ public class ScoreResponseVO {
     private Boolean status;
     private String message;
     @JsonIgnore
-
     @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
     private HttpStatus code;
     @Schema(description = "회원 닉네임", example = "침착맨")
-    private String name;
+    private String nickname;
     @Schema(description = "회원 등수", example = "3")
     private Integer rank;
     @Schema(description = "회원 운동 기록", example = "00:09:00")
