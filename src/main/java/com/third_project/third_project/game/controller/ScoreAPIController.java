@@ -1,6 +1,7 @@
 package com.third_project.third_project.game.controller;
 
 import com.third_project.third_project.game.service.ScoreService;
+import com.third_project.third_project.game.vo.GameScoreRecordVO;
 import com.third_project.third_project.game.vo.RankListResponseVO;
 import com.third_project.third_project.game.vo.ScoreResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +33,11 @@ public class ScoreAPIController {
     public ResponseEntity<List<RankListResponseVO>> getTotalScore(
             @Parameter(description = "운동 종류 번호", example = "1") @PathVariable Long seq){
         return new ResponseEntity<>(scoreService.getTotalScore(seq), HttpStatus.OK);
+    }
+
+    @Operation(summary = "<미완성>게임 기록 입력", description = "게임 기록 정보를 추가합니다.")
+    @PutMapping("/insert")
+    public ResponseEntity<GameScoreRecordVO> userJoin(@RequestBody GameScoreRecordVO data , @RequestParam Long seq) {
+        return new ResponseEntity<>(scoreService.recordGameScore(data, seq), HttpStatus.OK);
     }
 }

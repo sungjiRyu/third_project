@@ -12,7 +12,9 @@ import java.time.LocalTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class ScoreResponseVO {
+    @Schema(description = "상태", example = "true")
     private Boolean status;
+    @Schema(description = "메세지", example = "인증에 성공했습니다")
     private String message;
     @JsonIgnore
     @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
