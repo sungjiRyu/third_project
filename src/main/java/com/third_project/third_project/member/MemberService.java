@@ -1,51 +1,180 @@
 package com.third_project.third_project.member;
 
+import com.third_project.third_project.entity.GenInfoEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
-import com.third_project.third_project.member.VO.MemberAddResponseVO;
+import com.third_project.third_project.member.VO.*;
 import com.third_project.third_project.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
 @Service
 public class MemberService {
-    //private final MemberInfoEntity miEntity;
-
 
     private final MemberInfoRepository miRepo;
     private final GenInfoRepository giRepo;
-    
+
     private final ExStatusRepository esRepo;
     private final MemberImgRepository mimgRepo;
 
 
-    // Create
-    public MemberAddResponseVO addMember(MemberAddResponseVO data) {
+
+
+    // 가입 필수 정보
+    public MemberJoinResponseVO joinMember(MemberJoinVO data) {
+        if(miRepo.countByMiId(data.getId()) >= 1) {
+            MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
+                    .status(false)
+                    .message("이미 존재하는 ID 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(!(data.getPwd().equals(data.getConfirmpwd()))) {
+            MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
+                    .status(false)
+                    .message("비밀번호와 확인비밀번호가 일치하지 않습니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(miRepo.countByMiNickname(data.getNickname()) >= 1) {
+            MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
+                    .status(false)
+                    .message("이미 존재하는 닉네임 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
         MemberInfoEntity miEntity = MemberInfoEntity.builder()
                 .miId(data.getId())
                 .miPwd(data.getPwd())
-                .miTall(data.getTall())
-                .miWeight(data.getWeight())
                 .miNickname(data.getNickname())
-                .miRole(data.getRole())
-                .gen(giRepo.findByGiSeq(data.getGiSeq()))
-                
-                .exStatus(esRepo.findByEsSeq(data.getEsSeq()))
-                .mimg(mimgRepo.findByMimgSeq(data.getMimgSeq()))
                 .build();
         miRepo.save(miEntity);
-
-        MemberAddResponseVO ResponseVO = MemberAddResponseVO.builder()
+        MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
                 .status(true)
-                .message("추가하였습니다")
-                .code(HttpStatus.ACCEPTED)
+                .message("가입되었습니다.")
+                .code(HttpStatus.OK)
                 .build();
-        return ResponseVO;
-
+        return responseVO;
     }
-    // Read
-    // Update
-    // Delete
+
+
+    // 가입 후 추가정보 ( 입력 / 수정 )
+    public MemberAddInfoResponseVO addInfo(Long seq, MemberAddInfoVO data) {
+        Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+        if(!(findseq.isPresent())) {
+            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(miRepo.countByMiNickname(data.getNickname()) >= 1) {
+            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                    .status(false)
+                    .message("이미 존재하는 닉네임 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
+            MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+            miEntity.setMiNickname(data.getNickname());
+            miEntity.setMiTall(data.getTall());
+            miEntity.setMiWeight(data.getWeight());
+            miEntity.setMiClassNum(data.getClassNum());
+            miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
+            miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
+            miRepo.save(miEntity);
+            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                    .status(true)
+                    .message("정보가 수정되었습니다.")
+                    .code(HttpStatus.OK)
+                    .build();
+            return responseVO;
+        }
+    }
+
+
+    // 개인정보 수정 ( 비밀번호 )
+    public MemberUpdateResponseVO updateMember(Long seq, MemberUpdateVO data) {
+        Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+        if(!(findseq.isPresent())) {
+            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(!(data.getPwd().equals(data.getConfirmpwd()))) {
+            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+                    .status(false)
+                    .message("비밀번호와 확인비밀번호가 일치하지 않습니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
+
+            MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+            miEntity.setMiPwd(data.getPwd());
+            miRepo.save(miEntity);
+
+            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+                    .status(true)
+                    .message("변경 하였습니다.")
+                    .code(HttpStatus.OK)
+                    .build();
+            return responseVO;
+        }
+    }
+
+    // 회원 탈퇴
+    @Transactional
+    public MemberDeleteResponseVO deleteMember(Long seq, MemberDeleteVO data) {
+        Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+        if(!(findseq.isPresent())) {
+            MemberDeleteResponseVO responseVO = MemberDeleteResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
+            MemberInfoEntity entity = miRepo.findByMiSeq(seq);
+            String pwd= entity.getMiPwd();
+            if(!(data.getPwd().equals(pwd))) {
+                MemberDeleteResponseVO responseVO = MemberDeleteResponseVO.builder()
+                        .status(false)
+                        .message("비밀번호를 확인하세요.")
+                        .code(HttpStatus.BAD_REQUEST)
+                        .build();
+                return responseVO;
+            }
+            else {
+                miRepo.deleteByMiSeq(seq);
+                MemberDeleteResponseVO responseVO = MemberDeleteResponseVO.builder()
+                        .status(true)
+                        .message("삭제되었습니다.")
+                        .code(HttpStatus.OK)
+                        .build();
+                return responseVO;
+            }
+        }
+    }
+
+
+    // login
+    // logout
+
 }
