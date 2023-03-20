@@ -4,6 +4,7 @@ import com.third_project.third_project.entity.GenInfoEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.member.VO.*;
 import com.third_project.third_project.repository.*;
+import com.third_project.third_project.utilities.AESAlgorithm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,12 +52,22 @@ public class MemberService {
                     .build();
             return responseVO;
         }
-        MemberInfoEntity miEntity = MemberInfoEntity.builder()
-                .miId(data.getId())
-                .miPwd(data.getPwd())
-                .miNickname(data.getNickname())
-                .build();
-        miRepo.save(miEntity);
+        try{
+            String encPwd = AESAlgorithm.Encrypt(data.getPwd());
+            MemberInfoEntity miEntity = MemberInfoEntity.builder()
+                    .miId(data.getId())
+                    .miPwd(encPwd)
+                    .miNickname(data.getNickname())
+                    .build();
+                    miRepo.save(miEntity);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+//        MemberInfoEntity miEntity = MemberInfoEntity.builder()
+//                .miId(data.getId())
+//                .miNickname(data.getNickname())
+//                .build();
         MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
                 .status(true)
                 .message("가입되었습니다.")
@@ -116,6 +127,7 @@ public class MemberService {
             return responseVO;
         }
         else if(!(data.getPwd().equals(data.getConfirmpwd()))) {
+
             MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
                     .status(false)
                     .message("비밀번호와 확인비밀번호가 일치하지 않습니다.")
@@ -124,11 +136,16 @@ public class MemberService {
             return responseVO;
         }
         else {
+            try{
+                String encPwd = AESAlgorithm.Encrypt(data.getPwd());
+                MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+                miEntity.setMiPwd(encPwd);
 
-            MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
-            miEntity.setMiPwd(data.getPwd());
-            miRepo.save(miEntity);
-
+                miRepo.save(miEntity);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
             MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
                     .status(true)
                     .message("변경 하였습니다.")
