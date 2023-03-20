@@ -3,6 +3,7 @@ package com.third_project.third_project.repository;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.GameScoreEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
+import com.third_project.third_project.entity.MemberRankingView;
 import com.third_project.third_project.game.vo.WeeklyRankingVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public interface GameScoreRepository extends JpaRepository<GameScoreEntity, Long> {
     GameScoreEntity findByMember(MemberInfoEntity member);
+//    GameScoreEntity findByMemberRankingView(MemberRankingView mrentity);
 
     GameScoreEntity findByExType (ExTypeEntity exType);
     GameScoreEntity findByGsTime(LocalTime gsTime);

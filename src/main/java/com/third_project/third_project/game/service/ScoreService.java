@@ -110,23 +110,23 @@ public class ScoreService {
     }
 
     public ScoreResponseVO getMemberScore(Long seq) { //회원 게임점수 조회
-        MemberInfoEntity member = miRepo.findByMiSeq(seq); //입력받은 번호에 해당하는 회원 조회
-        GameScoreEntity mentity = gsRepo.findByMember(member);
+//        MemberInfoEntity member = miRepo.findByMiSeq(seq); //입력받은 번호에 해당하는 회원 조회
         MemberRankingView mrentity = mrRepo.findByMiSeq(seq);
+//        GameScoreEntity mentity = gsRepo.findByMemberRankingView(mrentity);
 
         ScoreResponseVO response = new ScoreResponseVO();
 
-        if(mentity == null) {
-            response = ScoreResponseVO.builder()
-                    .status(false)
-                    .message("조회된 회원 정보가 없습니다")
-                    .code(HttpStatus.BAD_REQUEST)
-                    .build();
+//        if(mrentity == null) {
+//            response = ScoreResponseVO.builder()
+//                    .status(false)
+//                    .message("조회된 회원 정보가 없습니다")
+//                    .code(HttpStatus.BAD_REQUEST)
+//                    .build();
+//
+//            return response;
+//        }
 
-            return response;
-        }
-
-        else if(mrentity == null) {
+        if(mrentity == null) {
             response = ScoreResponseVO.builder()
                     .status(false)
                     .message("저번주의 기록이 없습니다")
