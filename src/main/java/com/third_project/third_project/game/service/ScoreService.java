@@ -3,7 +3,6 @@ package com.third_project.third_project.game.service;
 import com.third_project.third_project.entity.*;
 import com.third_project.third_project.game.exception.ErrorResponse;
 import com.third_project.third_project.game.exception.GameScoreException;
-import com.third_project.third_project.game.vo.GameScoreRecordVO;
 import com.third_project.third_project.game.vo.RankListResponseVO;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.GameScoreEntity;
@@ -42,6 +41,7 @@ public class ScoreService {
     private final MemberScoreViewRepository msRepo;
     private final MemberRankingViewRepository mrRepo;
     private final TripleRankingViewRepository tRepo;
+    private final ExTypeRepository eRepo;
 
     // 게임 성적 상위 % 조회 후 스템프 사용 횟수 부여 기능
 //    public BasicResponseVO setAvailableStamp(Long seq){
@@ -149,30 +149,56 @@ public class ScoreService {
         return response;
     }
 
-    public List<RankListResponseVO> getTotalScore(Long seq) { // 전체 1~3등 순위 조회
-        List<RankListResponseVO> list = new ArrayList<RankListResponseVO>();
-        RankListResponseVO response = new RankListResponseVO();
+    public RankResponseVO getTotalScore(Long seq) { // 전체 1~3등 순위 조회
+        List<TripleRankingView> tlist = tRepo.findByEtSeq(seq);
+        List<RankListResponseVO> entity = new ArrayList<>();
 
-        for(TripleRankingView data : tRepo.findByEtSeq(seq)) { // list의 값이 있을때 status와 message가 나오도록 해야함
-            RankListResponseVO vo = new RankListResponseVO(data);
-            list.add(vo);
+        for(int i=0; i< tlist.size(); i++) {
+            RankListResponseVO vo = RankListResponseVO.builder()
+                    .ban(tlist.get(i).getMiClass())
+                    .nickname(tlist.get(i).getMiNickName())
+                    .rank(tlist.get(i).getRank())
+                    .score(tlist.get(i).getGsTime())
+                    .url(tlist.get(i).getMingUrl())
+                    .build();
+            entity.add(vo);
         }
-        if(list.isEmpty()) { // list의 값이 비었을때 예외처리
-            response = RankListResponseVO.builder()
+
+
+        if(tlist.isEmpty()) { // list의 값이 비었을때 예외처리
+            RankResponseVO response = RankResponseVO.builder()
                     .status(false)
                     .message("해당 운동은 저번주에 진행되지 않았습니다")
                     .code(HttpStatus.BAD_REQUEST).build();
-            list.add(response);
+            return response;
         }
-//        if(list.isEmpty()) {
-//            throw new GameScoreException(ErrorResponse.of(HttpStatus.NOT_FOUND, String.format("%s에 해당하는 운동은 지난주에 진행되지 않았습니다", seq)));
-//        }
-        return list;
+        RankResponseVO response = RankResponseVO.builder()
+                .status(true)
+                .message("지난주 상위 3위까지의 기록입니다")
+                .code(HttpStatus.OK)
+                .list(entity)
+                .build();
+        return response;
     }
 
-    public GameScoreRecordVO recordGameScore(GameScoreRecordVO data, Long seq) {
+    public GameResponseVO insertGameRecord(GameScoreInsertVO data) {
+        GameResponseVO response = new GameResponseVO();
+        MemberInfoEntity entity = miRepo.findByMiSeq(data.getMiSeq());
+        ExTypeEntity exentity = eRepo.findByEtSeq(data.getEtSeq());
+        GameScoreEntity score = GameScoreEntity.builder()
+                .member(entity)
+                .exType(exentity)
+                .gsTime(data.getScore())
+                .build();
 
-        return null;
+        response = GameResponseVO.builder()
+                .status(true)
+                .message("기록 등록이 완료되었습니다")
+                .code(HttpStatus.OK)
+                .build();
+
+        gsRepo.save(score);
+        return response;
     }
 }
 

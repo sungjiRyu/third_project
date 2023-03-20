@@ -1,7 +1,6 @@
 package com.third_project.third_project.game.controller;
 
 import com.third_project.third_project.game.service.ScoreService;
-import com.third_project.third_project.game.vo.GameScoreRecordVO;
 import com.third_project.third_project.game.vo.RankListResponseVO;
 import com.third_project.third_project.game.vo.BasicResponseVO;
 import com.third_project.third_project.game.vo.ScorePercentResponseVO;
@@ -35,15 +34,14 @@ public class ScoreAPIController {
     }
     @Operation(summary = "지난주 전체 게임성적 조희", description = "운동 seq 통해 지난 주 해당 운동의 게임성적을 1~3위까지 조회합니다")
     @GetMapping("/total/{seq}")
-    public ResponseEntity<List<RankListResponseVO>> getTotalScore(
+    public ResponseEntity<RankResponseVO> getTotalScore(
             @Parameter(description = "운동 종류 번호", example = "1") @PathVariable Long seq){
         return new ResponseEntity<>(scoreService.getTotalScore(seq), HttpStatus.OK);
     }
-
-    @Operation(summary = "<미완성>게임 기록 입력", description = "게임 기록 정보를 추가합니다.")
+    @Operation(summary = "게임 기록 입력", description = "게임 기록 정보를 추가합니다.") //시간 값 json 에러남 확인필요 
     @PutMapping("/insert")
-    public ResponseEntity<GameScoreRecordVO> userJoin(@RequestBody GameScoreRecordVO data , @RequestParam Long seq) {
-        return new ResponseEntity<>(scoreService.recordGameScore(data, seq), HttpStatus.OK);
+    public ResponseEntity<GameResponseVO> insertGameScore(@RequestBody GameScoreInsertVO data) {
+        return new ResponseEntity<>(scoreService.insertGameRecord(data), HttpStatus.OK);
     }
 
     @Operation(summary = "회원 게임성적 상위 % 조회", description = "운동 번호와 회원 번호를 통해 저번 주 게임 성적 상위 % 조회 기능")
