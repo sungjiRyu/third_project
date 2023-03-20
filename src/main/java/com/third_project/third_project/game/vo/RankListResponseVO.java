@@ -13,13 +13,7 @@ import java.time.LocalTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class RankListResponseVO {
-    @Schema(description = "상태", example = "true")
-    private Boolean status;
-    @Schema(description = "메세지", example = "인증에 성공했습니다")
-    private String message;
-    @JsonIgnore
-    @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
-    private HttpStatus code;
+
     @Schema(description = "회원 닉네임", example = "침착맨")
     private String nickname;
     @Schema(description = "회원 등수", example = "3")
@@ -30,12 +24,12 @@ public class RankListResponseVO {
     private String url;
     @Schema(description = "회원 반", example = "3학년 2반")
     private String ban;
-
-    public RankListResponseVO(TripleRankingView data) {
-        this.nickname = data.getMiNickName();
-        this.rank = data.getRank();
-        this.score = data.getGsTime();
-        this.url = data.getMingUrl();
-        this.ban = data.getMiClass();
-    }
+//
+//    public RankListResponseVO(TripleRankingView data) {
+//        this.nickname = data.getMiNickName();
+//        this.rank = data.getRank();
+//        this.score = data.getGsTime();
+//        this.url = data.getMingUrl();
+//        this.ban = data.getMiClass();
+//    }
 }
