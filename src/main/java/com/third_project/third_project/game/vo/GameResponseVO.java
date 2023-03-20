@@ -19,10 +19,10 @@ public class GameResponseVO {
     @JsonIgnore
     @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
     private HttpStatus code;
-    @Schema(description = "회원 운동 기록", example = "00:09:00")
-    private LocalTime score;
-    @Schema(description = "회원 번호", example = "1")
-    private Long miSeq;
-    @Schema(description = "운동 종류 번호", example = "1")
-    private Long etSeq;
+//    @Schema(description = "회원 운동 기록", example = "00:09:00")
+//    private LocalTime score;
+//    @Schema(description = "회원 번호", example = "1")
+//    private Long miSeq;
+//    @Schema(description = "운동 종류 번호", example = "1")
+//    private Long etSeq;
 }

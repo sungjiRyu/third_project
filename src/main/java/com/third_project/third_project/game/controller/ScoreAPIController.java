@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class ScoreAPIController {
             @Parameter(description = "운동 종류 번호", example = "1") @PathVariable Long seq){
         return new ResponseEntity<>(scoreService.getTotalScore(seq), HttpStatus.OK);
     }
-    @Operation(summary = "게임 기록 입력", description = "게임 기록 정보를 추가합니다.") //시간 값 json 에러남 확인필요 
-    @PutMapping("/insert")
+    @Operation(summary = "게임 기록 입력", description = "게임 기록 정보를 추가합니다.")
+    @PutMapping("/insert/score")
     public ResponseEntity<GameResponseVO> insertGameScore(@RequestBody GameScoreInsertVO data) {
         return new ResponseEntity<>(scoreService.insertGameRecord(data), HttpStatus.OK);
     }
@@ -47,6 +48,15 @@ public class ScoreAPIController {
                                                                    @Parameter(description = "회원 번호", example = "1") @PathVariable Long miSeq){
         ScorePercentResponseVO response = scoreService.getMemberPercent(seq, miSeq);
         return new ResponseEntity<>(response, response.getCode());
+    }
+
+    @Operation(summary = "게임 인증영상 등록", description = "회원번호와 회원의 게임 인증영상을 등록합니다")
+    @PutMapping(value="/insert/video", consumes= MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GameResponseVO> insertGameVideo(
+            @Parameter(description = "formdata로 영상 데이터를 입력합니다")
+            @ModelAttribute VideoResponseVO data
+            ) {
+        return new ResponseEntity<>(scoreService.insertGameVideo(data), HttpStatus.OK);
     }
 
 //    @GetMapping("/available/{seq}")

@@ -14,20 +14,21 @@ import com.third_project.third_project.repository.MemberInfoRepository;
 import com.third_project.third_project.repository.MemberScoreViewRepository;
 import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
-
-
-
 import java.time.LocalDate;
 import java.util.List;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,10 @@ public class ScoreService {
     private final MemberRankingViewRepository mrRepo;
     private final TripleRankingViewRepository tRepo;
     private final ExTypeRepository eRepo;
+    private final CertificationVideoReposritory cvRepo;
+
+    @Value("${file.video.exercise}") String member_video_path;
+
 
     // 게임 성적 상위 % 조회 후 스템프 사용 횟수 부여 기능
 //    public BasicResponseVO setAvailableStamp(Long seq){
@@ -177,10 +182,29 @@ public class ScoreService {
         return response;
     }
 
-    public GameResponseVO insertGameRecord(GameScoreInsertVO data) {
+    public GameResponseVO insertGameRecord(GameScoreInsertVO data) { //회원 게임 기록 등록
         GameResponseVO response = new GameResponseVO();
         MemberInfoEntity entity = miRepo.findByMiSeq(data.getMiSeq());
         ExTypeEntity exentity = eRepo.findByEtSeq(data.getEtSeq());
+        
+        if(entity==null) {
+            response = GameResponseVO.builder()
+                    .status(false)
+                    .message("해당 회원은 존재하지 않습니다")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+
+        else if(exentity==null) {
+            response = GameResponseVO.builder()
+                    .status(false)
+                    .message("해당 운동은 존재하지 않습니다")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+        
         GameScoreEntity score = GameScoreEntity.builder()
                 .member(entity)
                 .exType(exentity)
@@ -194,6 +218,58 @@ public class ScoreService {
                 .build();
 
         gsRepo.save(score);
+        return response;
+    }
+
+    public GameResponseVO insertGameVideo(VideoResponseVO data) { // 회원 인증영상 등록
+        GameResponseVO response = new GameResponseVO();
+        MemberInfoEntity entity = miRepo.findByMiSeq(data.getMiSeq());
+
+        if(entity==null) {
+            response = GameResponseVO.builder()
+                    .status(false)
+                    .message("해당 회원은 존재하지 않습니다")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+
+        String originalFileName = data.getVideo().getOriginalFilename();
+        String[] split = originalFileName.split("\\.");
+        String ext = split[split.length -1];
+        String filename = "";
+        for(int i=0; i<split.length-1; i++) {
+            filename += split[i];
+        }
+        String saveFilename = "member_" + LocalDateTime.now().getNano() + "." +ext;
+
+        Path forderLocation = Paths.get(member_video_path);
+        Path targetFile = forderLocation.resolve(saveFilename);
+
+        try {
+            Files.copy(data.getVideo().getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            response = GameResponseVO.builder()
+                    .status(false)
+                    .message("파일전송에 실패했습니다")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+
+        CertificationVideoEntity vdoEntity = CertificationVideoEntity.builder()
+                .member(entity)
+                .cvUrl(filename)
+                .cvName(saveFilename)
+                .build();
+
+        cvRepo.save(vdoEntity);
+        response = GameResponseVO.builder()
+                .status(true)
+                .message("영상 등록이 완료되었습니다")
+                .code(HttpStatus.BAD_REQUEST)
+                .build();
+
         return response;
     }
 }
