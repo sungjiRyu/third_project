@@ -20,7 +20,7 @@ public class MemberScoreView {
     @Column (name="mi_seq") private Long miSeq;
     @Column (name="et_seq") private Long etSeq;
     @Column (name="mi_nickname") private String miNickName;
-    @Column (name="mi_class") private Integer miClass;
+    @Column (name="mi_classnum") private Integer miClassNum;
     @Column (name="gs_time") private LocalTime gsTime;
     @Column (name="et_time_type") private Integer etTimeType;
     @Column (name="mimg_url") private String mingUrl;

@@ -3,15 +3,11 @@ package com.third_project.third_project.game.service;
 import com.third_project.third_project.entity.*;
 import com.third_project.third_project.game.exception.ErrorResponse;
 import com.third_project.third_project.game.exception.GameScoreException;
-import com.third_project.third_project.game.vo.RankListResponseVO;
+import com.third_project.third_project.game.vo.*;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.GameScoreEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
-import com.third_project.third_project.game.vo.BasicResponseVO;
-import com.third_project.third_project.game.vo.ScorePercentResponseVO;
-import com.third_project.third_project.game.vo.ScoreResponseVO;
 import com.third_project.third_project.repository.*;
-import com.third_project.third_project.game.vo.WeeklyRankingVO;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.GameScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
@@ -143,7 +139,7 @@ public class ScoreService {
                     .nickname(mrentity.getMiNickName())
                     .rank(mrentity.getRank())
                     .url(mrentity.getMingUrl())
-                    .ban(mrentity.getMiClass())
+                    .ban(mrentity.getMiClassNum())
                     .build();
 
         return response;
@@ -155,7 +151,7 @@ public class ScoreService {
 
         for(int i=0; i< tlist.size(); i++) {
             RankListResponseVO vo = RankListResponseVO.builder()
-                    .ban(tlist.get(i).getMiClass())
+                    .ban(tlist.get(i).getMiClassNum())
                     .nickname(tlist.get(i).getMiNickName())
                     .rank(tlist.get(i).getRank())
                     .score(tlist.get(i).getGsTime())

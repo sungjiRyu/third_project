@@ -1,10 +1,7 @@
 package com.third_project.third_project.game.controller;
 
 import com.third_project.third_project.game.service.ScoreService;
-import com.third_project.third_project.game.vo.RankListResponseVO;
-import com.third_project.third_project.game.vo.BasicResponseVO;
-import com.third_project.third_project.game.vo.ScorePercentResponseVO;
-import com.third_project.third_project.game.vo.ScoreResponseVO;
+import com.third_project.third_project.game.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -21,7 +21,7 @@ public class MemberRankingView {
     @Column (name="et_seq") private Long etSeq;
     @Column (name="ranking") private Integer rank;
     @Column (name="mi_nickname") private String miNickName;
-    @Column (name="mi_class") private String miClass;
+    @Column (name="mi_classnum") private String miClassNum;
     @Column (name="gs_time") private LocalTime gsTime;
     @Column (name="et_time_type") private Integer etTimeType;
     @Column (name="mimg_url") private String mingUrl;
