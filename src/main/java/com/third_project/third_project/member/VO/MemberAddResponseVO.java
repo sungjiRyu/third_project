@@ -18,9 +18,9 @@ public class MemberAddResponseVO {
     private Integer weight;
     private String nickname;
     private String role;
+    private String classnum;
 
     private Long giSeq;
-    private Long ciSeq;
     private Long esSeq;
     private Long mimgSeq;
 
