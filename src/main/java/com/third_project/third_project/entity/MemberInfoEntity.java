@@ -23,8 +23,7 @@ public class MemberInfoEntity {
     @Column(name="mi_role")         private String miRole;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_gi_seq")       private GenInfoEntity gen;
-    @OneToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name="mi_class_seq")    private ClassInfoEntity classNum;
+    @Column(name="mi_class")    private String miClassNum;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_es_seq")       private ExStatusEntity exStatus;
     @OneToOne(fetch = FetchType.LAZY)

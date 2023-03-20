@@ -30,8 +30,8 @@ public class MemberService {
                 .miWeight(data.getWeight())
                 .miNickname(data.getNickname())
                 .miRole(data.getRole())
+                .miClassNum(data.getClassnum())
                 .gen(giRepo.findByGiSeq(data.getGiSeq()))
-                .classNum(ciRepo.findByCiSeq(data.getCiSeq()))
                 .exStatus(esRepo.findByEsSeq(data.getEsSeq()))
                 .mimg(mimgRepo.findByMimgSeq(data.getMimgSeq()))
                 .build();

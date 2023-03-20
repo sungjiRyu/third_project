@@ -18,9 +18,9 @@ public class MemberAddResponseVO {
     private Integer weight;
     private String nickname;
     private String role;
+    private String classnum;
 
     private Long giSeq;
-    private Long ciSeq;
     private Long esSeq;
     private Long mimgSeq;
 
@@ -36,7 +36,7 @@ public class MemberAddResponseVO {
         this.nickname = entity.getMiNickname();
         this.role     = entity.getMiRole();
         this.giSeq    = entity.getGen().getGiSeq();
-        this.ciSeq    = entity.getClassNum().getCiSeq();
+        this.classnum = entity.getMiClassNum();
         this.esSeq    = entity.getExStatus().getEsSeq();
         this.mimgSeq  = entity.getMimg().getMimgSeq();
 
