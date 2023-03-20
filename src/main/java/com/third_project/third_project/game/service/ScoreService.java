@@ -41,7 +41,7 @@ public class ScoreService {
     private final ExTypeRepository eRepo;
     private final CertificationVideoReposritory cvRepo;
 
-    @Value("${file.video.exercise}") String member_video_path;
+    @Value("${file.video.exercise.game}") String game_video_path;
 
 
     // 게임 성적 상위 % 조회 후 스템프 사용 횟수 부여 기능
@@ -241,9 +241,9 @@ public class ScoreService {
         for(int i=0; i<split.length-1; i++) {
             filename += split[i];
         }
-        String saveFilename = "member_" + LocalDateTime.now().getNano() + "." +ext;
+        String saveFilename = "game_" + LocalDateTime.now().getNano() + "." +ext;
 
-        Path forderLocation = Paths.get(member_video_path);
+        Path forderLocation = Paths.get(game_video_path);
         Path targetFile = forderLocation.resolve(saveFilename);
 
         try {

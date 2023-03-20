@@ -49,7 +49,7 @@ public class NoticeService{
     @Autowired ExVideoRepository exVideoRepo;
     @Autowired ExTypeRepository exTypeRepo;
     // 영상파일 저장경로
-    @Value("${file.video.exercise}") String excriseVideoPath;
+    @Value("${file.video.exercise.main}") String excriseVideoPath;
 
     // 게임 공지사항 등록( 이미지, 영상 첨부가능 )
     // 입력할때 제목, 내용, 영상, 운동종류를 받음
