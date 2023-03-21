@@ -38,8 +38,8 @@ public class FileController {
             content = @Content(schema = @Schema(implementation = BasicResponse.class)))
     })
     @GetMapping("/download/video/{type}/{uri}")
-    public ResponseEntity<Resource> downloadImgFile(
-            @Parameter(description = "업로드 된 곳(game: 게임기록, detail: 상세페이지, main: 메인페이지)", example = "game") @PathVariable String type,
+    public ResponseEntity<Resource> downloadVideoFile(
+            @Parameter(description = "업로드 된 곳(game: 게임기록)", example = "game") @PathVariable String type,
             @Parameter(description = "파일 uri", example = "jumprope") @PathVariable String uri,
             HttpServletRequest request
     ) throws Exception {
@@ -74,47 +74,49 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=\"" + URLEncoder.encode(exportName, "UTF-8") + "\"")
                 .body(r);
     }
-//    @Operation(summary = "이미지 파일 다운로드", description = "type에 업로드 된 uri 파일을 다운로드",
-//    responses = {
-//            @ApiResponse(responseCode = "200", description = ResponseMessageUtils.TRUE),
-//            @ApiResponse(responseCode = "400", description = ResponseMessageUtils.FALSE,
-//            content = @Content(schema = @Schema(implementation = BasicResponse.class)))
-//    })
-//    @GetMapping("/download/img/{type}/{uri}")
-//    public ResponseEntity<Resource> downloadImgFile(
-//            @Parameter(description = "업로드 된 곳(game_video : 게임영상)", example = "game_video") @PathVariable String type,
-//            @Parameter(description = "파일 uri", example = "game_839666700") @PathVariable String uri,
-//            HttpServletRequest request
-//    ) throws Exception {
-//        String filename = fileService.downloadFile(type, uri).getFilename();
-//        Path folderLocation = fileService.downloadFile(type, uri).getFolderLocation();
-//        String[] split = filename.split("\\.");
-//        String ext = split[split.length - 1];
-//        String exportName = uri + "." + ext;
-//        Path targetFile = folderLocation.resolve(filename);
-//
-//        Resource r = null;
-//        try {
-//            r = new UrlResource(targetFile.toUri());
-//        }
-//        catch (Exception e) {
-//            throw new InvalidInputException("파일 다운로드 실패");
-//        }
-//
-//        String contentType = null;
-//        try {
-//            contentType = request.getServletContext().getMimeType(r.getFile().getAbsolutePath());
-//            if (contentType==null) {
-//                contentType = "application/octet-stream";
-//            }
-//        }
-//        catch (Exception e) {
-//            throw new InvalidInputException("파일 다운로드 실패");
-//        }
-//
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType(contentType))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=\"" + URLEncoder.encode(exportName, "UTF-8") + "\"")
-//                .body(r);
-//    }
+
+
+    @Operation(summary = "이미지 파일 다운로드", description = "type에 업로드 된 uri 파일을 다운로드",
+    responses = {
+            @ApiResponse(responseCode = "200", description = ResponseMessageUtils.TRUE),
+            @ApiResponse(responseCode = "400", description = ResponseMessageUtils.FALSE,
+            content = @Content(schema = @Schema(implementation = BasicResponse.class)))
+    })
+    @GetMapping("/download/img/{type}/{uri}")
+    public ResponseEntity<Resource> downloadImgFile(
+            @Parameter(description = "업로드 된 곳(member : 회원사진)", example = "member") @PathVariable String type,
+            @Parameter(description = "파일 uri", example = "승지.jpg") @PathVariable String uri,
+            HttpServletRequest request
+    ) throws Exception {
+        String filename = fileService.downloadImageFile(type, uri).getFilename();
+        Path folderLocation = fileService.downloadImageFile(type, uri).getFolderLocation();
+        String[] split = filename.split("\\.");
+        String ext = split[split.length - 1];
+        String exportName = uri + "." + ext;
+        Path targetFile = folderLocation.resolve(filename);
+
+        Resource r = null;
+        try {
+            r = new UrlResource(targetFile.toUri());
+        }
+        catch (Exception e) {
+            throw new InvalidInputException("파일 다운로드 실패");
+        }
+
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(r.getFile().getAbsolutePath());
+            if (contentType==null) {
+                contentType = "application/octet-stream";
+            }
+        }
+        catch (Exception e) {
+            throw new InvalidInputException("파일 다운로드 실패");
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=\"" + URLEncoder.encode(exportName, "UTF-8") + "\"")
+                .body(r);
+    }
 }
