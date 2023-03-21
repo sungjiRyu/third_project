@@ -2,6 +2,8 @@ package com.third_project.third_project.Detail.api;
 
 
 
+import java.time.LocalDate;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,6 +59,7 @@ public class IndividualScoreController {
     @Parameter(description = "조회할 회원 번호")@RequestParam Long memberNo){
   return new ResponseEntity<ScoreListViewResponseVO>(isService.getListScore(memberNo),HttpStatus.OK);
 }
+
 }
 
 

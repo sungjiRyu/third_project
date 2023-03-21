@@ -21,6 +21,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Table(name="individual_score")
 public class IndividualScoreEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "개인 운동 seq")
     @Column(name="is_seq")     private Long isSeq;
     @Column(name="is_mi_seq")  private Long isMiSeq;
     @Column(name="is_et_seq")  private Long isEtSeq;
