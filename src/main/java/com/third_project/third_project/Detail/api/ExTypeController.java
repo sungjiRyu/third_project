@@ -38,12 +38,12 @@ public class ExTypeController {
   public ResponseEntity<ExTypeResponseVO> putExTypeInfo(@RequestBody ExtypeInsertVO data){
     return new ResponseEntity<ExTypeResponseVO>(etService.addExType(data),HttpStatus.OK);
   }
-  @GetMapping("/{type}/{filename}")
-  public ResponseEntity<Resource> getImageFile(
-          @PathVariable String type, @PathVariable String filename
-  ) throws Exception {
-      return exiService.getImageFile(type, filename);
-  }
+//  @GetMapping("/{type}/{filename}")
+//  public ResponseEntity<Resource> getImageFile(
+//          @PathVariable String type, @PathVariable String filename
+//  ) throws Exception {
+//      return exiService.getImageFile(type, filename);
+//  }
   @DeleteMapping("{no}")
   public ResponseEntity<ExTypeResponseVO> deleteExType(@PathVariable Long no){
     return new ResponseEntity<ExTypeResponseVO>(etService.deldeteExTypeInfo(no), HttpStatus.OK);
