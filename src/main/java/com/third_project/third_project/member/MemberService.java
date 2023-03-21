@@ -115,7 +115,7 @@ public class MemberService {
     }
 
 
-    // 개인정보 수정 ( 비밀번호 )
+    // 개인정보 수정 ( 비밀번호, 이미지 업로드 )
     public MemberUpdateResponseVO updateMember(Long seq, MemberUpdateVO data) {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
         if(!(findseq.isPresent())) {
@@ -188,6 +188,38 @@ public class MemberService {
                 return responseVO;
             }
         }
+    }
+    // 회원 정보 조회
+    public MemberSearchResponseVO searchMember (Long seq) {
+        MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+        if(miEntity == null) {
+            MemberSearchResponseVO responseVO = MemberSearchResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+//            MemberSearchVO searchVO = new MemberSearchVO();
+            MemberSearchVO searchVO = MemberSearchVO.builder()
+                    .id(miEntity.getMiId())
+                    .tall(miEntity.getMiTall())
+                    .weight(miEntity.getMiWeight())
+                    .nickname(miEntity.getMiNickname())
+                    .classnum(miEntity.getMiClassNum())
+                    .gen(miEntity.getGen().getGiStatus())
+                    .type(miEntity.getExStatus().getEsType())
+                    .mimg(miEntity.getMimg().getMimgUrl())
+                    .build();
+
+            MemberSearchResponseVO responseVO = MemberSearchResponseVO.builder()
+                    .info(searchVO)
+                    .status(true)
+                    .message("조회 완료")
+                    .code(HttpStatus.OK)
+                    .build();
+                    return responseVO;
+
     }
 
 
