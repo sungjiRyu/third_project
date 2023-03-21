@@ -99,9 +99,8 @@ ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
   return response;
 }
 //이번주 기록 조회
-  public ScoreListViewResponseVO getThisWeekScore(Long miSeq, Integer year, Integer month, Integer day){
 
 
   }
-  }
+
 
