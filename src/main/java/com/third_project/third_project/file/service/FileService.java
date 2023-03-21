@@ -22,7 +22,7 @@ public class FileService {
     private final ExImgRepository eiRepo;
 
     @Value("${file.video.exercise.game}") String game_video_path;
-    @Value("${file.video.exercise.notice") String notice_video_path;
+    @Value("${file.video.exercise.notice}") String notice_video_path;
     @Value("${file.image.exercise.detail}") String detail_image_path;
     @Value("${file.image.exercise.thumbnail}")   String thumbnail_image_path;
     @Value("${file.image.exercise.member}")   String member_image_path;
