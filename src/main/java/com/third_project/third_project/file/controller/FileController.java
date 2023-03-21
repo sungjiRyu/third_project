@@ -31,23 +31,23 @@ import java.nio.file.Path;
 @RequestMapping("/api")
 public class FileController {
     private final FileService fileService;
-    @Operation(summary = "비디오 파일 다운로드", description = "type에 업로드 된 uri 파일을 다운로드",
+    @Operation(summary = "비디오 파일 다운로드", description = "type에 업로드 된 url 파일을 다운로드",
     responses = {
             @ApiResponse(responseCode = "200", description = ResponseMessageUtils.TRUE),
             @ApiResponse(responseCode = "400", description = ResponseMessageUtils.FALSE,
             content = @Content(schema = @Schema(implementation = BasicResponse.class)))
     })
-    @GetMapping("/download/video/{type}/{uri}")
+    @GetMapping("/download/video/{type}/{url}")
     public ResponseEntity<Resource> downloadVideoFile(
-            @Parameter(description = "업로드 된 곳(game: 게임기록)", example = "game") @PathVariable String type,
-            @Parameter(description = "파일 uri", example = "jumprope") @PathVariable String uri,
+            @Parameter(description = "업로드 된 곳(notice: 공지사항)", example = "notice") @PathVariable String type,
+            @Parameter(description = "파일 url", example = "/exercise_video/Notice_1679030591694.mp4") @PathVariable String url,
             HttpServletRequest request
     ) throws Exception {
-        String filename = fileService.downloadVideoFile(type, uri).getFilename();
-        Path folderLocation = fileService.downloadVideoFile(type, uri).getFolderLocation();
+        String filename = fileService.downloadVideoFile(type, url).getFilename();
+        Path folderLocation = fileService.downloadVideoFile(type, url).getFolderLocation();
         String[] split = filename.split("\\.");
         String ext = split[split.length - 1];
-        String exportName = uri + "." + ext;
+        String exportName = url + "." + ext;
         Path targetFile = folderLocation.resolve(filename);
 
         Resource r = null;
@@ -76,23 +76,23 @@ public class FileController {
     }
 
 
-    @Operation(summary = "이미지 파일 다운로드", description = "type에 업로드 된 uri 파일을 다운로드",
+    @Operation(summary = "이미지 파일 다운로드", description = "type에 업로드 된 url 파일을 다운로드",
     responses = {
             @ApiResponse(responseCode = "200", description = ResponseMessageUtils.TRUE),
             @ApiResponse(responseCode = "400", description = ResponseMessageUtils.FALSE,
             content = @Content(schema = @Schema(implementation = BasicResponse.class)))
     })
-    @GetMapping("/download/img/{type}/{uri}")
+    @GetMapping("/download/img/{type}/{url}")
     public ResponseEntity<Resource> downloadImgFile(
-            @Parameter(description = "업로드 된 곳(member : 회원사진)", example = "member") @PathVariable String type,
-            @Parameter(description = "파일 uri", example = "승지") @PathVariable String uri,
+            @Parameter(description = "업로드 된 곳(member : 회원사진, detail : 운동상세 , thumbnail : 운동썸네일)", example = "member") @PathVariable String type,
+            @Parameter(description = "파일 url", example = "승지") @PathVariable String url,
             HttpServletRequest request
     ) throws Exception {
-        String filename = fileService.downloadImageFile(type, uri).getFilename();
-        Path folderLocation = fileService.downloadImageFile(type, uri).getFolderLocation();
+        String filename = fileService.downloadImageFile(type, url).getFilename();
+        Path folderLocation = fileService.downloadImageFile(type, url).getFolderLocation();
         String[] split = filename.split("\\.");
         String ext = split[split.length - 1];
-        String exportName = uri + "." + ext;
+        String exportName = url + "." + ext;
         Path targetFile = folderLocation.resolve(filename);
 
         Resource r = null;
