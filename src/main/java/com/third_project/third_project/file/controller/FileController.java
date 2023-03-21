@@ -85,7 +85,7 @@ public class FileController {
     @GetMapping("/download/img/{type}/{uri}")
     public ResponseEntity<Resource> downloadImgFile(
             @Parameter(description = "업로드 된 곳(member : 회원사진)", example = "member") @PathVariable String type,
-            @Parameter(description = "파일 uri", example = "승지.jpg") @PathVariable String uri,
+            @Parameter(description = "파일 uri", example = "승지") @PathVariable String uri,
             HttpServletRequest request
     ) throws Exception {
         String filename = fileService.downloadImageFile(type, uri).getFilename();
