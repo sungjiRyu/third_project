@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExVideoRepository extends JpaRepository<ExVideoEntity, Long> {
     public ExVideoEntity findByEvSeq(Long evEtSeq);
+    public ExVideoEntity findByEvUrlEquals(String evUrl);
 }

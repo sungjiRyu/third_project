@@ -39,7 +39,7 @@ public class FileController {
     })
     @GetMapping("/download/video/{type}/{uri}")
     public ResponseEntity<Resource> downloadImgFile(
-            @Parameter(description = "업로드 된 곳(game: 게임영상)", example = "game") @PathVariable String type,
+            @Parameter(description = "업로드 된 곳(game: 게임기록, detail: 상세페이지, main: 메인페이지)", example = "game") @PathVariable String type,
             @Parameter(description = "파일 uri", example = "jumprope") @PathVariable String uri,
             HttpServletRequest request
     ) throws Exception {
