@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class MemberController {
-
     private final MemberService mService;
-
 
     //http://localhost:8888/api/member/join
     @Operation(summary = " 가입 (필수 정보)")
@@ -47,5 +45,11 @@ public class MemberController {
     @DeleteMapping("/{seq}")
     public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) {
         return new ResponseEntity<MemberDeleteResponseVO>(mService.deleteMember(seq, data), HttpStatus.OK);
+    }
+
+    @Operation(summary = "회원 정보 조회")
+    @GetMapping("/{seq}")
+    public ResponseEntity<MemberSearchResponseVO> searchMember(@PathVariable Long seq) {
+        return  new ResponseEntity<MemberSearchResponseVO>(mService.searchMember(seq), HttpStatus.OK);
     }
 }
