@@ -40,7 +40,7 @@ public class FileController {
     @GetMapping("/download/video/{type}/{url}")
     public ResponseEntity<Resource> downloadVideoFile(
             @Parameter(description = "업로드 된 곳(notice: 공지사항)", example = "notice") @PathVariable String type,
-            @Parameter(description = "파일 url", example = "/exercise_video/Notice_1679030591694.mp4") @PathVariable String url,
+            @Parameter(description = "파일 url", example = "notice1679030591694") @PathVariable String url,
             HttpServletRequest request
     ) throws Exception {
         String filename = fileService.downloadVideoFile(type, url).getFilename();
