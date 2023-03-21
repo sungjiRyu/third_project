@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,9 +61,9 @@ public class NoticeAPIController {
 
 
     @Operation(summary =  "게임 공지사항 상세조회", description = "공지사항 내용 상세조회.")
-    @GetMapping("/detail")
+    @GetMapping("/detail/{gnSeq}")
     public ResponseEntity<GetDetailNoticeVO> GetNoticeDetail(
-        @Parameter(description = "공지사항 번호", example = "1") @RequestParam Long gnSeq
+        @Parameter(description = "공지사항 번호", example = "1") @PathVariable Long gnSeq
     ){
         GetDetailNoticeVO response = noticeService.GetDetailNotice(gnSeq);
         return new ResponseEntity<>(response, HttpStatus.OK);

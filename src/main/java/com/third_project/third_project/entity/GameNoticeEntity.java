@@ -35,5 +35,5 @@ public class GameNoticeEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gn_ev_seq", insertable = false, updatable = false)   private ExVideoEntity video;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gn_et_seq", insertable = false, updatable = false)   private ExTypeEntity type;
+    @JoinColumn(name = "gn_et_seq", referencedColumnName = "", insertable = false, updatable = false)   private ExTypeEntity type;
 }
