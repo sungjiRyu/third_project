@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "운동 API" , description ="개인측정용 운동조회")
+@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동조회")
 @RestController
 @RequestMapping("api/exercise")
 public class ExcriseAPIController {
