@@ -2,19 +2,20 @@ package com.third_project.third_project.Detail.service;
 
 import org.springframework.stereotype.Service;
 
-
+import java.time.LocalDate;
 import java.util.List;
 
 
 
 import org.springframework.http.HttpStatus;
 
-
+import com.third_project.third_project.Detail.vo.ExTypeResponseVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
+import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.IndividualScoreRepository;
@@ -97,6 +98,10 @@ ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
   .build();
   return response;
 }
-    
+//이번주 기록 조회
+  public ScoreListViewResponseVO getThisWeekScore(Long miSeq, Integer year, Integer month, Integer day){
+
+
+  }
   }
 
