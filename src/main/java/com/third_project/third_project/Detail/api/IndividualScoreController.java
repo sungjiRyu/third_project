@@ -21,7 +21,9 @@ import com.third_project.third_project.Detail.service.IndividualScoreService;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
+import com.third_project.third_project.Detail.vo.WeekScoreResponseVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
+import com.third_project.third_project.entity.WeekScore;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -59,7 +61,10 @@ public class IndividualScoreController {
     @Parameter(description = "조회할 회원 번호")@RequestParam Long memberNo){
   return new ResponseEntity<ScoreListViewResponseVO>(isService.getListScore(memberNo),HttpStatus.OK);
 }
-
+@GetMapping("/list/week")
+public ResponseEntity<WeekScoreResponseVO> getWeekScore(@RequestParam Long memberNo, @RequestParam Long week){
+  return new ResponseEntity<WeekScoreResponseVO>(isService.getThisScore(memberNo, week),HttpStatus.OK);
+}
 }
 
 

@@ -25,7 +25,7 @@ public class MemberInfoEntity {
     @Column(name="mi_nickname")     private String miNickname;
     @Column(name="mi_role")
     @ColumnDefault("user") private String miRole;
-    @Column(name="mi_classnum")
+    @Column(name="mi_class")
     @ColumnDefault("반 선택") private String miClassNum;
     @OneToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_gi_seq")

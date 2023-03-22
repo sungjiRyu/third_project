@@ -58,6 +58,6 @@ public class ExTypeService {
       .build();
       return response;
     }
-
+    
   }
 

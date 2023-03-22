@@ -28,7 +28,7 @@ public class IndividualScoreEntity {
     @Column(name="is_et_seq")  private Long isEtSeq;
     @Column(name="is_reg_dt")  private @ColumnDefault("current_timestamp") LocalDate isRegDt;
     @Column(name="is_time")    private LocalTime isTime;
-
+    @Column(name = "is_week") private Integer isWeed;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="is_mi_seq", insertable=false, updatable=false)  private MemberInfoEntity member;
     @ManyToOne(fetch = FetchType.LAZY)
