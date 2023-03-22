@@ -275,7 +275,7 @@ public class MemberService {
                                 .mimgName(firstname)
                                 .mimgUrl(saveFilename)
                                 .build();
-//                mimgRepo.save(newImg);  //
+                mimgRepo.save(newImg);
 
                 MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
                     miEntity.setMimg(newImg);
