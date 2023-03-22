@@ -241,7 +241,7 @@ public class ScoreService {
         for(int i=0; i<split.length-1; i++) {
             filename += split[i];
         }
-        String saveFilename = "game_" + LocalDateTime.now().getNano() + "." +ext;
+        String saveFilename = "game_" + entity.getMiSeq()+"_"+LocalDateTime.now().getNano() + "." +ext;
 
         Path forderLocation = Paths.get(game_video_path);
         Path targetFile = forderLocation.resolve(saveFilename);
