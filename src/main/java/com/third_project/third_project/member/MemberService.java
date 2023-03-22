@@ -1,15 +1,22 @@
 package com.third_project.third_project.member;
 
-import com.third_project.third_project.entity.GenInfoEntity;
+import com.third_project.third_project.entity.MemberImgEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.member.VO.*;
 import com.third_project.third_project.repository.*;
 import com.third_project.third_project.utilities.AESAlgorithm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 import java.util.Optional;
 
 
@@ -22,6 +29,7 @@ public class MemberService {
 
     private final ExStatusRepository esRepo;
     private final MemberImgRepository mimgRepo;
+    @Value("${file.image.exercise.member}")   String member_image_path;
 
 
 
@@ -64,10 +72,7 @@ public class MemberService {
         catch (Exception e) {
             e.printStackTrace();
         }
-//        MemberInfoEntity miEntity = MemberInfoEntity.builder()
-//                .miId(data.getId())
-//                .miNickname(data.getNickname())
-//                .build();
+
         MemberJoinResponseVO responseVO = MemberJoinResponseVO.builder()
                 .status(true)
                 .message("가입되었습니다.")
@@ -135,11 +140,12 @@ public class MemberService {
                     .build();
             return responseVO;
         }
+
         else {
             try{
                 String encPwd = AESAlgorithm.Encrypt(data.getPwd());
                 MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
-                miEntity.setMiPwd(encPwd);
+                    miEntity.setMiPwd(encPwd);
 
                 miRepo.save(miEntity);
             }
@@ -221,9 +227,62 @@ public class MemberService {
                     return responseVO;
 
     }
+    // 이미지 업로드
+    public MemberImgResponseVO addMemberImg (Long seq, MultipartFile file) {
+        Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+        if(!(findseq.isPresent())) {
+            MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
+        Path folderLocation = null;
+        folderLocation = Paths.get(member_image_path);
+
+        String saveFilename = "";
+        String orginFileName = file.getOriginalFilename();
+
+        String[]split = orginFileName.split("\\.");
+
+        String firstname = "";  //split[0] + "_";
+        String ext = split[split.length -1];
+        for(int i=0; i<split.length; i++) {
+            if(i != split.length - 1)
+                firstname += split[i];
+        }
+
+        Calendar c = Calendar.getInstance();
+        saveFilename += firstname + c.getTimeInMillis() + "." + ext;
+        Path targetFile = folderLocation.resolve(saveFilename);
+
+        try {
+            Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+            MemberImgEntity imgEntity = miEntity.getMimg();
+
+                imgEntity.setMimgUrl(saveFilename);
+                miEntity.setMimg(imgEntity);
+                mimgRepo.save(imgEntity);
+                miRepo.save(miEntity);
 
 
+        MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                //.mimgUrl(saveFilename)
+                .status(true)
+                .message("파일이 저장되었습니다.")
+                .code(HttpStatus.ACCEPTED)
+                .build();
+        return mimgVO;
+        }
+    }
     // login
     // logout
-
 }
