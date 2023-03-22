@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class MemberAddInfoVO {
-            private String Nickname;
+//            private String Nickname;
             private Integer Tall;
             private Integer Weight;
             private String ClassNum;

@@ -93,17 +93,17 @@ public class MemberService {
                     .build();
             return responseVO;
         }
-        else if(miRepo.countByMiNickname(data.getNickname()) >= 1) {
-            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
-                    .status(false)
-                    .message("이미 존재하는 닉네임 입니다.")
-                    .code(HttpStatus.BAD_REQUEST)
-                    .build();
-            return responseVO;
-        }
+//        else if(miRepo.countByMiNickname(data.getNickname()) >= 1) {
+//            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+//                    .status(false)
+//                    .message("이미 존재하는 닉네임 입니다.")
+//                    .code(HttpStatus.BAD_REQUEST)
+//                    .build();
+//            return responseVO;
+//        }
         else {
             MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
-            miEntity.setMiNickname(data.getNickname());
+//            miEntity.setMiNickname(data.getNickname());
             miEntity.setMiTall(data.getTall());
             miEntity.setMiWeight(data.getWeight());
             miEntity.setMiClassNum(data.getClassNum());
@@ -228,8 +228,10 @@ public class MemberService {
 
     }
     // 이미지 업로드
+    @Transactional
     public MemberImgResponseVO addMemberImg (Long seq, MultipartFile file) {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+
         if(!(findseq.isPresent())) {
             MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
                     .status(false)
@@ -239,50 +241,58 @@ public class MemberService {
             return responseVO;
         }
         else {
-        Path folderLocation = null;
-        folderLocation = Paths.get(member_image_path);
+            MemberInfoEntity member = miRepo.findByMiSeq(seq);
+            MemberImgEntity img = member.getMimg();
+            String Url = img.getMimgUrl();
+            mimgRepo.deleteByMimgUrl(Url);
 
-        String saveFilename = "";
-        String orginFileName = file.getOriginalFilename();
+                Path folderLocation = null;
+                folderLocation = Paths.get(member_image_path);
 
-        String[]split = orginFileName.split("\\.");
+                String saveFilename = "";
+                String orginFileName = file.getOriginalFilename();
 
-        String firstname = "";  //split[0] + "_";
-        String ext = split[split.length -1];
-        for(int i=0; i<split.length; i++) {
-            if(i != split.length - 1)
-                firstname += split[i];
+                String[]split = orginFileName.split("\\.");
+
+                String firstname = "";  //split[0] + "_";
+                String ext = split[split.length -1];
+                for(int i=0; i<split.length; i++) {
+                    if(i != split.length - 1)
+                        firstname += split[i];
+                }
+
+                Calendar c = Calendar.getInstance();
+                saveFilename += firstname + c.getTimeInMillis() + "." + ext;
+                Path targetFile = folderLocation.resolve(saveFilename);
+
+                try {
+                    Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                MemberImgEntity newImg = MemberImgEntity.builder()
+                                .mimgName(firstname)
+                                .mimgUrl(saveFilename)
+                                .build();
+//                mimgRepo.save(newImg);  //
+
+                MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+                    miEntity.setMimg(newImg);
+                    miRepo.save(miEntity);
+
+
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                        //.mimgUrl(saveFilename)
+                        .status(true)
+                        .message("파일이 저장되었습니다.")
+                        .code(HttpStatus.ACCEPTED)
+                        .build();
+                return mimgVO;
         }
 
-        Calendar c = Calendar.getInstance();
-        saveFilename += firstname + c.getTimeInMillis() + "." + ext;
-        Path targetFile = folderLocation.resolve(saveFilename);
-
-        try {
-            Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
-            MemberImgEntity imgEntity = miEntity.getMimg();
-
-                imgEntity.setMimgUrl(saveFilename);
-                miEntity.setMimg(imgEntity);
-                mimgRepo.save(imgEntity);
-                miRepo.save(miEntity);
-
-
-        MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
-                //.mimgUrl(saveFilename)
-                .status(true)
-                .message("파일이 저장되었습니다.")
-                .code(HttpStatus.ACCEPTED)
-                .build();
-        return mimgVO;
-        }
     }
+
     // login
     // logout
 }

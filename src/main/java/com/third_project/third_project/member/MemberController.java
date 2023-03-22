@@ -58,7 +58,8 @@ public class MemberController {
 
     // http://localhost:8888/api/member/img/{seq}
     @Operation(summary = "멤버 이미지 업로드")
-    @PatchMapping("/img/{seq}")
+    @Transactional
+    @PutMapping("/img/{seq}")
     public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) {
         return new ResponseEntity<MemberImgResponseVO>(mService.addMemberImg(seq, file), HttpStatus.OK);
     }

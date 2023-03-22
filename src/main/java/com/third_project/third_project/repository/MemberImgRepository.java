@@ -9,6 +9,8 @@ public interface MemberImgRepository extends JpaRepository<MemberImgEntity, Long
     public MemberImgEntity findByMimgUrlEquals(String mimgUrl);
 
     public MemberImgEntity findByMimgUrl(String url);
+    
+    public String deleteByMimgUrl(String url);
 
 
 }
