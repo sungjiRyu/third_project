@@ -33,6 +33,6 @@ public class MemberInfoEntity {
     @OneToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_es_seq")
     @ColumnDefault("1") private ExStatusEntity exStatus;
-    @OneToOne//(fetch = FetchType.LAZY)
-    @JoinColumn(name="mi_mimg_seq")     private MemberImgEntity mimg;
+    @OneToOne//( cascade = CascadeType.ALL)
+    @JoinColumn(name="mi_mimg_seq") private MemberImgEntity mimg;
 }
