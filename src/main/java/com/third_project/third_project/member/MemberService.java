@@ -244,6 +244,54 @@ public class MemberService {
             MemberInfoEntity member = miRepo.findByMiSeq(seq);
             MemberImgEntity img = member.getMimg();
             String Url = img.getMimgUrl();
+
+            if( img.getMimgSeq() == 1 ) {
+                Path folderLocation = null;
+                folderLocation = Paths.get(member_image_path);
+
+                String saveFilename = "";
+                String orginFileName = file.getOriginalFilename();
+
+                String[]split = orginFileName.split("\\.");
+
+                String firstname = "";  //split[0] + "_";
+                String ext = split[split.length -1];
+                for(int i=0; i<split.length; i++) {
+                    if(i != split.length - 1)
+                        firstname += split[i];
+                }
+
+                Calendar c = Calendar.getInstance();
+                saveFilename += firstname + c.getTimeInMillis() + "." + ext;
+                Path targetFile = folderLocation.resolve(saveFilename);
+
+                try {
+                    Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                MemberImgEntity newImg = MemberImgEntity.builder()
+                        .mimgName(firstname)
+                        .mimgUrl(saveFilename)
+                        .build();
+                mimgRepo.save(newImg);
+
+                MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+                miEntity.setMimg(newImg);
+                miRepo.save(miEntity);
+
+
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                        //.mimgUrl(saveFilename)
+                        .status(true)
+                        .message("파일이 저장되었습니다.")
+                        .code(HttpStatus.ACCEPTED)
+                        .build();
+                return mimgVO;
+            }
+            else {
+
             mimgRepo.deleteByMimgUrl(Url);
 
                 Path folderLocation = null;
@@ -289,8 +337,8 @@ public class MemberService {
                         .code(HttpStatus.ACCEPTED)
                         .build();
                 return mimgVO;
+            }
         }
-
     }
 
     // login
