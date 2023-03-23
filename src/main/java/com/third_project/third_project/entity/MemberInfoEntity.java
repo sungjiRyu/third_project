@@ -27,12 +27,12 @@ public class MemberInfoEntity {
     @ColumnDefault("user") private String miRole;
     @Column(name="mi_classnum")
     @ColumnDefault("반 선택") private String miClassNum;
-    @OneToOne//(fetch = FetchType.LAZY)
+    @OneToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_gi_seq")
     @ColumnDefault("1") private GenInfoEntity gen;
-    @OneToOne//(fetch = FetchType.LAZY)
+    @OneToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name="mi_es_seq")
     @ColumnDefault("1") private ExStatusEntity exStatus;
-    @OneToOne//( cascade = CascadeType.ALL)
+    @OneToOne //( cascade = CascadeType.ALL)
     @JoinColumn(name="mi_mimg_seq") private MemberImgEntity mimg;
 }
