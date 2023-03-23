@@ -260,11 +260,11 @@ public class MemberService {
                     if(i != split.length - 1)
                         firstname += split[i];
                 }
-                Long MemSeq = member.getMiSeq();
+
 
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
-                firstname = firstname + MemSeq + "." + ext;
+                firstname = firstname + member.getMiSeq();
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
@@ -310,11 +310,11 @@ public class MemberService {
                     if(i != split.length - 1)
                         firstname += split[i];
                 }
-                Long MemSeq = member.getMiSeq();
+//                Long MemSeq = member.getMiSeq();
 
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
-                firstname = firstname + MemSeq + "." + ext;
+                firstname = firstname + member.getMiSeq();
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
@@ -346,5 +346,12 @@ public class MemberService {
     }
 
     // login
+//    public MemberLoginResponseVO login (MemberLoginVO LoginVO) {
+//
+//        MemberInfoEntity miEntity = miRepo.findByMiSeq(LoginVO.getId());
+//        miRepo.findByMiPwd(LoginVO.getPwd());
+//
+//        return MemberLoginResponseVO;
+//        }
     // logout
 }
