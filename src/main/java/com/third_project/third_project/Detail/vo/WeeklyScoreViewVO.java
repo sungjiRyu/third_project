@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.third_project.third_project.entity.WeekScore;
+import com.third_project.third_project.entity.WeeklyScoreView;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WeekScoreResponseVO {
-  private List<WeekScore> list;
-  private String message;
+public class WeeklyScoreViewVO {
+  private List<WeeklyScoreView>list;
   private HttpStatus code;
+  private String message;
   private Boolean status;
 }

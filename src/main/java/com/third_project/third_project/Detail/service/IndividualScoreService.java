@@ -13,17 +13,19 @@ import com.third_project.third_project.Detail.vo.ExTypeResponseVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
-import com.third_project.third_project.Detail.vo.WeekScoreResponseVO;
+import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
 import com.third_project.third_project.entity.WeekScore;
+import com.third_project.third_project.entity.WeeklyScoreView;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.IndividualScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
 import com.third_project.third_project.repository.ScoreListViewRepository;
 import com.third_project.third_project.repository.WeekScoreRepository;
+import com.third_project.third_project.repository.WeeklyScoreViewRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,8 @@ public class IndividualScoreService {
   private final MemberInfoRepository miRepo;
   private final ExTypeRepository etRepo;
   private final ScoreListViewRepository slRepo;
-  private final WeekScoreRepository wsRepo;
+  private final WeeklyScoreViewRepository wsRepo;
+  
 
   //개인 기록 추가
   public IndividualScoreResponseVO addIndividualScore(IndividualScoreInsertVO data){
@@ -92,7 +95,7 @@ public class IndividualScoreService {
 public ScoreListViewResponseVO getListScore(Long memberNo){
 List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
   // ScoreListView member = slRepo.findByIsMiSeq(memberNo);
-  if(member == null){
+  if(member.isEmpty()){
     ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
     .code(HttpStatus.NOT_FOUND)
     .message(memberNo+"학생은 등록되지 않은 회원입니다.")
@@ -109,26 +112,25 @@ ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
   return response;
 }
 //이번주 기록 조회
-public WeekScoreResponseVO getThisScore(Long memberNo, Long week){
-  List<WeekScore> member =  wsRepo.findByIsMiSeq(memberNo);
-  if(member == null){
-    WeekScoreResponseVO response = WeekScoreResponseVO.builder()
-    .code(HttpStatus.NOT_FOUND)
+public WeeklyScoreViewVO getWeeklyScore(Long memberNo, Integer week){
+  List<WeeklyScoreView> member = wsRepo.findByIsMiSeq(memberNo);
+  if(member.isEmpty()){
+    WeeklyScoreViewVO response = WeeklyScoreViewVO.builder()
     .message(memberNo+"학생은 등록되지 않은 회원입니다.")
+    .code(HttpStatus.NOT_FOUND)
     .status(false)
     .build();
-    return response;  
+    return response;
   }
-  List<WeekScore> list = wsRepo.findByIsWeek(week);
-  WeekScoreResponseVO response = WeekScoreResponseVO.builder()
-  .list(list)
+  List<WeeklyScoreView> weekly = wsRepo.findByIsMiSeqAndIsWeek(memberNo, week);
+  WeeklyScoreViewVO response = WeeklyScoreViewVO.builder()
+  .list(weekly)
+  .message(memberNo+"학생의 주간 기록이 조회되었습니다..")
   .code(HttpStatus.OK)
-  .message(memberNo+"학생의 이번주 기록이 조회되었습니다.")
   .status(true)
   .build();
   return response;
 }
-
   }
 
 
