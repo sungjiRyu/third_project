@@ -1,8 +1,6 @@
 package com.third_project.third_project.game.service;
 
 import com.third_project.third_project.entity.*;
-import com.third_project.third_project.game.exception.ErrorResponse;
-import com.third_project.third_project.game.exception.GameScoreException;
 import com.third_project.third_project.game.vo.*;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.GameScoreEntity;
@@ -44,36 +42,36 @@ public class ScoreService {
     @Value("${file.video.exercise.game}") String game_video_path;
 
 
-    // 게임 성적 상위 % 조회 후 스템프 사용 횟수 부여 기능
-//    public BasicResponseVO setAvailableStamp(Long seq){
-//        List<WeeklyRankingVO> ranking = gsRepo.findRanking(seq);
-//        List<WeeklyRankingVO> list = new ArrayList<>();
-//        if(ranking.isEmpty()){
-//            BasicResponseVO response = BasicResponseVO.builder()
-//                    .status(false)
-//                    .message("해당 운동 정보는 저번 회차 게임 운동 종목과 일치하지 않습니다.")
-//                    .code(HttpStatus.BAD_REQUEST)
-//                    .build();
-//        }
-//
-//
-//        for(int i=0; i<ranking.size(); i++){
-//            ranking.get(i).getRanking();
-//        System.out.println(ranking.get(i).getRanking());
-//        }
-//
-//
-//        BasicResponseVO response = BasicResponseVO.builder()
-//                .status(true)
-//                .message("횟수 부여 완료")
-//                .code(HttpStatus.OK)
-//                .build();
-//        return response;
-//    }
+
+    // 스템프 사용 횟수 부여를 위한 전체 게임 성적 상위 % 입력 기능
+    public BasicResponseVO setPercent(Long seq){
+        List<GameScoreEntity> ranking = gsRepo.findWeeklyRanking(seq);
+//        List<WeeklyRankingVO> list = gsRepo.findRanking(seq);
+
+        if(ranking.isEmpty()){
+            BasicResponseVO response = BasicResponseVO.builder()
+                    .status(false)
+                    .message("해당 운동 정보는 저번 회차 게임 운동 종목과 일치하지 않습니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+
+        for(int i=0; i<ranking.size(); i++){
+                GameScoreEntity entity = new GameScoreEntity();
+                entity.setGsPercent(getMemberPercent(seq, ranking.get(i).getMember().getMiSeq()).getPercent());
+                gsRepo.save(entity);
+        }
+        BasicResponseVO response = BasicResponseVO.builder()
+                .status(true)
+                .message("퍼센트 정보 입력 완료")
+                .code(HttpStatus.OK)
+                .build();
+        return response;
+    }
 
 
     // 게임 성적 상위 몇 퍼센트 인지 조회 기능
-    // ranking 부분 interface return 형식으로 수정 필요해 보임
     public ScorePercentResponseVO getMemberPercent(Long seq, Long miSeq){
         List<GameScoreEntity> list = gsRepo.findWeeklyRanking(seq);
         List<WeeklyRankingVO> ranking = gsRepo.findRanking(seq);
@@ -81,12 +79,20 @@ public class ScoreService {
         if(list.isEmpty()) {
             ScorePercentResponseVO response = ScorePercentResponseVO.builder()
                     .status(false)
+                    .message("조회된 운동 정보가 없습니다")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return response;
+        }
+        if(member == null){
+            ScorePercentResponseVO response = ScorePercentResponseVO.builder()
+                    .status(false)
                     .message("조회된 회원 정보가 없습니다")
                     .code(HttpStatus.BAD_REQUEST)
                     .build();
             return response;
         }
-        
+
         Integer people = 0;
         for(int i=0; i<list.size(); i++){
             people += 1;
@@ -99,12 +105,12 @@ public class ScoreService {
             }
         }
         Double percent = (double)rank / (double) people * 100.0;
-        DecimalFormat df = new DecimalFormat("#.##");
+//        DecimalFormat df = new DecimalFormat("#.##");
         ScorePercentResponseVO response = ScorePercentResponseVO.builder()
                 .status(true)
                 .message("조회된 회원 성적의 상위 퍼센트 조회!!")
                 .code(HttpStatus.OK)
-                .percent(df.format(percent))
+                .percent(percent)
                 .build();
         return response;
     }
@@ -136,7 +142,20 @@ public class ScoreService {
             return response;
         }
 
-        response = ScoreResponseVO.builder()
+        else if(mrentity.getMingUrl() == null) {
+            response = ScoreResponseVO.builder()
+                    .status(true)
+                    .message("지난주의 성적입니다")
+                    .code(HttpStatus.OK)
+                    .score(mrentity.getGsTime())
+                    .nickname(mrentity.getMiNickName())
+                    .rank(mrentity.getRank())
+                    .url(null)
+                    .ban(mrentity.getMiClassNum())
+                    .build();
+        }
+        else {
+            response = ScoreResponseVO.builder()
                     .status(true)
                     .message("지난주의 성적입니다")
                     .code(HttpStatus.OK)
@@ -146,6 +165,7 @@ public class ScoreService {
                     .url(mrentity.getMingUrl())
                     .ban(mrentity.getMiClassNum())
                     .build();
+        }
 
         return response;
     }
@@ -241,7 +261,8 @@ public class ScoreService {
         for(int i=0; i<split.length-1; i++) {
             filename += split[i];
         }
-        String saveFilename = "game_" + LocalDateTime.now().getNano() + "." +ext;
+        String newUri = "game_"+entity.getMiSeq()+LocalDateTime.now().getNano();
+        String saveFilename = "game_" + entity.getMiSeq()+"_"+LocalDateTime.now().getNano() + "." +ext;
 
         Path forderLocation = Paths.get(game_video_path);
         Path targetFile = forderLocation.resolve(saveFilename);
@@ -256,10 +277,9 @@ public class ScoreService {
                     .code(HttpStatus.BAD_REQUEST)
                     .build();
         }
-
         CertificationVideoEntity vdoEntity = CertificationVideoEntity.builder()
                 .member(entity)
-                .cvUrl(filename)
+                .cvUrl(newUri)
                 .cvName(saveFilename)
                 .build();
 
@@ -267,7 +287,7 @@ public class ScoreService {
         response = GameResponseVO.builder()
                 .status(true)
                 .message("영상 등록이 완료되었습니다")
-                .code(HttpStatus.BAD_REQUEST)
+                .code(HttpStatus.OK)
                 .build();
 
         return response;

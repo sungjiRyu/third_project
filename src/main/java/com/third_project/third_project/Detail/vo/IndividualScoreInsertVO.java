@@ -17,4 +17,5 @@ public class IndividualScoreInsertVO {
   private Long isEtSeq;
   private LocalDate isRegDt;
   private LocalTime isTime;
+  private Integer isWeek;
 }

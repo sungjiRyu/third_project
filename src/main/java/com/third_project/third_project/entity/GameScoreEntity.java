@@ -28,8 +28,9 @@ public class GameScoreEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gs_et_seq")   private ExTypeEntity exType;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "gs_reg_dt")  @ColumnDefault
-  ("CURRENT_TIMESTAMP")  private Date gsRegDt;
+    @Column(name = "gs_reg_dt")  @ColumnDefault("CURRENT_TIMESTAMP")  private Date gsRegDt;
     @DateTimeFormat(pattern = "HH:mm:ss.SSS")
     @Column(name = "gs_time")   private LocalTime gsTime;
+
+    @Column(name = "gs_percent") @ColumnDefault("0") private Double gsPercent;
 }

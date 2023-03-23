@@ -13,14 +13,17 @@ import com.third_project.third_project.Detail.vo.ExTypeResponseVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
+import com.third_project.third_project.Detail.vo.WeekScoreResponseVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
+import com.third_project.third_project.entity.WeekScore;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.IndividualScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
 import com.third_project.third_project.repository.ScoreListViewRepository;
+import com.third_project.third_project.repository.WeekScoreRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ public class IndividualScoreService {
   private final MemberInfoRepository miRepo;
   private final ExTypeRepository etRepo;
   private final ScoreListViewRepository slRepo;
+  private final WeekScoreRepository wsRepo;
 
   //개인 기록 추가
   public IndividualScoreResponseVO addIndividualScore(IndividualScoreInsertVO data){
@@ -44,14 +48,20 @@ public class IndividualScoreService {
       return response;
     }
     else{
-      IndividualScoreEntity entity = IndividualScoreEntity.builder()
-      .member(miRepo.findById(data.getIsMiSeq()).get())
-      .exType(etRepo.findById(data.getIsEtSeq()).get())
-      .isRegDt(data.getIsRegDt())
-      .isTime(data.getIsTime())
-      .build();
-      isRepo.save(entity);
-      
+      if (miRepo.findById(data.getIsMiSeq()).isEmpty()) return IndividualScoreResponseVO.builder().code(HttpStatus.BAD_REQUEST).message("miRepo error").status(false).build();
+      else if (etRepo.findById(data.getIsEtSeq()).isEmpty()) return IndividualScoreResponseVO.builder().code(HttpStatus.BAD_REQUEST).message("etRepo error").status(false).build();
+      else {
+        IndividualScoreEntity entity = IndividualScoreEntity.builder()
+        // .member(miRepo.findById(data.getIsMiSeq()).get())
+        // .exType(etRepo.findById(data.getIsEtSeq()).get())
+        .isMiSeq(miRepo.findById(data.getIsMiSeq()).get().getMiSeq())
+        .isEtSeq(etRepo.findById(data.getIsEtSeq()).get().getEtSeq())
+        .isRegDt(data.getIsRegDt())
+        .isTime(data.getIsTime())
+        .isWeed(data.getIsWeek())
+        .build();
+        isRepo.save(entity);
+      }
     }
     return IndividualScoreResponseVO.builder().code(HttpStatus.OK).message("개인 기록이 추가되었습니다..").status(true).build();
   }
@@ -98,10 +108,27 @@ ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
   .build();
   return response;
 }
-// // 이번주 기록 조회
-//   public ScoreListViewResponseVO getThisWeekScore(Long miSeq, Integer year, Integer month, Integer day){
-
-
-//   }
+//이번주 기록 조회
+public WeekScoreResponseVO getThisScore(Long memberNo, Long week){
+  List<WeekScore> member =  wsRepo.findByIsMiSeq(memberNo);
+  if(member == null){
+    WeekScoreResponseVO response = WeekScoreResponseVO.builder()
+    .code(HttpStatus.NOT_FOUND)
+    .message(memberNo+"학생은 등록되지 않은 회원입니다.")
+    .status(false)
+    .build();
+    return response;  
   }
+  List<WeekScore> list = wsRepo.findByIsWeek(week);
+  WeekScoreResponseVO response = WeekScoreResponseVO.builder()
+  .list(list)
+  .code(HttpStatus.OK)
+  .message(memberNo+"학생의 이번주 기록이 조회되었습니다.")
+  .status(true)
+  .build();
+  return response;
+}
+
+  }
+
 

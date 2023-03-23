@@ -1,20 +1,23 @@
 package com.third_project.third_project.member;
 
-import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.member.VO.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "회원관련", description = "회원 CRUD")
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class MemberController {
+    //@Value("${file.image.exercise.member}") String local_img_path;
     private final MemberService mService;
 
     //http://localhost:8888/api/member/join
@@ -52,4 +55,18 @@ public class MemberController {
     public ResponseEntity<MemberSearchResponseVO> searchMember(@PathVariable Long seq) {
         return  new ResponseEntity<MemberSearchResponseVO>(mService.searchMember(seq), HttpStatus.OK);
     }
+
+    // http://localhost:8888/api/member/img/{seq}
+    @Operation(summary = "멤버 이미지 업로드")
+    @Transactional
+    @PutMapping("/img/{seq}")
+    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) {
+        return new ResponseEntity<MemberImgResponseVO>(mService.addMemberImg(seq, file), HttpStatus.OK);
+    }
+
+//    @Operation(summary = "로그인")
+//    @PostMapping("/login")
+//    public ResponseEntity<MemberLoginResponseVO> login (@RequestBody MemberLoginVO loginVO) {
+//        return new ResponseEntity<MemberLoginResponseVO>(mService.login(loginVO), HttpStatus.OK;
+//    }
 }
