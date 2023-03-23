@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -346,12 +347,41 @@ public class MemberService {
     }
 
     // login
-//    public MemberLoginResponseVO login (MemberLoginVO LoginVO) {
-//
-//        MemberInfoEntity miEntity = miRepo.findByMiSeq(LoginVO.getId());
-//        miRepo.findByMiPwd(LoginVO.getPwd());
-//
-//        return MemberLoginResponseVO;
-//        }
+    public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
+
+//        Long findSeq = miRepo.findByMiSeq(LoginVO.getId());
+//        MemberInfoEntity miEntity = miRepo.findByMiId(LoginVO.getId());
+//            Long searchSeq = miEntity.getMiSeq();
+//        MemberInfoEntity miEntity2 = miRepo.findByMiPwd(AESAlgorithm.Encrypt(LoginVO.getPwd()));
+//            Long searchSeq2 = miEntity2.getMiSeq();
+        MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
+
+        if ( miEntity == null) {
+            MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
+                    //.mimgUrl(saveFilename)
+                    .status(false)
+                    .message("Id / Pwd 를 확인하세요.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
+                //.mimgUrl(saveFilename)
+                .status(true)
+                .message("로그인 성공 하였습니다.")
+                .code(HttpStatus.ACCEPTED)
+                .build();
+        return responseVO;
+        }
+
     // logout
+    public MemberLogoutResponseVO logout() {
+        MemberLogoutResponseVO responseVO = MemberLogoutResponseVO.builder()
+                //.mimgUrl(saveFilename)
+                .status(true)
+                .message("로그아웃 완료.")
+                .code(HttpStatus.ACCEPTED)
+                .build();
+        return responseVO;
+    }
 }

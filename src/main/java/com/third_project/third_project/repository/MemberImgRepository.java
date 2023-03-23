@@ -13,4 +13,6 @@ public interface MemberImgRepository extends JpaRepository<MemberImgEntity, Long
     public String deleteByMimgUrl(String url);
 
 
+
+
 }

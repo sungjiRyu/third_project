@@ -64,9 +64,17 @@ public class MemberController {
         return new ResponseEntity<MemberImgResponseVO>(mService.addMemberImg(seq, file), HttpStatus.OK);
     }
 
-//    @Operation(summary = "로그인")
-//    @PostMapping("/login")
-//    public ResponseEntity<MemberLoginResponseVO> login (@RequestBody MemberLoginVO loginVO) {
-//        return new ResponseEntity<MemberLoginResponseVO>(mService.login(loginVO), HttpStatus.OK;
-//    }
+
+    @Operation(summary = "로그인")
+    @PostMapping("/login")
+    public ResponseEntity<MemberLoginResponseVO> login (@RequestBody MemberLoginVO loginVO) throws Exception{
+        return new ResponseEntity<MemberLoginResponseVO>(mService.login(loginVO), HttpStatus.OK);
+    }
+
+    @Operation(summary = "로그아웃")
+    @GetMapping("/logout")
+    public ResponseEntity<MemberLogoutResponseVO> logout () {
+        return new ResponseEntity<MemberLogoutResponseVO>(mService.logout(), HttpStatus.OK);
+    }
+
 }
