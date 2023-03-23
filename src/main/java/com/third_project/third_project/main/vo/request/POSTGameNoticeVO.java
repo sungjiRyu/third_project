@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class POSTGameNoticeVO {
-    @Schema(description = "수정할 공지사항seq", example = "1")  
+    @Schema(description = "등록할 공지사항seq", example = "1")  
     private Long  gnSeq;
     @Schema(description = "제목", example = "modifyTitle")  
     private String gnTitle;

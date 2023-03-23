@@ -98,10 +98,10 @@ ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
   .build();
   return response;
 }
-//이번주 기록 조회
-  public ScoreListViewResponseVO getThisWeekScore(Long miSeq, Integer year, Integer month, Integer day){
+// // 이번주 기록 조회
+//   public ScoreListViewResponseVO getThisWeekScore(Long miSeq, Integer year, Integer month, Integer day){
 
 
-  }
+//   }
   }
 

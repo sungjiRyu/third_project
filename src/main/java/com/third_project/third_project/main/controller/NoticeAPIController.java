@@ -5,6 +5,7 @@ import com.third_project.third_project.main.service.NoticeService;
 import com.third_project.third_project.main.vo.request.POSTGameNoticeVO;
 import com.third_project.third_project.main.vo.request.UPDATEGameNoticeVO;
 import com.third_project.third_project.main.vo.response.GetDetailNoticeVO;
+import com.third_project.third_project.main.vo.response.GetDetailNoticeVO1;
 import com.third_project.third_project.main.vo.response.GetNoticeVO;
 import com.third_project.third_project.main.vo.response.POSTNoticeVO;
 import com.third_project.third_project.main.vo.response.ResponseMessage;
@@ -42,7 +43,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 public class NoticeAPIController {
     @Autowired NoticeService noticeService;
 
-    @Operation(summary = "게임 공지사항 등록", description = "게임 공지사항을 등록합니다.")
+    @Operation(summary = "게임 공지사항 등록", description = "폼데이터로 게임 공지사항을 등록합니다.")
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage> writeArticle(@ModelAttribute POSTGameNoticeVO data){
         ResponseMessage response = noticeService.postNotice(data);
@@ -60,12 +61,12 @@ public class NoticeAPIController {
     }
 
 
-    @Operation(summary =  "게임 공지사항 상세조회", description = "공지사항 내용 상세조회.")
+    @Operation(summary =  "게임 공지사항 상세조회", description = "공지사항 내용과 영상, 운동종목, 타입, 레벨이 조회됩니다.")
     @GetMapping("/detail/{gnSeq}")
-    public ResponseEntity<GetDetailNoticeVO> GetNoticeDetail(
+    public ResponseEntity<GetDetailNoticeVO1> GetNoticeDetail(
         @Parameter(description = "공지사항 번호", example = "1") @PathVariable Long gnSeq
     ){
-        GetDetailNoticeVO response = noticeService.GetDetailNotice(gnSeq);
+        GetDetailNoticeVO1 response = noticeService.GetDetailNotice(gnSeq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

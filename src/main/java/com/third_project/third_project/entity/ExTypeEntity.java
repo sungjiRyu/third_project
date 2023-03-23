@@ -25,10 +25,11 @@ public class ExTypeEntity {
   @Column(name = "et_es_seq") private Long etEsSeq;
   @Schema(description = "운동성적타입(1. 시간이 짧을수록 성적이 높음 2. 시간이 길수록 성적이 높음)")
   @Column(name = "et_time_type") private  Integer etTimeType;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "et_gi_seq") private GenInfoEntity gen;
   @ManyToOne
-  @JoinColumn(name = "et_level_seq") 
+  @JoinColumn(name = "et_level_seq")
   private ExLevelEntity level;
   @OneToOne(fetch = FetchType.LAZY, mappedBy = "type")
   private ExImgEntity img;
