@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동조회")
+@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동목록조회/저장/개인기록조회")
 @RestController
 @RequestMapping("api/exercise")
 public class ExcriseAPIController {
@@ -44,7 +44,7 @@ public class ExcriseAPIController {
         return new ResponseEntity<>(response, (HttpStatus)response.getCode());
     }
     
-    @Operation(summary = "개인 측정용 운동 기록 조회", description = "개인 측정용 운동 기록을 조회합니다.")
+    @Operation(summary = "개인 측정용 운동 기록 조회", description = "작업중.")
     @GetMapping("{miSeq}")
     public ResponseEntity<List<GetExRecodVO>> getExRecord(@Parameter(description = "현재 로그인한 회원seq", example = "1") @PathVariable Long miSeq){
         List<GetExRecodVO> response = exercise.getExRecod(miSeq);
