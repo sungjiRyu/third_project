@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.third_project.third_project.main.service.ExcriseService;
 import com.third_project.third_project.main.vo.response.GetExRecodVO;
 import com.third_project.third_project.main.vo.response.GetExVO;
+import com.third_project.third_project.main.vo.response.GetPersonalExListVO;
 import com.third_project.third_project.main.vo.response.PostExRecord;
 import com.third_project.third_project.main.vo.response.ResponseMessage;
 
@@ -23,7 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "운동 API" , description ="개인측정용 운동조회")
+@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동조회")
 @RestController
 @RequestMapping("api/exercise")
 public class ExcriseAPIController {
@@ -31,8 +32,8 @@ public class ExcriseAPIController {
 
     @Operation(summary = "개인 측정용 운동 리스트 조회", description = "개인 측정용 운동 목록을 조회합니다.")
     @GetMapping("")
-    public ResponseEntity<List<GetExVO>> getExList(){
-        List<GetExVO> response = exercise.getExList();
+    public ResponseEntity<List<GetPersonalExListVO>> getExList(){
+        List<GetPersonalExListVO> response = exercise.getExList();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

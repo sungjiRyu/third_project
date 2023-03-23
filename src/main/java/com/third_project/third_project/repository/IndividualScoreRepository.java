@@ -17,5 +17,6 @@ public interface IndividualScoreRepository extends JpaRepository<IndividualScore
   @Query(value = "select * from individual_score where is_et_seq = :isEtSeq", nativeQuery = true) 
   public IndividualScoreEntity findByIsEtSeq (@Param("isEtSeq") Long isEtSeq);
 
+  
   public List<GetExRecodVO> findByIsMiSeq(Long miSeq);
 }

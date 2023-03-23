@@ -13,6 +13,8 @@ import java.time.LocalTime;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -32,6 +32,7 @@ import com.third_project.third_project.entity.GameNoticeEntity;
 import com.third_project.third_project.main.vo.ErrorResponse;
 import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler;
 import com.third_project.third_project.main.vo.response.GetDetailNoticeVO;
+import com.third_project.third_project.main.vo.response.GetDetailNoticeVO1;
 import com.third_project.third_project.main.vo.response.GetNoticeVO;
 import com.third_project.third_project.main.vo.response.GetVideoVO;
 import com.third_project.third_project.main.vo.response.POSTNoticeVO;
@@ -87,7 +88,7 @@ public class NoticeService{
                     // if (ObjectUtils.isEmpty(contentType))  // 확장자명이 없다면(잘못된 파일)
                     //     break;
                     String newFileName = "Notice_" + Calendar.getInstance().getTimeInMillis() + originalFileExtension;
-                    String url = excriseVideoPath + "/" + newFileName;
+                    String url = "notice_"+ Calendar.getInstance().getTimeInMillis() + originalFileExtension;
                      exVideoEntity = ExVideoEntity.builder()
                             .evName(newFileName)
                             .evUrl(url)
@@ -135,11 +136,20 @@ public class NoticeService{
         }
 
         // 공지사항 상세 조회
-        public GetDetailNoticeVO GetDetailNotice(Long gnSeq){
-            GetDetailNoticeVO notice = null;
+        public GetDetailNoticeVO1 GetDetailNotice(Long gnSeq){
+            GetDetailNoticeVO notice = null; //인터페이스로 공지사항과 관련된 정보다 끌고옴
             notice = gameNoticeRepo.findByGnSeq(gnSeq);
+            GetDetailNoticeVO1 response = null; //json으로 출력할 데이터만 담음
             if(notice == null)  throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("없는 글번호입니다.")));
-            return notice;
+            
+            response = GetDetailNoticeVO1.builder()
+            .GnTitle(notice.getGnTitle())
+            .GnContent(notice.getGnContent())
+            .GnRegDt(notice.getGnRegDt())
+            .url(notice.getVideo().getEvUrl())
+            .etSeq(notice.getType().getEtSeq()) //운동종류 seq (EtSeq) 반환 
+            .build();
+            return response;
         }
 
         // 공지사항 수정
@@ -188,7 +198,7 @@ public class NoticeService{
                         // if (ObjectUtils.isEmpty(contentType))  // 확장자명이 없다면(잘못된 파일)
                         //     break;
                         String newFileName = "Notice_" + Calendar.getInstance().getTimeInMillis() + originalFileExtension;
-                        String url = excriseVideoPath + "/" + newFileName;
+                        String url = "notice_"+ Calendar.getInstance().getTimeInMillis() + originalFileExtension;
                         ExVideoEntity newExVideoEntity = ExVideoEntity.builder()
                                 .evName(newFileName)
                                 .evUrl(url)

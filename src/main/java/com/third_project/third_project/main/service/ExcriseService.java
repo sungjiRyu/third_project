@@ -1,11 +1,13 @@
 package com.third_project.third_project.main.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.third_project.third_project.entity.ExImgEntity;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.ExVideoEntity;
 import com.third_project.third_project.entity.IndividualScoreEntity;
@@ -13,6 +15,7 @@ import com.third_project.third_project.main.vo.ErrorResponse;
 import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler;
 import com.third_project.third_project.main.vo.response.GetExRecodVO;
 import com.third_project.third_project.main.vo.response.GetExVO;
+import com.third_project.third_project.main.vo.response.GetPersonalExListVO;
 import com.third_project.third_project.main.vo.response.PostExRecord;
 import com.third_project.third_project.main.vo.response.ResponseMessage;
 import com.third_project.third_project.repository.ExTypeRepository;
@@ -28,9 +31,24 @@ public class ExcriseService {
     @Autowired IndividualScoreRepository individualScoreRepo;
 
     // 개인측정용 운동 리스트로 출력
-    public List<GetExVO> getExList(){
+    // 개인측정용 운동 리스트로 출력
+    public List<GetPersonalExListVO> getExList(){
         List<GetExVO> data = exTypeRepo.findByEtEsSeq(Long.valueOf(4));
-        return data;
+        List<GetPersonalExListVO> personalExList = new ArrayList<>();
+        if (data != null) {
+            for(GetExVO exList : data){
+                ExImgEntity img = exList.getImg();
+                if (img != null) {
+                    personalExList.add(GetPersonalExListVO.builder()
+                        .etSeq(exList.getEtSeq())
+                        .etName(exList.getEtName())
+                        .etDetail(exList.getEtDetail())
+                        .url(img.getEimgUrl())
+                        .build());
+                }
+            }
+        }
+        return personalExList;
     }
 
     // 개인측정기록 저장
