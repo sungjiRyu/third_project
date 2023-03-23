@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IndividualScoreController {
   private final IndividualScoreService isService;
-  @Operation(summary = "개인 기록 추가", description = "개인 기록이 추가되었습니다.")
+  @Operation(summary = "개인 기록 추가", description = "isTime은 \"isTime\": \"00:00:10\" 형식으로 입력합니다")
   @PutMapping("")
   public ResponseEntity<IndividualScoreResponseVO> addIndividualScore(
     @Parameter(description = "RequestBody로 데이터를 입력합니다.(isMiSeq:회원 번호,isEtSeq: 운동 종류 번호, isRegDt:기록 작성일, isTime: 기록") @RequestBody IndividualScoreInsertVO data){
