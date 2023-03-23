@@ -13,6 +13,7 @@ import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.main.vo.ErrorResponse;
 import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler;
 import com.third_project.third_project.main.vo.response.GetLevelExVO;
+import com.third_project.third_project.repository.ExImgRepository;
 import com.third_project.third_project.repository.ExTypeRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
 
@@ -23,6 +24,7 @@ public class LevelExService {
     // 리스트로 레벨에따른 모든운동 출력
     @Autowired ExTypeRepository exTypeRepo;
     @Autowired MemberInfoRepository memberInfoRepo;
+    @Autowired ExImgRepository exImgRepo;
 
     public List<GetLevelExVO> levelExList(Long miSeq){
         // miSeq로 회원정보검색
@@ -37,9 +39,22 @@ public class LevelExService {
         else{
             // 로그인한 회원의 성별과 타입에 맞는 운동종목을 불러옴 
             exTypeEntity = exTypeRepo.findByGenAndEtEsSeq(memberInfoEntity.getGen(), memberInfoEntity.getExStatus().getEsSeq());
+            // etName = 걷기(15), 줄넘기(12), 달리기(13), 계단오르기(14)
+            Long eimgSeq = null;
+          
             if (exTypeRepo != null) {
                 for(ExTypeEntity exList : exTypeEntity){
-                    ExImgEntity img = exList.getImg();
+                    if(exList.getEtName().equals("달리기"))             eimgSeq = Long.valueOf(13);
+                    if(exList.getEtName().equals("줄넘기"))             eimgSeq = Long.valueOf(12);
+                    if(exList.getEtName().equals("걷기"))               eimgSeq = Long.valueOf(15);
+                    if(exList.getEtName().equals("계단오르기"))          eimgSeq = Long.valueOf(14);
+
+                    if(exList.getEtName().equals("푸쉬업"))             eimgSeq = Long.valueOf(21);
+                    if(exList.getEtName().equals("스쿼트"))             eimgSeq = Long.valueOf(22);
+                    if(exList.getEtName().equals("윗몸"))               eimgSeq = Long.valueOf(23);
+                    if(exList.getEtName().equals("플랭크"))          eimgSeq = Long.valueOf(20);
+
+                    ExImgEntity img = exImgRepo.findByEimgSeq(eimgSeq);
                     if (img != null) {
                         list.add(GetLevelExVO.builder()
                             .etSeq(exList.getEtSeq())
