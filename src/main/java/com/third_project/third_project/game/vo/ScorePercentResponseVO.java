@@ -20,5 +20,5 @@ public class ScorePercentResponseVO {
     @Schema(description = "HttpStatus 상태", example = "OK")
     private HttpStatus code;
     @Schema(description = "상위 % 정보", example = "20.22")
-    private String percent;
+    private Double percent;
 }

@@ -63,4 +63,10 @@ public class ScoreAPIController {
 //        BasicResponseVO response = scoreService.setAvailableStamp(seq);
 //        return new ResponseEntity<>(response, response.getCode());
 //    }
+    @Operation(summary = "전체 게임 성적 상위 % 입력", description = "운동 번호를 통해 저번 주 게임 성적 상위 % 테이블에 저장 기능")
+    @PutMapping("/addPercent/{seq}")
+    public ResponseEntity<BasicResponseVO> setAvailableStamp(@Parameter(description = "운동번호", example = "2") @PathVariable Long seq){
+        BasicResponseVO response = scoreService.setPercent(seq);
+        return new ResponseEntity<>(response, response.getCode());
+    }
 }
