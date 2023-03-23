@@ -36,31 +36,42 @@ public class StampService {
                     .build();
             return response;
         }
-
+        System.out.println(game.get(0).getMember());
         for(int i=0; i<game.size(); i++){
-            stamp = stampRepo.findStamp(game.get(i).getMember().getMiSeq());
+            StampInfoEntity entity = stampRepo.findByMember(game.get(i).getMember());
+            if(entity == null){
+                StampInfoEntity newEntity = StampInfoEntity.builder()
+                        .stampAva(0)
+                        .stampTotal(20)
+                        .stampUse(0)
+                        .member(game.get(i).getMember())
+                        .build();
+                stampRepo.save(newEntity);
+                stamp.add(newEntity);
+            }
+            stamp.add(entity);
         }
 
         System.out.println(game);
         System.out.println(game.size());
         System.out.println(stamp);
 
-        for(int i = 0; i<game.size(); i++){
-            StampInfoEntity entity = new StampInfoEntity();
+        for(int i = 0; i<stamp.size(); i++){
+            StampInfoEntity entity = stamp.get(i);
             if(ranking.get(i).getRanking() == 1 || ranking.get(i).getRanking() == 2 || ranking.get(i).getRanking() == 3){
-                entity.setStampAva(stamp.get(i).getStampAva()+2);
+                entity.ChangeStampAva(2);
                 stampRepo.save(entity);
             }
             if(game.get(i).getGsPercent() >= 0.0 && game.get(i).getGsPercent() <= 10.0){
-                entity.setStampAva(stamp.get(i).getStampAva()+3);
+                entity.ChangeStampAva(3);
                 stampRepo.save(entity);
             }
             else if(game.get(i).getGsPercent() > 10.0 && game.get(i).getGsPercent() <= 30.0){
-                entity.setStampAva(stamp.get(i).getStampAva()+2);
+                entity.ChangeStampAva(2);
                 stampRepo.save(entity);
             }
             else {
-                entity.setStampAva(stamp.get(i).getStampAva()+1);
+                entity.ChangeStampAva(1);
                 stampRepo.save(entity);
             }
         }

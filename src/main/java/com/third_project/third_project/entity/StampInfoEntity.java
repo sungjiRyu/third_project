@@ -21,4 +21,8 @@ public class StampInfoEntity {
     @Column(name="stamp_total")  private Integer stampTotal;
     @Column(name="stamp_ava")    private Integer stampAva;
     @Column(name="stamp_use")    private Integer stampUse;
+
+    public void ChangeStampAva(Integer no) {
+        this.stampAva += no;
+    }
 }
