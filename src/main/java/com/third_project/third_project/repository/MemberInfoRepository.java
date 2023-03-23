@@ -9,9 +9,12 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfoEntity, Lo
     public Integer countByMiNickname(String nickname);
     public void deleteByMiSeq(Long seq);
 
-    public Long findByMiSeq(String id);
-    public String findByMiPwd(String pwd);
+    //public Long findByMiSeq(String id);
+    //public String findByMiPwd(String pwd);
 
+    public MemberInfoEntity findByMiId(String id);
+    public MemberInfoEntity findByMiPwd(String pwd);
 
+    public MemberInfoEntity findByMiIdAndMiPwd(String id, String pwd);
 
 }
