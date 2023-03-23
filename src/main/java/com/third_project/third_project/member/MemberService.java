@@ -272,8 +272,8 @@ public class MemberService {
                     e.printStackTrace();
                 }
                 MemberImgEntity newImg = MemberImgEntity.builder()
-                        .mimgName(firstname)
-                        .mimgUrl(saveFilename)
+                        .mimgName(saveFilename)
+                        .mimgUrl(firstname)
                         .build();
                 mimgRepo.save(newImg);
 
@@ -282,13 +282,13 @@ public class MemberService {
                 miRepo.save(miEntity);
 
 
-                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
                         //.mimgUrl(saveFilename)
                         .status(true)
-                        .message("파일이 저장되었습니다.")
+                        .message("이미지가 변경되었습니다.")
                         .code(HttpStatus.ACCEPTED)
                         .build();
-                return mimgVO;
+                return responseVO;
             }
             else {
 
@@ -308,9 +308,11 @@ public class MemberService {
                     if(i != split.length - 1)
                         firstname += split[i];
                 }
+                Long MemSeq = member.getMiSeq();
 
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
+                firstname = firstname + MemSeq + "." + ext;
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
@@ -320,8 +322,8 @@ public class MemberService {
                     e.printStackTrace();
                 }
                 MemberImgEntity newImg = MemberImgEntity.builder()
-                                .mimgName(firstname)
-                                .mimgUrl(saveFilename)
+                                .mimgName(saveFilename)
+                                .mimgUrl(firstname)
                                 .build();
                 mimgRepo.save(newImg);
 
@@ -330,13 +332,13 @@ public class MemberService {
                     miRepo.save(miEntity);
 
 
-                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
                         //.mimgUrl(saveFilename)
                         .status(true)
-                        .message("파일이 저장되었습니다.")
+                        .message("이미지가 변경되었습니다.")
                         .code(HttpStatus.ACCEPTED)
                         .build();
-                return mimgVO;
+                return responseVO;
             }
         }
     }
