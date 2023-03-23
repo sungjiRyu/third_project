@@ -136,7 +136,20 @@ public class ScoreService {
             return response;
         }
 
-        response = ScoreResponseVO.builder()
+        else if(mrentity.getMingUrl() == null) {
+            response = ScoreResponseVO.builder()
+                    .status(true)
+                    .message("지난주의 성적입니다")
+                    .code(HttpStatus.OK)
+                    .score(mrentity.getGsTime())
+                    .nickname(mrentity.getMiNickName())
+                    .rank(mrentity.getRank())
+                    .url(null)
+                    .ban(mrentity.getMiClassNum())
+                    .build();
+        }
+        else {
+            response = ScoreResponseVO.builder()
                     .status(true)
                     .message("지난주의 성적입니다")
                     .code(HttpStatus.OK)
@@ -146,6 +159,7 @@ public class ScoreService {
                     .url(mrentity.getMingUrl())
                     .ban(mrentity.getMiClassNum())
                     .build();
+        }
 
         return response;
     }
@@ -241,6 +255,7 @@ public class ScoreService {
         for(int i=0; i<split.length-1; i++) {
             filename += split[i];
         }
+        String newUri = "game_"+entity.getMiSeq()+LocalDateTime.now().getNano();
         String saveFilename = "game_" + entity.getMiSeq()+"_"+LocalDateTime.now().getNano() + "." +ext;
 
         Path forderLocation = Paths.get(game_video_path);
@@ -256,10 +271,9 @@ public class ScoreService {
                     .code(HttpStatus.BAD_REQUEST)
                     .build();
         }
-
         CertificationVideoEntity vdoEntity = CertificationVideoEntity.builder()
                 .member(entity)
-                .cvUrl(filename)
+                .cvUrl(newUri)
                 .cvName(saveFilename)
                 .build();
 
@@ -267,7 +281,7 @@ public class ScoreService {
         response = GameResponseVO.builder()
                 .status(true)
                 .message("영상 등록이 완료되었습니다")
-                .code(HttpStatus.BAD_REQUEST)
+                .code(HttpStatus.OK)
                 .build();
 
         return response;
