@@ -34,5 +34,8 @@ public class MemberInfoEntity {
     @JoinColumn(name="mi_es_seq")
     @ColumnDefault("1") private ExStatusEntity exStatus;
     @OneToOne //( cascade = CascadeType.ALL)
-    @JoinColumn(name="mi_mimg_seq") private MemberImgEntity mimg;
+
+    @JoinColumn(name="mi_mimg_seq")
+    @ColumnDefault("2")private MemberImgEntity mimg;
+
 }
