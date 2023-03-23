@@ -260,9 +260,11 @@ public class MemberService {
                     if(i != split.length - 1)
                         firstname += split[i];
                 }
+                Long MemSeq = member.getMiSeq();
 
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
+                firstname = firstname + MemSeq + "." + ext;
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
