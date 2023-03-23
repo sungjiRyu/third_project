@@ -30,7 +30,7 @@ public class ScoreListView {
     @Column(name = "is_reg_dt") private LocalDate isRegDt;
     @Column(name = "is_time") private LocalTime isTime;
     @Column(name = "et_name") private String etName;
-    @Column(name = "et_level_seq") private Long etLevelSeq;
-    @Column(name = "et_gi_seq") private Long etGiSeq;
-    @Column(name = "et_es_seq") private Long etEsSeq;
+    @Column(name = "level_type") private String levelType;
+    @Column(name = "gi_status") private String giStatus;
+    @Column(name = "es_type") private String esType;
 }
