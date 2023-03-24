@@ -12,6 +12,7 @@ import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.main.vo.ErrorResponse;
 import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler;
+import com.third_project.third_project.main.vo.response.GetDetailLevelExVO;
 import com.third_project.third_project.main.vo.response.GetLevelExVO;
 import com.third_project.third_project.repository.ExImgRepository;
 import com.third_project.third_project.repository.ExTypeRepository;
@@ -69,4 +70,40 @@ public class LevelExService {
         return list;
     }
 
+    // 레벨별 운동 상세조회
+    // 상세이미지, 운동종목seq, 상세설명 
+    public GetDetailLevelExVO detailLevelEx(Long miSeq, Long etSeq){
+        GetDetailLevelExVO detailInfo = null;
+        ExTypeEntity exList = exTypeRepo.findByEtSeq(etSeq);
+        MemberInfoEntity memberInfo = memberInfoRepo.findByMiSeq(miSeq);
+
+        if(memberInfo == null)
+        throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("로그인을 해주세요")));
+        if(exList == null)
+        throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("존재하지않는 운동종목입니다.")));
+
+        Long eimgSeq = null;
+
+        if(exList.getEtName().equals("달리기"))                  eimgSeq = Long.valueOf(26);
+        else if(exList.getEtName().equals("줄넘기"))             eimgSeq = Long.valueOf(25);
+        else if(exList.getEtName().equals("걷기"))               eimgSeq = Long.valueOf(27);
+        else if(exList.getEtName().equals("계단오르기"))          eimgSeq = Long.valueOf(24);
+        else if(exList.getEtName().equals("푸쉬업"))             eimgSeq = Long.valueOf(29);
+        else if(exList.getEtName().equals("스쿼트"))             eimgSeq = Long.valueOf(30);
+        else if(exList.getEtName().equals("윗몸"))               eimgSeq = Long.valueOf(31);
+        else if(exList.getEtName().equals("플랭크"))             eimgSeq = Long.valueOf(28);
+
+        ExImgEntity img = exImgRepo.findByEimgSeq(eimgSeq);
+
+        
+        detailInfo = GetDetailLevelExVO.builder()
+        .etSeq(exList.getEtSeq())
+        .etDetail(exList.getEtDetail())
+        .url(img.getEimgUrl())
+        .build();
+       
+        return detailInfo;
+        
+
+    }
 }

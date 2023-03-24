@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.main.service.LevelExService;
+import com.third_project.third_project.main.vo.response.GetDetailLevelExVO;
 import com.third_project.third_project.main.vo.response.GetLevelExVO;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,5 +32,16 @@ public class LevelExAPIController {
         List<GetLevelExVO> response = levelExService.levelExList(miSeq);
         return new ResponseEntity(response, HttpStatus.OK);
     }
+
+    @Operation(summary = "레벨별 운동 상세조회 조회", description = "miSeq와 etSeq를 파라미터로 받아서 해당하는 운동의 상세정보(상세이미지, 상세설명) 조회")
+    @GetMapping("/{miSeq}/{etSeq}")
+    public ResponseEntity<GetDetailLevelExVO> levelExDetail(
+        @Parameter(description = "회원번호", example = "1") @PathVariable Long miSeq,
+        @Parameter(description = "운동종목번호", example = "19") @PathVariable Long etSeq
+        ){
+        GetDetailLevelExVO response = levelExService.detailLevelEx(miSeq, etSeq);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
     
 }
