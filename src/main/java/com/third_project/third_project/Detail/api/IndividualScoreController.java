@@ -60,9 +60,19 @@ public class IndividualScoreController {
     @Parameter(description = "조회할 회원 번호")@RequestParam Long memberNo){
   return new ResponseEntity<ScoreListViewResponseVO>(isService.getListScore(memberNo),HttpStatus.OK);
 }
+@Operation(summary = "이번주 기록 조회")
 @GetMapping("/list/week")
-public ResponseEntity<WeeklyScoreViewVO> getWeekScore(@RequestParam Long memberNo, @RequestParam Integer week){
+public ResponseEntity<WeeklyScoreViewVO> getWeekScore(
+  @Parameter(description = "회원 번호")@RequestParam Long memberNo,
+  @Parameter(description = "주(週)")@RequestParam Integer week){
   return new ResponseEntity<WeeklyScoreViewVO>(isService.getWeeklyScore(memberNo, week),HttpStatus.OK);
+}
+@Operation(summary = "종목별 시간 변화량")
+@GetMapping("/list/change")
+public ResponseEntity<ScoreListViewResponseVO> getChangeList(
+  @Parameter(description = "회원번호")@RequestParam Long memberNo,
+  @Parameter(description = "종목 명")@RequestParam String type){
+  return new ResponseEntity<ScoreListViewResponseVO>(isService.getLevelVariance(memberNo, type),HttpStatus.OK);
 }
 }
 

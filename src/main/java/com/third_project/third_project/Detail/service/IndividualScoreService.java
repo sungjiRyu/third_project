@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-
+import org.aspectj.weaver.Lint;
 import org.springframework.http.HttpStatus;
 
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
@@ -122,6 +121,26 @@ public WeeklyScoreViewVO getWeeklyScore(Long memberNo, Integer week){
   .list(weekly)
   .message(memberNo+"학생의 주간 기록이 조회되었습니다..")
   .code(HttpStatus.OK)
+  .status(true)
+  .build();
+  return response;
+}
+//본인 레벨의 종목별 시간을 기준으로 변화량
+public ScoreListViewResponseVO getLevelVariance(Long memberNo, String name){
+  List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
+  if(member.isEmpty()){
+    ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
+    .message(memberNo+"학생은 등록되지않은 회원입니다.")
+    .status(false)
+    .code(HttpStatus.BAD_REQUEST)
+    .build();
+    return response;
+  }
+  List<ScoreListView> list = slRepo.findByEtNameAndIsMiSeq(name, memberNo);
+  ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
+  .list(list)
+  .code(HttpStatus.OK)
+  .message(memberNo+"학생의 종목별 기준 변화량이 조회되었습니다.")
   .status(true)
   .build();
   return response;
