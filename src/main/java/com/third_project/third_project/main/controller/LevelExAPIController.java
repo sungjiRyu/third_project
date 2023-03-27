@@ -26,7 +26,7 @@ public class LevelExAPIController {
 
     @Autowired LevelExService levelExService;
 
-    @Operation(summary = "레벨별 운동 리스트 조회", description = "회원seq(miSeq)를 파라미터로 받아서 회원 타입(성별, 다이어트/웨이트)에 맞는 운동목록 조회")
+    @Operation(summary = "레벨별 운동 리스트 조회(류승지)", description = "회원seq(miSeq)를 파라미터로 받아서 회원 타입(성별, 다이어트/웨이트)에 맞는 운동목록 조회")
     @GetMapping("/{miSeq}")
     public ResponseEntity<List<GetLevelExVO>> levelExList(@Parameter(description = "로그인한 회원 번호", example = "2") @PathVariable Long miSeq){
         List<GetLevelExVO> response = levelExService.levelExList(miSeq);

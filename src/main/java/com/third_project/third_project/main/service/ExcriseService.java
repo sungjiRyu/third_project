@@ -20,6 +20,7 @@ import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler
 import com.third_project.third_project.main.vo.response.GetExRecodVO;
 import com.third_project.third_project.main.vo.response.GetExTimePeriodVO;
 import com.third_project.third_project.main.vo.response.GetExVO;
+import com.third_project.third_project.main.vo.response.GetExerciseTimeVO;
 import com.third_project.third_project.main.vo.response.GetPersonalExListVO;
 import com.third_project.third_project.main.vo.response.PostExRecord;
 import com.third_project.third_project.main.vo.response.ResponseMessage;
@@ -87,11 +88,11 @@ public class ExcriseService {
 
     // 개인 기록 조회하기
     // 회원 시퀀스로 검색해서 개인 운동기록 조회 (리스트에 담아서 가져오기)
-    public List<Object[]> getExRecod(Long miSeq, LocalDate startDate, LocalDate endDate ){
+    public List<GetExerciseTimeVO> getExRecod(Long miSeq, LocalDate startDate, LocalDate endDate ){
         MemberInfoEntity memberinfoEntity = memberInfoRepo.findByMiSeq(miSeq);
         if(memberinfoEntity == null)
         throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("로그인을 해주세요")));
-        List<Object[]> personalExScore = individualScoreRepo.getExerciseTimeByPeriod(miSeq, startDate, endDate);
+        List<GetExerciseTimeVO> personalExScore = individualScoreRepo.getExerciseTimeByPeriod(miSeq, startDate, endDate);
         return personalExScore;
     }
     

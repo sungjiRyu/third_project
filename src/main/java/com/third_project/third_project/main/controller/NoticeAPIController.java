@@ -43,7 +43,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 public class NoticeAPIController {
     @Autowired NoticeService noticeService;
 
-    @Operation(summary = "게임 공지사항 등록", description = "폼데이터로 게임 공지사항을 등록합니다.")
+    @Operation(summary = "게임 공지사항 등록(류승지)", description = "폼데이터로 게임 공지사항을 등록합니다.")
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage> writeArticle(@ModelAttribute POSTGameNoticeVO data){
         ResponseMessage response = noticeService.postNotice(data);
