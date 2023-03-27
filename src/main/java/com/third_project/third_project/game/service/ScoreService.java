@@ -105,9 +105,7 @@ public class ScoreService {
                 rank = ranking.get(i).getRanking();
             }
         }
-        System.out.println(rank);
         Double percent = (double)rank / (double) people * 100.0;
-//        DecimalFormat df = new DecimalFormat("#.##");
         ScorePercentResponseVO response = ScorePercentResponseVO.builder()
                 .status(true)
                 .message("조회된 회원 성적의 상위 퍼센트 조회!!")

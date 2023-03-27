@@ -36,7 +36,7 @@ public class StampService {
                     .build();
             return response;
         }
-        System.out.println(game.get(0).getMember());
+
         for(int i=0; i<game.size(); i++){
             StampInfoEntity entity = stampRepo.findByMember(game.get(i).getMember());
             if(entity == null){
@@ -52,9 +52,6 @@ public class StampService {
             stamp.add(entity);
         }
 
-        System.out.println(game);
-        System.out.println(game.size());
-        System.out.println(stamp);
 
         for(int i = 0; i<stamp.size(); i++){
             StampInfoEntity entity = stamp.get(i);
