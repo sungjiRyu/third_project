@@ -50,7 +50,7 @@ public class ExcriseAPIController {
         return new ResponseEntity<>(response, (HttpStatus)response.getCode());
     }
     
-    @Operation(summary = "개인 측정용 운동 기록 조회", description = "5(걷기), 6(사이클링), 7(요가), 8(댄스) ,9(코어트레이닝), 10(필라테스), 11(수영), 12(하이킹)")
+    @Operation(summary = "개인 측정용 운동 기록 조회", description = "현재 로그인한 회원번호(miSeq)와 기간을 입력하면(시작일 ~ 종료일) 기간동안 종목별 운동시간이 조회됩니다")
     @GetMapping("/personal/{miSeq}")
     public ResponseEntity<List<GetExerciseTimeVO>> getExRecord(
         @Parameter(description = "현재 로그인한 회원seq", example = "1") @PathVariable Long miSeq,
