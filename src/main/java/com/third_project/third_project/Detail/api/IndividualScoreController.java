@@ -40,7 +40,7 @@ public class IndividualScoreController {
   @Operation(summary = "개인 기록 추가", description = "isTime은 \"isTime\": \"00:00:10\" 형식으로 입력합니다")
   @PutMapping("")
   public ResponseEntity<IndividualScoreResponseVO> addIndividualScore(
-    @Parameter(description = "RequestBody로 데이터를 입력합니다.(isMiSeq:회원 번호,isEtSeq: 운동 종류 번호, isRegDt:기록 작성일, isTime: 기록") @RequestBody IndividualScoreInsertVO data){
+    @Parameter(description = "RequestBody로 데이터를 입력합니다.(isMiSeq:회원 번호,isEtSeq: 운동 종류 번호, isRegDt:기록 작성일, isTime: 기록, isWeek: 기록한 날짜에 해당하는 주차 (ex: 기록일이 2023-03-28이면 isWeek: 5 (5주차))") @RequestBody IndividualScoreInsertVO data){
   return new ResponseEntity<IndividualScoreResponseVO>(isService.addIndividualScore(data),HttpStatus.OK);
   }
   @Operation(summary = "개인 기록 수정", description = "개인 기록이 수정되었습니다.")
