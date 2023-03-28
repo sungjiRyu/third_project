@@ -8,17 +8,23 @@ import org.aspectj.weaver.Lint;
 import org.springframework.http.HttpStatus;
 
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
+import com.third_project.third_project.Detail.vo.ScoreRankListViewResponseVO;
 import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
+import com.third_project.third_project.entity.IndividualScoreRankView;
 import com.third_project.third_project.entity.ScoreListView;
+import com.third_project.third_project.entity.ScoreRankListView;
 import com.third_project.third_project.entity.WeeklyScoreView;
 import com.third_project.third_project.repository.ExTypeRepository;
+import com.third_project.third_project.repository.IndividualScoreRankViewRepository;
 import com.third_project.third_project.repository.IndividualScoreRepository;
 import com.third_project.third_project.repository.MemberInfoRepository;
 import com.third_project.third_project.repository.ScoreListViewRepository;
+import com.third_project.third_project.repository.ScoreRankListViewRepository;
 import com.third_project.third_project.repository.WeeklyScoreViewRepository;
 
 import jakarta.transaction.Transactional;
@@ -32,6 +38,7 @@ public class IndividualScoreService {
   private final ExTypeRepository etRepo;
   private final ScoreListViewRepository slRepo;
   private final WeeklyScoreViewRepository wsRepo;
+  private final IndividualScoreRankViewRepository isrvRepo;
   
 
   //개인 기록 추가
@@ -145,6 +152,25 @@ public ScoreListViewResponseVO getLevelVariance(Long memberNo, String name){
   .build();
   return response;
 }
+//백분위
+  public IndividualScoreRankViewResposeVO getScoreRank(Long memberNo){
+    List<IndividualScoreRankView> member = isrvRepo.findByIsMiSeq(memberNo);
+    if(member.isEmpty()){
+      IndividualScoreRankViewResposeVO respose = IndividualScoreRankViewResposeVO.builder()
+      .message(memberNo+"학생은 등록되지 않은 회원입니다.")
+      .status(false)
+      .code(HttpStatus.NOT_FOUND)
+      .build();
+      return respose;
+    }
+    IndividualScoreRankViewResposeVO respose = IndividualScoreRankViewResposeVO.builder()
+    .list(member)
+    .message(memberNo+"학생의 백분위가 조회되었습니다..")
+    .status(true)
+    .code(HttpStatus.OK)
+    .build();
+    return respose;
+  }
   }
 
 
