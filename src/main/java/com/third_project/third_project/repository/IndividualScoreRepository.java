@@ -1,7 +1,7 @@
 package com.third_project.third_project.repository;
 
 
-import com.third_project.third_project.entity.ExTypeEntity;
+
 import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.main.vo.response.GetExRecodVO;
 import com.third_project.third_project.main.vo.response.GetExTimePeriodVO;
