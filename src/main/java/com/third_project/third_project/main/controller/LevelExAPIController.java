@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.entity.ExTypeEntity;
@@ -28,8 +29,11 @@ public class LevelExAPIController {
 
     @Operation(summary = "레벨별 운동 리스트 조회", description = "회원seq(miSeq)를 파라미터로 받아서 회원 타입(성별, 다이어트/웨이트)에 맞는 운동목록 조회")
     @GetMapping("/{miSeq}")
-    public ResponseEntity<List<GetLevelExVO>> levelExList(@Parameter(description = "로그인한 회원 번호", example = "2") @PathVariable Long miSeq){
-        List<GetLevelExVO> response = levelExService.levelExList(miSeq);
+    public ResponseEntity<List<GetLevelExVO>> levelExList(
+        @Parameter(description = "로그인한 회원 번호", example = "2") @PathVariable Long miSeq,
+        @Parameter(description = "조회할 레벨(1,2,3)", example = "1") @RequestParam Long levelSeq
+        ){
+        List<GetLevelExVO> response = levelExService.levelExList(miSeq, levelSeq);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
