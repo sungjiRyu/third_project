@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.Detail.service.IndividualScoreService;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
+import com.third_project.third_project.Detail.vo.ScoreRankListViewResponseVO;
 import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 
@@ -73,6 +75,13 @@ public ResponseEntity<ScoreListViewResponseVO> getChangeList(
   @Parameter(description = "회원번호")@RequestParam Long memberNo,
   @Parameter(description = "종목 명")@RequestParam String type){
   return new ResponseEntity<ScoreListViewResponseVO>(isService.getLevelVariance(memberNo, type),HttpStatus.OK);
+}
+@Operation(summary = "백분위")
+@GetMapping("/percent")
+public ResponseEntity<IndividualScoreRankViewResposeVO> getPercentScore(
+  @Parameter(description = "회원번호") @RequestParam Long memberNo
+){
+  return new ResponseEntity<IndividualScoreRankViewResposeVO>(isService.getScoreRank(memberNo),HttpStatus.OK);
 }
 }
 
