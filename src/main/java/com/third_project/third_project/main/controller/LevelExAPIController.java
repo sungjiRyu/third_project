@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "레벨별 운동 조회API(류승지)" , description ="레벨별 운동 리스트 조회/상세조회")
+@Tag(name = "레벨별 운동 조회API" , description ="레벨별 운동 리스트 조회/상세조회")
 @RestController
 @RequestMapping("api/level/exercise")
 public class LevelExAPIController {

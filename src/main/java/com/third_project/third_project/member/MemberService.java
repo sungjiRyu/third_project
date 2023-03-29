@@ -4,11 +4,16 @@ import com.third_project.third_project.entity.MemberImgEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.member.VO.*;
 import com.third_project.third_project.repository.*;
+import com.third_project.third_project.security.provider.JwtTokenProvider;
+import com.third_project.third_project.security.service.CustomUserDetailService;
 import com.third_project.third_project.utilities.AESAlgorithm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -30,6 +34,11 @@ public class MemberService {
 
     private final ExStatusRepository esRepo;
     private final MemberImgRepository mimgRepo;
+
+    private final AuthenticationManagerBuilder authBuilder;
+    private final JwtTokenProvider tokenProvider;
+    private final CustomUserDetailService userDetailService;
+    
     @Value("${file.image.exercise.member}")   String member_image_path;
 
 
@@ -262,10 +271,8 @@ public class MemberService {
                         firstname += split[i];
                 }
 
-
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
-                firstname = firstname + member.getMiSeq();
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
@@ -275,8 +282,8 @@ public class MemberService {
                     e.printStackTrace();
                 }
                 MemberImgEntity newImg = MemberImgEntity.builder()
-                        .mimgName(saveFilename)
-                        .mimgUrl(firstname)
+                        .mimgName(firstname)
+                        .mimgUrl(saveFilename)
                         .build();
                 mimgRepo.save(newImg);
 
@@ -285,13 +292,13 @@ public class MemberService {
                 miRepo.save(miEntity);
 
 
-                MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
                         //.mimgUrl(saveFilename)
                         .status(true)
-                        .message("이미지가 변경되었습니다.")
+                        .message("파일이 저장되었습니다.")
                         .code(HttpStatus.ACCEPTED)
                         .build();
-                return responseVO;
+                return mimgVO;
             }
             else {
 
@@ -311,11 +318,9 @@ public class MemberService {
                     if(i != split.length - 1)
                         firstname += split[i];
                 }
-//                Long MemSeq = member.getMiSeq();
 
                 Calendar c = Calendar.getInstance();
                 saveFilename += firstname + c.getTimeInMillis() + "." + ext;
-                firstname = firstname + member.getMiSeq();
                 Path targetFile = folderLocation.resolve(saveFilename);
 
                 try {
@@ -325,8 +330,8 @@ public class MemberService {
                     e.printStackTrace();
                 }
                 MemberImgEntity newImg = MemberImgEntity.builder()
-                                .mimgName(saveFilename)
-                                .mimgUrl(firstname)
+                                .mimgName(firstname)
+                                .mimgUrl(saveFilename)
                                 .build();
                 mimgRepo.save(newImg);
 
@@ -335,53 +340,53 @@ public class MemberService {
                     miRepo.save(miEntity);
 
 
-                MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
                         //.mimgUrl(saveFilename)
                         .status(true)
-                        .message("이미지가 변경되었습니다.")
+                        .message("파일이 저장되었습니다.")
                         .code(HttpStatus.ACCEPTED)
                         .build();
-                return responseVO;
+                return mimgVO;
             }
         }
     }
 
-    // login
-    public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
+   // login
+   public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
+    MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
 
-//        Long findSeq = miRepo.findByMiSeq(LoginVO.getId());
-//        MemberInfoEntity miEntity = miRepo.findByMiId(LoginVO.getId());
-//            Long searchSeq = miEntity.getMiSeq();
-//        MemberInfoEntity miEntity2 = miRepo.findByMiPwd(AESAlgorithm.Encrypt(LoginVO.getPwd()));
-//            Long searchSeq2 = miEntity2.getMiSeq();
-        MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
-
-        if ( miEntity == null) {
-            MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
-                    //.mimgUrl(saveFilename)
-                    .status(false)
-                    .message("Id / Pwd 를 확인하세요.")
-                    .code(HttpStatus.BAD_REQUEST)
-                    .build();
-            return responseVO;
-        }
+    if ( miEntity == null) {
         MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
                 //.mimgUrl(saveFilename)
-                .status(true)
-                .message("로그인 성공 하였습니다.")
-                .code(HttpStatus.ACCEPTED)
-                .build();
-        return responseVO;
-        }
-
-    // logout
-    public MemberLogoutResponseVO logout() {
-        MemberLogoutResponseVO responseVO = MemberLogoutResponseVO.builder()
-                //.mimgUrl(saveFilename)
-                .status(true)
-                .message("로그아웃 완료.")
-                .code(HttpStatus.ACCEPTED)
+                .status(false)
+                .message("Id / Pwd 를 확인하세요.")
+                .code(HttpStatus.BAD_REQUEST)
                 .build();
         return responseVO;
     }
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(miEntity.getMiId(), miEntity.getMiPwd());
+    Authentication authentication = authBuilder
+            .getObject()
+            .authenticate(authenticationToken);
+
+    MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
+            //.mimgUrl(saveFilename)
+            .status(true)
+            .message("로그인 성공 하였습니다.")
+            .token(tokenProvider.generateToken(authentication))
+            .code(HttpStatus.ACCEPTED)
+            .build();
+    return responseVO;
+    }
+
+// logout
+public MemberLogoutResponseVO logout() {
+    MemberLogoutResponseVO responseVO = MemberLogoutResponseVO.builder()
+            //.mimgUrl(saveFilename)
+            .status(true)
+            .message("로그아웃 완료.")
+            .code(HttpStatus.ACCEPTED)
+            .build();
+    return responseVO;
+}
 }

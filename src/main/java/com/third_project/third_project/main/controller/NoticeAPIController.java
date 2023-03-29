@@ -37,7 +37,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
-@Tag(name = "게임 공지사항 API(류승지)" , description ="게임 공지사항 등록/조회(리스트)/상세조회/수정/삭제")
+@Tag(name = "게임 공지사항 API" , description ="게임 공지사항 등록/조회(리스트)/상세조회/수정/삭제")
 @RestController
 @RequestMapping("api/notice")
 public class NoticeAPIController {

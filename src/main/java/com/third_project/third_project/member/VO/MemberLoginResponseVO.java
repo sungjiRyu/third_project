@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import com.third_project.third_project.security.vo.TokenVO;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +16,5 @@ public class MemberLoginResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
+    private TokenVO token;
 }

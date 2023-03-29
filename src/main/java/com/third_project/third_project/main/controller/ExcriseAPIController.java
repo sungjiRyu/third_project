@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "개인 측정용 운동 API(류승지)" , description ="개인측정용 운동목록조회/저장/개인기록조회")
+@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동목록조회/저장/개인기록조회")
 @RestController
 @RequestMapping("api/exercise")
 public class ExcriseAPIController {
