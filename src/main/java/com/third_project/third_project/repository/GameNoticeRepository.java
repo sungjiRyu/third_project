@@ -20,4 +20,7 @@ public interface GameNoticeRepository extends JpaRepository<GameNoticeEntity, Lo
     // 공지사항 삭제
     public GameNoticeEntity findBygnSeq(Long gnSeq);
 
+    //공지사항 관리자 페이지  리스트 조회
+   Page<GameNoticeEntity> findByGnTitleContains(String gnTitle, Pageable pageable);
+
 }

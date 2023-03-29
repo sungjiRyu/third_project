@@ -53,8 +53,8 @@ public class IndividualScoreController {
     }
   @Operation(summary = "개인 기록 삭제", description = "개인 기록이 삭제되었습니다.")
   @DeleteMapping("{isSeq}")
-  public ResponseEntity<IndividualScoreResponseVO> deleteIndividualScore(@PathVariable Long siSeq){
-    return new ResponseEntity<IndividualScoreResponseVO>(isService.deleteIndividualScore(siSeq),HttpStatus.OK);
+  public ResponseEntity<IndividualScoreResponseVO> deleteIndividualScore(@PathVariable Long isSeq){
+    return new ResponseEntity<IndividualScoreResponseVO>(isService.deleteIndividualScore(isSeq),HttpStatus.OK);
   }
   @Operation(summary = "개인 기록 조회", description="개인 기록이 조회되었습니다.")
   @GetMapping("/list")
