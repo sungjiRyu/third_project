@@ -143,9 +143,10 @@ public class NoticeService{
             if(notice == null)  throw new ExceptionHendler(ErrorResponse.of(HttpStatus.BAD_REQUEST,String.format("없는 글번호입니다.")));
             
             response = GetDetailNoticeVO1.builder()
-            .GnTitle(notice.getGnTitle())
-            .GnContent(notice.getGnContent())
-            .GnRegDt(notice.getGnRegDt())
+            .gnSeq(notice.getGnSeq())
+            .gnTitle(notice.getGnTitle())
+            .gnContent(notice.getGnContent())
+            .gnRegDt(notice.getGnRegDt())
             .url(notice.getVideo().getEvUrl())
             .etSeq(notice.getType().getEtSeq()) //운동종류 seq (EtSeq) 반환 
             .build();

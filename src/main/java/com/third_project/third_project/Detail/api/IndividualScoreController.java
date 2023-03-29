@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.Detail.service.IndividualScoreService;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
+import com.third_project.third_project.Detail.vo.ScoreRankListViewResponseVO;
 import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 
@@ -38,7 +40,7 @@ public class IndividualScoreController {
   @Operation(summary = "개인 기록 추가", description = "isTime은 \"isTime\": \"00:00:10\" 형식으로 입력합니다")
   @PutMapping("")
   public ResponseEntity<IndividualScoreResponseVO> addIndividualScore(
-    @Parameter(description = "RequestBody로 데이터를 입력합니다.(isMiSeq:회원 번호,isEtSeq: 운동 종류 번호, isRegDt:기록 작성일, isTime: 기록") @RequestBody IndividualScoreInsertVO data){
+    @Parameter(description = "RequestBody로 데이터를 입력합니다.(isMiSeq:회원 번호,isEtSeq: 운동 종류 번호, isRegDt:기록 작성일, isTime: 기록, isWeek: 기록한 날짜에 해당하는 주차 (ex: 기록일이 2023-03-28이면 isWeek: 5 (5주차))") @RequestBody IndividualScoreInsertVO data){
   return new ResponseEntity<IndividualScoreResponseVO>(isService.addIndividualScore(data),HttpStatus.OK);
   }
   @Operation(summary = "개인 기록 수정", description = "개인 기록이 수정되었습니다.")
@@ -60,9 +62,26 @@ public class IndividualScoreController {
     @Parameter(description = "조회할 회원 번호")@RequestParam Long memberNo){
   return new ResponseEntity<ScoreListViewResponseVO>(isService.getListScore(memberNo),HttpStatus.OK);
 }
+@Operation(summary = "이번주 기록 조회")
 @GetMapping("/list/week")
-public ResponseEntity<WeeklyScoreViewVO> getWeekScore(@RequestParam Long memberNo, @RequestParam Integer week){
+public ResponseEntity<WeeklyScoreViewVO> getWeekScore(
+  @Parameter(description = "회원 번호")@RequestParam Long memberNo,
+  @Parameter(description = "주(週)")@RequestParam Integer week){
   return new ResponseEntity<WeeklyScoreViewVO>(isService.getWeeklyScore(memberNo, week),HttpStatus.OK);
+}
+@Operation(summary = "종목별 시간 변화량")
+@GetMapping("/list/change")
+public ResponseEntity<ScoreListViewResponseVO> getChangeList(
+  @Parameter(description = "회원번호")@RequestParam Long memberNo,
+  @Parameter(description = "종목 명")@RequestParam String type){
+  return new ResponseEntity<ScoreListViewResponseVO>(isService.getLevelVariance(memberNo, type),HttpStatus.OK);
+}
+@Operation(summary = "백분위")
+@GetMapping("/percent")
+public ResponseEntity<IndividualScoreRankViewResposeVO> getPercentScore(
+  @Parameter(description = "회원번호") @RequestParam Long memberNo
+){
+  return new ResponseEntity<IndividualScoreRankViewResposeVO>(isService.getScoreRank(memberNo),HttpStatus.OK);
 }
 }
 

@@ -1,5 +1,7 @@
 package com.third_project.third_project.main.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.main.service.ExcriseService;
 import com.third_project.third_project.main.vo.response.GetExRecodVO;
+import com.third_project.third_project.main.vo.response.GetExTimePeriodVO;
 import com.third_project.third_project.main.vo.response.GetExVO;
+import com.third_project.third_project.main.vo.response.GetExerciseTimeVO;
 import com.third_project.third_project.main.vo.response.GetPersonalExListVO;
 import com.third_project.third_project.main.vo.response.PostExRecord;
 import com.third_project.third_project.main.vo.response.ResponseMessage;
@@ -24,7 +30,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "개인 측정용 운동 API" , description ="개인측정용 운동조회")
+@Tag(name = "개인 측정용 운동 API(류승지)" , description ="개인측정용 운동목록조회/저장/개인기록조회")
 @RestController
 @RequestMapping("api/exercise")
 public class ExcriseAPIController {
@@ -37,17 +43,21 @@ public class ExcriseAPIController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "개인 측정용 운동 기록 저장", description = "측정한 기록을 저장합니다.")
+    @Operation(summary = "개인 측정용 운동 기록 저장", description = "time -> 00:00:10 형식으로 데이터를 넣어주세요.")
     @PostMapping("")
     public ResponseEntity<ResponseMessage> postExRecord(@RequestBody PostExRecord data){
         ResponseMessage response = exercise.postExRecord(data);
         return new ResponseEntity<>(response, (HttpStatus)response.getCode());
     }
     
-    @Operation(summary = "개인 측정용 운동 기록 조회", description = "개인 측정용 운동 기록을 조회합니다.")
-    @GetMapping("{miSeq}")
-    public ResponseEntity<List<GetExRecodVO>> getExRecord(@Parameter(description = "현재 로그인한 회원seq", example = "1") @PathVariable Long miSeq){
-        List<GetExRecodVO> response = exercise.getExRecod(miSeq);
+    @Operation(summary = "개인 측정용 운동 기록 조회", description = "현재 로그인한 회원번호(miSeq)와 기간을 입력하면(시작일 ~ 종료일) 기간동안 종목별 운동시간이 조회됩니다")
+    @GetMapping("/personal/{miSeq}")
+    public ResponseEntity<List<GetExerciseTimeVO>> getExRecord(
+        @Parameter(description = "현재 로그인한 회원seq", example = "1") @PathVariable Long miSeq,
+        @Parameter(description = "시작일" , example = "2023-03-21" ) @RequestParam LocalDate startDate,
+        @Parameter(description = "종료일" , example = "2023-03-22") @RequestParam LocalDate endDate
+        ){
+        List<GetExerciseTimeVO> response = exercise.getExRecod(miSeq, startDate, endDate);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

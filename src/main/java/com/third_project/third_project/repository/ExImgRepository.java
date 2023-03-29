@@ -7,4 +7,5 @@ public interface ExImgRepository extends JpaRepository<ExImgEntity, Long> {
   ExImgEntity findByEimgUrl (String eimgUrl);
   ExImgEntity findByEimgSeq (Long eimgSeq);
     public ExImgEntity findByEimgUrlEquals(String eimgUrl);
+
 }

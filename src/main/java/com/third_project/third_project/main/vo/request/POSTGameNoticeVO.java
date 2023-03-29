@@ -14,13 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class POSTGameNoticeVO {
-    @Schema(description = "등록할 공지사항seq", example = "1")  
-    private Long  gnSeq;
     @Schema(description = "제목", example = "modifyTitle")  
     private String gnTitle;
     @Schema(description = "내용", example = "modifyContent")  
     private String gnContent;
-    @Schema(description = "운동 종목 설정", example = "1")
+    @Schema(description = "운동 종목 설정(1.오래달리기 2.걷기 3.줄넘기)", example = "1")
     private Long gnEtSeq;
     @Schema(description = "등록자", example = "1")
     private Long gnMiSeq;

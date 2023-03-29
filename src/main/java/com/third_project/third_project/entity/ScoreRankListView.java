@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "score_list_view")
+@Table(name = "score_rank_list_view")
 @Entity
 @Immutable
-public class ScoreListView {
+public class ScoreRankListView {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = "is_seq") private Long isSeq;
     @Column(name = "is_mi_seq") private Long isMiSeq;

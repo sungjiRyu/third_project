@@ -46,8 +46,6 @@ public class ScoreService {
     // 스템프 사용 횟수 부여를 위한 전체 게임 성적 상위 % 입력 기능
     public BasicResponseVO setPercent(Long seq){
         List<GameScoreEntity> ranking = gsRepo.findWeeklyRanking(seq);
-//        List<WeeklyRankingVO> list = gsRepo.findRanking(seq);
-
         if(ranking.isEmpty()){
             BasicResponseVO response = BasicResponseVO.builder()
                     .status(false)
@@ -58,8 +56,11 @@ public class ScoreService {
         }
 
         for(int i=0; i<ranking.size(); i++){
-                GameScoreEntity entity = new GameScoreEntity();
+        GameScoreEntity entity = gsRepo.findByMember(ranking.get(i).getMember());
                 entity.setGsPercent(getMemberPercent(seq, ranking.get(i).getMember().getMiSeq()).getPercent());
+                entity.setMember(ranking.get(i).getMember());
+                entity.setExType(ranking.get(i).getExType());
+                entity.setGsTime(ranking.get(i).getGsTime());
                 gsRepo.save(entity);
         }
         BasicResponseVO response = BasicResponseVO.builder()
@@ -97,7 +98,7 @@ public class ScoreService {
         for(int i=0; i<list.size(); i++){
             people += 1;
         }
-
+        System.out.println(people);
         Integer rank = 0;
         for(int i=0; i<list.size(); i++){
             if(list.get(i).getMember().getMiSeq() == member.getMiSeq()){
@@ -105,7 +106,6 @@ public class ScoreService {
             }
         }
         Double percent = (double)rank / (double) people * 100.0;
-//        DecimalFormat df = new DecimalFormat("#.##");
         ScorePercentResponseVO response = ScorePercentResponseVO.builder()
                 .status(true)
                 .message("조회된 회원 성적의 상위 퍼센트 조회!!")

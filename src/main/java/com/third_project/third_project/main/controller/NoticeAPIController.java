@@ -37,20 +37,20 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
-@Tag(name = "게임 공지사항 API" , description ="게임 공지사항 등록/조회(리스트)/상세조회/수정/삭제")
+@Tag(name = "게임 공지사항 API(류승지)" , description ="게임 공지사항 등록/조회(리스트)/상세조회/수정/삭제")
 @RestController
 @RequestMapping("api/notice")
 public class NoticeAPIController {
     @Autowired NoticeService noticeService;
 
-    @Operation(summary = "게임 공지사항 등록", description = "폼데이터로 게임 공지사항을 등록합니다.")
+    @Operation(summary = "게임 공지사항 등록", description = "폼데이터로 게임 공지사항을 등록합니다(영상파일도 필수입력).")
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage> writeArticle(@ModelAttribute POSTGameNoticeVO data){
         ResponseMessage response = noticeService.postNotice(data);
         return new ResponseEntity<>(response, (HttpStatusCode)response.getCode());
     }
 
-    @Operation(summary = "게임 공지사항 조회(제목과 등록일, 운동종목이 출력)", description = "페이지와 사이즈를 입력하면 게임 공지사항 제목이 리스트로 출력됩니다.")
+    @Operation(summary = "게임 공지사항 조회(제목과 등록일, 운동종목이 출력)", description = "페이지와 사이즈를 입력하면 게임 공지사항 제목이 리스트로 출력됩니다. 입력하지 않는다면 page = 0, size = 10 으로 자동 설정됩니다.")
     @GetMapping("")
     public ResponseEntity<List<GetNoticeVO>> getArticle(
         @Parameter(description = "page default=0", example = "0") @RequestParam @Nullable Integer page,
@@ -61,16 +61,16 @@ public class NoticeAPIController {
     }
 
 
-    @Operation(summary =  "게임 공지사항 상세조회", description = "공지사항 내용과 영상, 운동종목, 타입, 레벨이 조회됩니다.")
+    @Operation(summary =  "게임 공지사항 상세조회", description = "공지사항 seq, 공지사항 내용, 영상url, 운동종목seq 이 조회됩니다.")
     @GetMapping("/detail/{gnSeq}")
     public ResponseEntity<GetDetailNoticeVO1> GetNoticeDetail(
-        @Parameter(description = "공지사항 번호", example = "1") @PathVariable Long gnSeq
+        @Parameter(description = "공지사항 번호", example = "42") @PathVariable Long gnSeq
     ){
         GetDetailNoticeVO1 response = noticeService.GetDetailNotice(gnSeq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary =  "게임 공지사항 삭제", description = "공지사항sesq에 해당하는 공지사항을 삭제합니다.")
+    @Operation(summary =  "게임 공지사항 삭제", description = "공지사항seq에 해당하는 공지사항을 삭제합니다.")
     @DeleteMapping("")
     public ResponseEntity<ResponseMessage> deleteNoticeDetile(
         @Parameter(description = "공지사항 번호", example = "1") @RequestParam Long gnSeq
