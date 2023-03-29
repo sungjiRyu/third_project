@@ -1,5 +1,6 @@
 package com.third_project.third_project.member.VO;
 
+import com.third_project.third_project.security.vo.TokenVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,5 @@ public class MemberLoginResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
+    private TokenVO token;
 }
