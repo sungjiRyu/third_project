@@ -38,7 +38,6 @@ public class MemberService {
     private final AuthenticationManagerBuilder authBuilder;
     private final JwtTokenProvider tokenProvider;
     private final CustomUserDetailService userDetailService;
-    
     @Value("${file.image.exercise.member}")   String member_image_path;
 
 

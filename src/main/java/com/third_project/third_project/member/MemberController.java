@@ -47,13 +47,13 @@ public class MemberController {
     @Transactional
     @DeleteMapping("/{seq}")
     public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) {
-        return new ResponseEntity<MemberDeleteResponseVO>(mService.deleteMember(seq, data), HttpStatus.OK);
+        return new ResponseEntity<>(mService.deleteMember(seq, data), HttpStatus.OK);
     }
 
     @Operation(summary = "회원 정보 조회")
     @GetMapping("/{seq}")
     public ResponseEntity<MemberSearchResponseVO> searchMember(@PathVariable Long seq) {
-        return  new ResponseEntity<MemberSearchResponseVO>(mService.searchMember(seq), HttpStatus.OK);
+        return  new ResponseEntity<>(mService.searchMember(seq), HttpStatus.OK);
     }
 
     // http://localhost:8888/api/member/img/{seq}
@@ -61,20 +61,20 @@ public class MemberController {
     @Transactional
     @PutMapping("/img/{seq}")
     public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) {
-        return new ResponseEntity<MemberImgResponseVO>(mService.addMemberImg(seq, file), HttpStatus.OK);
+        return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
     }
 
 
     @Operation(summary = "로그인")
     @PostMapping("/login")
     public ResponseEntity<MemberLoginResponseVO> login (@RequestBody MemberLoginVO loginVO) throws Exception{
-        return new ResponseEntity<MemberLoginResponseVO>(mService.login(loginVO), HttpStatus.OK);
+        return new ResponseEntity<>(mService.login(loginVO), HttpStatus.OK);
     }
 
     @Operation(summary = "로그아웃")
     @GetMapping("/logout")
     public ResponseEntity<MemberLogoutResponseVO> logout () {
-        return new ResponseEntity<MemberLogoutResponseVO>(mService.logout(), HttpStatus.OK);
+        return new ResponseEntity<>(mService.logout(), HttpStatus.OK);
     }
 
 }
