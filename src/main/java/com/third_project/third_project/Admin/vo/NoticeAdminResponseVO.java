@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.third_project.third_project.entity.GameNoticeEntity;
+import com.third_project.third_project.Admin.entity.NoticeAdminEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class NoticeAdminResponseVO {
-  private List<GameNoticeEntity> list;
-  private HttpStatus code;
-  private String message;
-  private Boolean status;
+  private List<NoticeAdminEntity> list;
+  private Long total;
+  private Integer totalPage;
+  private Integer currentPage;
 }

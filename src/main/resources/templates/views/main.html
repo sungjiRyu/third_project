@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +14,7 @@
       </center>
     </header>
   </section>
+  <hr>
   <h1>공지사항 리스트</h1>
   <table>
     <thead>
@@ -21,17 +22,67 @@
         <td>번호</td>
         <td>제목</td>
         <td>내용</td>
+        <td>등록일</td>
         <td>회원번호</td>
         <td>영상번호</td>
         <td>운동타입</td>
-        <td></td>
+      
+        <tbody>
+          <tr th:each="notice : ${result.list}">
+          <td th:text="${notice.gnSeq}"></td>
+          <td th:text="${notice.gnTitle}"></td>
+          <td th:text="${notice.gnContent}"></td>
+          <td th:text="${notice.gnRegDt}"></td>
+          <td th:text="${notice.gnMiSeq}"></td>
+          <td th:text="${notice.gnEvSeq}"></td>
+          <td th:text="${notice.gnEtSeq}"></td>
+        </tr>
+        </tbody>
       </tr>
-      <a href="/add">글쓰기</a>
     </thead>
   </table>
+  <div class="pager_area">
+    <form action="/user/list" method="get" id="search_form">
+      <input type="text" name="keyword" placeholder="제목 검색"><button>검색</button>
+    </form>
+    <th:block th:each="i : ${#numbers.sequence(0,result.totalPage-1)}">
+      <th:block th:if="${result.totalPage>0}">
+        <th:block th:if="${keyword == null ||keyword == ''}">
+          <a th:href="@{/user/list(page=${i})}" th:text="${i+1}"></a>
+        </th:block>
+        <th:block th:if="${keyword != null && keyword != ''}">
+          <a th:href="@{/user/list(page=${i},keyword=${keyword})}" th:text="${i+1}"></a>
+        </th:block>
+      </th:block>
+    </th:block>
+  </div>
+  <div class="add">
+    <a href="/add">글쓰기</a>
+  </div>
+  <hr>
+  <footer>
+    <center>
+        <small> Copyrightⓒ게시판 All right reserved. </small> 
+    </center>
+  </footer>
 </body>
 <style>
-  h1{text-align: center;}
-  table{margin: auto;}
+  @font-face {
+    font-family: 'IM_Hyemin-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+  h1{text-align: center; font-size: 45px; font-family:'IM_Hyemin-Bold';}
+  table{border-collapse: collapse; width: 1200px; margin: 10px auto; background-color: #cfffcf;
+      font-family: 'IM_Hyemin-Bold';
+      font-size: 25px;}
+  th{background-color: #cfffcf; padding: 10px;
+    font-family: 'IM_Hyemin-Bold';}
+  td{text-align: center; border-bottom: 1px; background-color: #fff;padding: 10px; 
+    font-family:'IM_Hyemin-Bold';}
+  .serch_area, .pager_area {text-align: center;}
+  .add{text-align: center;}
+  footer{font-size: 35px; font-family: 'IM_Hyemin-Bold';}
 </style>
 </html>
