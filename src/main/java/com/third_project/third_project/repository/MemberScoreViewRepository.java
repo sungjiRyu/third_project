@@ -9,7 +9,6 @@ import java.util.List;
 public interface MemberScoreViewRepository extends JpaRepository<MemberScoreView, Long> {
     MemberScoreView findByEtTimeType(Integer etTimeType);
     MemberScoreView findByMiSeq(Long miSeq);
-//    List<MemberScoreView> findByMemberOrderByDfcDate(MemberInfoEntity var1);
     List<MemberScoreView> findAllByOrderByGsTimeAsc();
     List<MemberScoreView> findAllByOrderByGsTimeDesc();
 }
