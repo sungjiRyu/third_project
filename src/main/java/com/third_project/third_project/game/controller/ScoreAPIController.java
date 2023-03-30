@@ -1,5 +1,6 @@
 package com.third_project.third_project.game.controller;
 import com.third_project.third_project.game.service.ScoreService;
+import com.third_project.third_project.game.service.StampService;
 import com.third_project.third_project.game.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,4 +70,5 @@ public class ScoreAPIController {
         BasicResponseVO response = scoreService.setPercent(seq);
         return new ResponseEntity<>(response, response.getCode());
     }
+
 }

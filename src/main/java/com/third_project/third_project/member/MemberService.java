@@ -2,6 +2,7 @@ package com.third_project.third_project.member;
 
 import com.third_project.third_project.entity.MemberImgEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
+import com.third_project.third_project.entity.MemberWeightEntity;
 import com.third_project.third_project.member.VO.*;
 import com.third_project.third_project.repository.*;
 import com.third_project.third_project.utilities.AESAlgorithm;
@@ -30,6 +31,7 @@ public class MemberService {
 
     private final ExStatusRepository esRepo;
     private final MemberImgRepository mimgRepo;
+    private final MemberWeightRepository mwRepo;
     @Value("${file.image.exercise.member}")   String member_image_path;
 
 
@@ -120,6 +122,56 @@ public class MemberService {
         }
     }
 
+    // 몸무게 추가 기능
+    public MemberUpdateResponseVO addWeight(Long seq, MemberWeightVO data){
+        MemberInfoEntity member = miRepo.findByMiSeq(seq);
+        MemberWeightEntity mwEntity = new MemberWeightEntity();
+        if(member == null){
+            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        mwEntity.setMember(member);
+        mwEntity.setMwWeight(data.getWeight());
+        mwRepo.save(mwEntity);
+        MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+                .status(true)
+                .message("추가 하였습니다.")
+                .code(HttpStatus.OK)
+                .build();
+        return responseVO;
+    }
+
+    public MemberListResponseVO getWeight(Long seq){
+        MemberInfoEntity member = miRepo.findByMiSeq(seq);
+        List<MemberWeightEntity> list = mwRepo.findByMember(member);
+        if(member == null){
+            MemberListResponseVO responseVO = MemberListResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(list.isEmpty()){
+            MemberListResponseVO responseVO = MemberListResponseVO.builder()
+                    .status(false)
+                    .message("회원의 기록 정보가 없습니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        MemberListResponseVO responseVO = MemberListResponseVO.builder()
+                .status(true)
+                .message("회원 몸무게 정보 조회!!")
+                .code(HttpStatus.OK)
+                .list(list)
+                .build();
+        return responseVO;
+    }
 
     // 개인정보 수정 ( 비밀번호, 이미지 업로드 )
     public MemberUpdateResponseVO updateMember(Long seq, MemberUpdateVO data) {
@@ -143,11 +195,10 @@ public class MemberService {
         }
 
         else {
+                MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
             try{
                 String encPwd = AESAlgorithm.Encrypt(data.getPwd());
-                MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
                     miEntity.setMiPwd(encPwd);
-
                 miRepo.save(miEntity);
             }
             catch (Exception e) {
