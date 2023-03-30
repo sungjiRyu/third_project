@@ -15,17 +15,77 @@
     </header>
   </section>
   <h1>글쓰기</h1>
-  <table>
-    <thead>
-      
-    </thead>
-    <tbody>
+  <form action="/admin/add" method="post">
+    <table border="1">
+    <div class="add_box">
+      <tbody>
+        <tr>
+          <th>제목</th>
+          <td>
+            <input type="text" name="title">
+          </td>
+          <br>
+        </tbody>
 
-    </tbody>
+        <tbody>
+          <th>회원번호</th>
+          <td>
+            <input type="text">
+          </td>
+        </tbody>
+        <tbody>
+            <th>영상</th>
+            <td>
+              <input type="file">
+            </td> 
+          </tbody>
+          <tbody>
+            <th>운동타입</th>
+            <td>
+              <select>
+                <option value="0">선택안함</option>
+                <option value="1">오래달리기</option>
+                <option value="2">걷기</option>
+                <option value="3">줄넘기</option>
+                <option value="6">사이클링</option>
+                <option value="7">요가</option>
+                <option value="8">댄스</option>
+                <option value="9">코어트레이닝</option>
+                <option value="10">필라테스</option>
+                <option value="11">수영</option>
+                <option value="12">하이킹</option>
+              </select>
+            </td>
+          </tbody>
+        <tbody>
+          <th>내용</th>
+          <td>
+            <textarea rows="5" cols="50"> </textarea>
+          </td>
+        </tbody>  
+        <div>
+          <td>
+            <input type="submit" value="저장">
+          </td>
+        </div>
+          </tr>
+  
+      </div>
   </table>
-  <a href="/">메인으로</a>
-</body>
-<style>
+    </form>
+    <a href="/">메인으로</a>
+  </body>
+  <style>
+      @font-face {
+    font-family: 'IM_Hyemin-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
   h1{text-align: center;}
-</style>
+  .add_box{text-align: center;}
+  table{border-collapse: collapse; width: 1200px; margin: 10px auto; background-color: #fff;
+      font-family: 'IM_Hyemin-Bold';
+      font-size: 25px;}
+    </style>
 </html>
