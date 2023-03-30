@@ -13,8 +13,10 @@ import lombok.NoArgsConstructor;
 // 레벨별 운동 상세조회
 // 운동 상세이미지url, 운동종목seq, 상세설명
 public class GetDetailLevelExVO {
-    @Schema(description = "운동종목" , example = "19")
+    @Schema(description = "운동종목seq" , example = "19")
     private Long   etSeq;
+    @Schema(description = "운동명" , example = "달리기LV1")
+    private String   etName;
     @Schema(description = "운동시간" , example = "10분")
     private String etDetail;
     @Schema(description = "상세 이미지 url" , example = "detail_level_run")

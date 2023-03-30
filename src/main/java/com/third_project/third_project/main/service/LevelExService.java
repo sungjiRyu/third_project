@@ -107,6 +107,7 @@ public class LevelExService {
         
         detailInfo = GetDetailLevelExVO.builder()
         .etSeq(exList.getEtSeq())
+        .etName(exList.getEtName())
         .etDetail(exList.getEtDetail())
         .url(img.getEimgUrl())
         .etExplain(exList.getEtExplain())
