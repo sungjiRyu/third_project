@@ -116,21 +116,9 @@ public class ScoreService {
     }
 
     public ScoreResponseVO getMemberScore(Long seq) { //회원 게임점수 조회
-//        MemberInfoEntity member = miRepo.findByMiSeq(seq); //입력받은 번호에 해당하는 회원 조회
         MemberRankingView mrentity = mrRepo.findByMiSeq(seq);
-//        GameScoreEntity mentity = gsRepo.findByMemberRankingView(mrentity);
 
         ScoreResponseVO response = new ScoreResponseVO();
-
-//        if(mrentity == null) {
-//            response = ScoreResponseVO.builder()
-//                    .status(false)
-//                    .message("조회된 회원 정보가 없습니다")
-//                    .code(HttpStatus.BAD_REQUEST)
-//                    .build();
-//
-//            return response;
-//        }
 
         if(mrentity == null) {
             response = ScoreResponseVO.builder()
