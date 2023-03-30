@@ -42,7 +42,6 @@ public class ScoreService {
     @Value("${file.video.exercise.game}") String game_video_path;
 
 
-
     // 스템프 사용 횟수 부여를 위한 전체 게임 성적 상위 % 입력 기능
     public BasicResponseVO setPercent(Long seq){
         List<GameScoreEntity> ranking = gsRepo.findWeeklyRanking(seq);

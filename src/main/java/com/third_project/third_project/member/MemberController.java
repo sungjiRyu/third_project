@@ -77,4 +77,17 @@ public class MemberController {
         return new ResponseEntity<>(mService.logout(), HttpStatus.OK);
     }
 
+    @Operation(summary = "몸무게 정보 추가 기능")
+    @PutMapping("/weight/{seq}")
+    public ResponseEntity<MemberUpdateResponseVO> addWeight(Long seq, MemberWeightVO data){
+        MemberUpdateResponseVO response = mService.addWeight(seq, data);
+        return new ResponseEntity<>(response, response.getCode());
+    }
+
+    @Operation(summary = "몸무게 정보 조회")
+    @GetMapping("/weight/{seq}")
+    public ResponseEntity<MemberListResponseVO> getWeight(Long seq){
+        MemberListResponseVO response = mService.getWeight(seq);
+        return new ResponseEntity<>(response, response.getCode());
+    }
 }
