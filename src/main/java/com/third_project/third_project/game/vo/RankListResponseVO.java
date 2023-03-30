@@ -24,12 +24,4 @@ public class RankListResponseVO {
     private String url;
     @Schema(description = "회원 반", example = "3학년 2반")
     private String ban;
-//
-//    public RankListResponseVO(TripleRankingView data) {
-//        this.nickname = data.getMiNickName();
-//        this.rank = data.getRank();
-//        this.score = data.getGsTime();
-//        this.url = data.getMingUrl();
-//        this.ban = data.getMiClass();
-//    }
 }
