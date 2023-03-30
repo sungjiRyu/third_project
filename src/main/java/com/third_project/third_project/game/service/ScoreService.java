@@ -115,7 +115,8 @@ public class ScoreService {
         return response;
     }
 
-    public ScoreResponseVO getMemberScore(Long seq) { //회원 게임점수 조회
+    //회원 개인 게임점수 조회
+    public ScoreResponseVO getMemberScore(Long seq) {
         MemberRankingView mrentity = mrRepo.findByMiSeq(seq);
 
         ScoreResponseVO response = new ScoreResponseVO();
@@ -158,7 +159,8 @@ public class ScoreService {
         return response;
     }
 
-    public RankResponseVO getTotalScore(Long seq) { // 전체 1~3등 순위 조회
+    //전체 1~3등 순위 조회
+    public RankResponseVO getTotalScore(Long seq) {
         List<TripleRankingView> tlist = tRepo.findByEtSeq(seq);
         List<RankListResponseVO> entity = new ArrayList<>();
 
@@ -190,7 +192,8 @@ public class ScoreService {
         return response;
     }
 
-    public GameResponseVO insertGameRecord(GameScoreInsertVO data) { //회원 게임 기록 등록
+    //회원 게임 기록 등록
+    public GameResponseVO insertGameRecord(GameScoreInsertVO data) {
         GameResponseVO response = new GameResponseVO();
         MemberInfoEntity entity = miRepo.findByMiSeq(data.getMiSeq());
         ExTypeEntity exentity = eRepo.findByEtSeq(data.getEtSeq());
@@ -229,7 +232,8 @@ public class ScoreService {
         return response;
     }
 
-    public GameResponseVO insertGameVideo(VideoResponseVO data) { // 회원 인증영상 등록
+    //회원 인증영상 등록
+    public GameResponseVO insertGameVideo(VideoResponseVO data) {
         GameResponseVO response = new GameResponseVO();
         MemberInfoEntity entity = miRepo.findByMiSeq(data.getMiSeq());
 

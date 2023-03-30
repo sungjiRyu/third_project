@@ -20,24 +20,4 @@ public class RankResponseVO {
     @Schema(description = "HTTP 상태 코드", example = "HttpStatus.BAD_REQUEST")
     private HttpStatus code;
     private List<RankListResponseVO> list;
-
-
-//    @Schema(description = "회원 닉네임", example = "침착맨")
-//    private String nickname;
-//    @Schema(description = "회원 등수", example = "3")
-//    private Integer rank;
-//    @Schema(description = "회원 운동 기록", example = "00:09:00")
-//    private LocalTime score;
-//    @Schema(description = "회원 이미지", example = "member.jpg")
-//    private String url;
-//    @Schema(description = "회원 반", example = "3학년 2반")
-//    private String ban;
-//
-//    public RankListResponseVO(TripleRankingView data) {
-//        this.nickname = data.getMiNickName();
-//        this.rank = data.getRank();
-//        this.score = data.getGsTime();
-//        this.url = data.getMingUrl();
-//        this.ban = data.getMiClass();
-//    }
 }
