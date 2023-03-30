@@ -13,9 +13,11 @@ import com.third_project.third_project.entity.ExLevelEntity;
 import com.third_project.third_project.entity.ExTypeEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.main.vo.ErrorResponse;
+import com.third_project.third_project.main.vo.InsertExplainVO;
 import com.third_project.third_project.main.vo.exceptionHendler.ExceptionHendler;
 import com.third_project.third_project.main.vo.response.GetDetailLevelExVO;
 import com.third_project.third_project.main.vo.response.GetLevelExVO;
+import com.third_project.third_project.main.vo.response.ResponseMessage;
 import com.third_project.third_project.repository.ExImgRepository;
 import com.third_project.third_project.repository.ExLevelRepository;
 import com.third_project.third_project.repository.ExTypeRepository;
@@ -107,10 +109,24 @@ public class LevelExService {
         .etSeq(exList.getEtSeq())
         .etDetail(exList.getEtDetail())
         .url(img.getEimgUrl())
+        .etExplain(exList.getEtExplain())
         .build();
        
         return detailInfo;
         
-
     }
+    // 운동 내용 넣기
+    // public ResponseMessage insertExplain(Long etSeq, InsertExplainVO data){
+    //     ExTypeEntity exType = exTypeRepo.findByEtSeq(etSeq);
+    //     ResponseMessage respnose = new ResponseMessage(true, HttpStatus.OK, "입력되었습니다");
+        
+    //     if(exType != null){
+    //     exType.setEtExplain(data.getExplain());
+    //     exTypeRepo.save(exType);
+    //     }
+    //     else
+    //     respnose = new ResponseMessage(false, HttpStatus.BAD_REQUEST, "존재하지않는 운동입니다.");
+
+    //     return respnose;
+    // }
 }

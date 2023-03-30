@@ -15,9 +15,11 @@ import lombok.NoArgsConstructor;
 public class GetDetailLevelExVO {
     @Schema(description = "운동종목" , example = "19")
     private Long   etSeq;
-    @Schema(description = "운동상세설명" , example = "달리기")
+    @Schema(description = "운동시간" , example = "10분")
     private String etDetail;
     @Schema(description = "상세 이미지 url" , example = "detail_level_run")
     private String url;
+    @Schema(description = "운동 상세 설명" , example = "줄넘기")
+    private String etExplain;
 
 }

@@ -95,6 +95,8 @@ public class ExcriseService {
         List<GetExerciseTimeVO> personalExScore = individualScoreRepo.getExerciseTimeByPeriod(miSeq, startDate, endDate);
         return personalExScore;
     }
+
+    
     
 
     
