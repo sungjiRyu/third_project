@@ -17,5 +17,6 @@ public class MemberLoginResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
+    private Long miSeq;
     private TokenVO token;
 }

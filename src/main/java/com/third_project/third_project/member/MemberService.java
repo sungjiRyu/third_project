@@ -423,6 +423,7 @@ public class MemberService {
 
     MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
             //.mimgUrl(saveFilename)
+            .miSeq(miEntity.getMiSeq())
             .status(true)
             .message("로그인 성공 하였습니다.")
             .token(tokenProvider.generateToken(authentication))
