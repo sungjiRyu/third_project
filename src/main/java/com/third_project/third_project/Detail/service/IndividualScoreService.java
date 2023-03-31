@@ -8,6 +8,7 @@ import org.aspectj.weaver.Lint;
 import org.springframework.http.HttpStatus;
 
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreListVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
@@ -16,6 +17,7 @@ import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.entity.IndividualScoreRankView;
+import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
 import com.third_project.third_project.entity.ScoreRankListView;
 import com.third_project.third_project.entity.WeeklyScoreView;
@@ -94,7 +96,7 @@ public class IndividualScoreService {
 
  //개인 기록 조회
 public ScoreListViewResponseVO getListScore(Long memberNo){
-List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
+  List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
   // ScoreListView member = slRepo.findByIsMiSeq(memberNo);
   if(member.isEmpty()){
     ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()
