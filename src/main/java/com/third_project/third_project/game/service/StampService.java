@@ -19,8 +19,6 @@ public class StampService {
     private final MemberGoodsRepository mgRepo;
     private final StampInfoRepository stampRepo;
     private final GameScoreRepository gsRepo;
-    private final ScoreService scoreService;
-    private final ExTypeRepository exTypeRepository;
 
     // 상위 % 조회 해서 1, 2, 3 등 조회 하고 스탬프 기회 부여 기능
     public BasicResponseVO putStampAvailable(Long seq){
