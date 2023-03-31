@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <section>
+    <header>
+      <center>
+        <a href="/">
+          <img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2018/05/web-20180530030449087616.png" width="150" height="200" alt="쿨피스">
+        </a>
+      </center>
+    </header>
+  </section>
+  <hr>
+  <h1> 조회할 운동 번호를 입력하세요🏃‍♂️ </h1>
+  <form action="/update" method="post">
+    <th>운동타입</th>
+    <td>
+      <input type="number" name="no" th:value="${score.no}">
+    <button>수정</button>
+  </form>
+</th:block>
+<a th:href="@{/game/list(page=${page},keyword=${keyword})}">목록으로</a>
+</body>
+</html>

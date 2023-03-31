@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.Detail.service.IndividualScoreService;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreListVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;

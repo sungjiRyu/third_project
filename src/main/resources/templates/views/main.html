@@ -15,6 +15,14 @@
     </header>
   </section>
   <hr>
+  <nav>
+    <ul style="background-color: #fff;">
+        <div>
+          <a style="font-weight: bold;" href="/game">지난주 성적 보기</a>
+        </div>
+    </ul>
+  </nav>
+  <hr>
   <h1>공지사항 리스트</h1>
   <table>
     <thead>
@@ -42,16 +50,16 @@
     </thead>
   </table>
   <div class="pager_area">
-    <form action="/user/list" method="get" id="search_form">
+    <form action="/" method="get" id="search_form">
       <input type="text" name="keyword" placeholder="제목 검색"><button>검색</button>
     </form>
     <th:block th:each="i : ${#numbers.sequence(0,result.totalPage-1)}">
       <th:block th:if="${result.totalPage>0}">
         <th:block th:if="${keyword == null ||keyword == ''}">
-          <a th:href="@{/user/list(page=${i})}" th:text="${i+1}"></a>
+          <a th:href="@{/(page=${i})}" th:text="${i+1}"></a>
         </th:block>
         <th:block th:if="${keyword != null && keyword != ''}">
-          <a th:href="@{/user/list(page=${i},keyword=${keyword})}" th:text="${i+1}"></a>
+          <a th:href="@{/(page=${i},keyword=${keyword})}" th:text="${i+1}"></a>
         </th:block>
       </th:block>
     </th:block>
@@ -62,7 +70,9 @@
   <hr>
   <footer>
     <center>
-        <small> Copyrightⓒ게시판 All right reserved. </small> 
+        <small> Copyrightⓒ(주)쿨피스 All right reserved. 
+          대표이사 : 류 승 지
+        </small> 
     </center>
   </footer>
 </body>
@@ -84,5 +94,6 @@
   .serch_area, .pager_area {text-align: center;}
   .add{text-align: center;}
   footer{font-size: 35px; font-family: 'IM_Hyemin-Bold';}
+  nav{text-align: center; font-size: 20px; font-family: 'IM_Hyemin-Bold'; font-;} 
 </style>
 </html>

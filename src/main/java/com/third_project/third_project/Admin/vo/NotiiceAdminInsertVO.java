@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class NotiiceAdminInsertVO {
-  
+
     private String gnTitle;
     private String gnContent;
     private Long gnMiSeq;

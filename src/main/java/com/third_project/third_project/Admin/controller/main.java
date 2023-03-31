@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.third_project.third_project.Admin.service.NoticeAdminService;
@@ -35,7 +36,7 @@ public class main {
   public String getNoticeAdd(){
     return "/add";
   }
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public String postNotice(Model model, NotiiceAdminInsertVO data){
     Map<String,Object> map = noticeAdminService.addNotice(data);
     model.addAttribute("data", data);
