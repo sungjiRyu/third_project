@@ -3,6 +3,7 @@ package com.third_project.third_project.Detail.api;
 
 import java.time.LocalDate;
 
+import com.third_project.third_project.Detail.vo.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -84,6 +85,22 @@ public ResponseEntity<IndividualScoreRankViewResposeVO> getPercentScore(
 ){
   return new ResponseEntity<IndividualScoreRankViewResposeVO>(isService.getScoreRank(memberNo),HttpStatus.OK);
 }
+
+@Operation(summary = "해당 일 성적 합산")
+  @GetMapping("/sum/date/{seq}/{date}")
+  public ResponseEntity<SumScoreDateVO> getSumScoreDate(@Parameter(description = "회원번호", example = "1")@PathVariable Long seq,
+                                                        @Parameter(description = "날짜", example = "2023-03-30")@PathVariable LocalDate date){
+    SumScoreDateVO response = isService.getSumScoreDate(seq, date);
+    return new ResponseEntity<>(response, response.getCode());
+}
+
+  @Operation(summary = "해당 종목 성적 합산")
+  @GetMapping("/sum/name/{seq}/{name}")
+  public ResponseEntity<SumScoreNameVO> getSumScoreName(@Parameter(description = "회원번호", example = "1")@PathVariable Long seq,
+                                                        @Parameter(description = "운동 명", example = "걷기")@PathVariable String name){
+    SumScoreNameVO response = isService.getSumScoreName(seq, name);
+    return new ResponseEntity<>(response, response.getCode());
+  }
 }
 
 
