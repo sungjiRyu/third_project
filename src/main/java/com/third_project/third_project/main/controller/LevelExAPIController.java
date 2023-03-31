@@ -42,7 +42,7 @@ public class LevelExAPIController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "레벨별 운동 상세조회 조회", description = "miSeq와 etSeq를 파라미터로 받아서 해당하는 운동의 상세정보(상세이미지, 상세설명) 조회")
+    @Operation(summary = "레벨별 운동 상세조회", description = "miSeq와 etSeq를 파라미터로 받아서 해당하는 운동의 상세정보(상세이미지, 상세설명) 조회")
     @GetMapping("/{miSeq}/{etSeq}")
     public ResponseEntity<GetDetailLevelExVO> levelExDetail(
         @Parameter(description = "회원번호", example = "1") @PathVariable Long miSeq,
