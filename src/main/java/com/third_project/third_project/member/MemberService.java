@@ -225,7 +225,7 @@ public class MemberService {
 
     // 회원 탈퇴
     @Transactional
-    public MemberDeleteResponseVO deleteMember(Long seq, MemberDeleteVO data) {
+    public MemberDeleteResponseVO deleteMember(Long seq, MemberDeleteVO data) throws Exception{
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
         if(!(findseq.isPresent())) {
             MemberDeleteResponseVO responseVO = MemberDeleteResponseVO.builder()
@@ -236,9 +236,10 @@ public class MemberService {
             return responseVO;
         }
         else {
+            // String encPwd = AESAlgorithm.Encrypt(data.getPwd());
             MemberInfoEntity entity = miRepo.findByMiSeq(seq);
             String pwd= entity.getMiPwd();
-            if(!(data.getPwd().equals(pwd))) {
+            if(!(AESAlgorithm.Encrypt(data.getPwd()).equals(pwd))) {
                 MemberDeleteResponseVO responseVO = MemberDeleteResponseVO.builder()
                         .status(false)
                         .message("비밀번호를 확인하세요.")

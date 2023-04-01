@@ -46,7 +46,7 @@ public class MemberController {
     @Operation(summary = "멤버 탈퇴")
     @Transactional
     @DeleteMapping("/{seq}")
-    public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) {
+    public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) throws Exception {
         return new ResponseEntity<>(mService.deleteMember(seq, data), HttpStatus.OK);
     }
 
