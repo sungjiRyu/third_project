@@ -451,21 +451,6 @@ public class MemberService {
     public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
         MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
 
-        if ( miEntity == null) {
-            MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
-                    //.mimgUrl(saveFilename)
-                    .status(false)
-                    .message("Id / Pwd 를 확인하세요.")
-                    .code(HttpStatus.BAD_REQUEST)
-                    .build();
-            return responseVO;
-        }
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(miEntity.getMiId(), miEntity.getMiPwd());
-        Authentication authentication = authBuilder
-                .getObject()
-                .authenticate(authenticationToken);
-
-
     if ( miEntity == null) {
         MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
                 //.mimgUrl(saveFilename)
