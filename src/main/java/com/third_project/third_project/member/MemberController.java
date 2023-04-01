@@ -35,11 +35,18 @@ public class MemberController {
     }
 
 
-    // http://localhost:8888/api/member/{seq}
-    @Operation(summary = "멤버 정보 수정")
-    @PatchMapping("/{seq}")
-    public ResponseEntity<MemberUpdateResponseVO> updateMember(@PathVariable Long seq, @RequestBody MemberUpdateVO data) {
-        return new ResponseEntity<>(mService.updateMember(seq, data), HttpStatus.OK);
+    // http://localhost:8888/api/pwd/member/{seq}
+    @Operation(summary = "멤버 pwd 수정")
+    @PatchMapping("/pwd/{seq}")
+    public ResponseEntity<UpdatePwdResponseVO> updatePwd(@PathVariable Long seq, @RequestBody UpdatePwdVO data) {
+        return new ResponseEntity<>(mService.updatePwd(seq, data), HttpStatus.OK);
+    }
+
+    // http://localhost:8888/api/member/nickname/{seq}
+    @Operation(summary = "멤버 nickname 수정")
+    @PatchMapping("/nickname/{seq}")
+    public ResponseEntity<UpdateNickNameResponseVO> updateNickname(@PathVariable Long seq, @RequestBody UpdateNickNameVO data) {
+        return new ResponseEntity<>(mService.updateNickname(seq, data), HttpStatus.OK);
     }
 
     // http://localhost:8888/api/member/{seq}

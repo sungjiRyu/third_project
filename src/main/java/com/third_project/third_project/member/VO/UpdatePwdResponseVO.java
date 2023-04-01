@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberUpdateResponseVO {
+public class UpdatePwdResponseVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
