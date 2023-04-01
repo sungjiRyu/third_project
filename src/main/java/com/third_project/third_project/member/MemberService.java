@@ -184,11 +184,11 @@ public class MemberService {
         return responseVO;
     }
 
-    // 개인정보 수정 ( 비밀번호, 이미지 업로드 )
-    public MemberUpdateResponseVO updateMember(Long seq, MemberUpdateVO data) {
+    // 개인정보 수정 ( 비밀번호 )
+    public UpdatePwdResponseVO updatePwd(Long seq, UpdatePwdVO data) {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
         if(!(findseq.isPresent())) {
-            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+            UpdatePwdResponseVO responseVO = UpdatePwdResponseVO.builder()
                     .status(false)
                     .message("존재하지 않는 seq 입니다.")
                     .code(HttpStatus.BAD_REQUEST)
@@ -197,7 +197,7 @@ public class MemberService {
         }
         else if(!(data.getPwd().equals(data.getConfirmpwd()))) {
 
-            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+            UpdatePwdResponseVO responseVO = UpdatePwdResponseVO.builder()
                     .status(false)
                     .message("비밀번호와 확인비밀번호가 일치하지 않습니다.")
                     .code(HttpStatus.BAD_REQUEST)
@@ -215,7 +215,7 @@ public class MemberService {
             catch (Exception e) {
                 e.printStackTrace();
             }
-            MemberUpdateResponseVO responseVO = MemberUpdateResponseVO.builder()
+            UpdatePwdResponseVO responseVO = UpdatePwdResponseVO.builder()
                     .status(true)
                     .message("변경 하였습니다.")
                     .code(HttpStatus.OK)
@@ -223,6 +223,42 @@ public class MemberService {
             return responseVO;
         }
     }
+
+
+    // 개인정보 수정 ( 닉네임 )
+    public UpdateNickNameResponseVO updateNickname(Long seq, UpdateNickNameVO data) {
+        Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
+
+        if(!(findseq.isPresent())) {
+            UpdateNickNameResponseVO responseVO = UpdateNickNameResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else if(miRepo.countByMiNickname(data.getNickname()) >= 1) {
+            UpdateNickNameResponseVO responseVO = UpdateNickNameResponseVO.builder()
+                    .status(false)
+                    .message("이미 존재하는 닉네임입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
+            MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
+            miEntity.setMiNickname(data.getNickname());
+            miRepo.save(miEntity);
+
+            UpdateNickNameResponseVO responseVO = UpdateNickNameResponseVO.builder()
+                    .status(true)
+                    .message("변경 하였습니다.")
+                    .code(HttpStatus.OK)
+                    .build();
+            return responseVO;
+        }
+    }
+
 
     // 회원 탈퇴
     @Transactional
@@ -237,7 +273,7 @@ public class MemberService {
             return responseVO;
         }
         else {
-            // String encPwd = AESAlgorithm.Encrypt(data.getPwd());
+
             MemberInfoEntity entity = miRepo.findByMiSeq(seq);
             String pwd= entity.getMiPwd();
             if(!(AESAlgorithm.Encrypt(data.getPwd()).equals(pwd))) {
@@ -259,6 +295,8 @@ public class MemberService {
             }
         }
     }
+
+
     // 회원 정보 조회
     public MemberSearchResponseVO searchMember (Long seq) {
         MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
@@ -291,7 +329,9 @@ public class MemberService {
                     return responseVO;
 
     }
-    // 이미지 업로드
+
+
+    // 이미지 변경
     @Transactional
     public MemberImgResponseVO addMemberImg (Long seq, MultipartFile file) {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
@@ -405,9 +445,26 @@ public class MemberService {
         }
     }
 
-   // login
-   public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
-    MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
+
+
+    // login
+    public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
+        MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
+
+        if ( miEntity == null) {
+            MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
+                    //.mimgUrl(saveFilename)
+                    .status(false)
+                    .message("Id / Pwd 를 확인하세요.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(miEntity.getMiId(), miEntity.getMiPwd());
+        Authentication authentication = authBuilder
+                .getObject()
+                .authenticate(authenticationToken);
+
 
     if ( miEntity == null) {
         MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()

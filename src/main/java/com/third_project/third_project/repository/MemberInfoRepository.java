@@ -23,4 +23,6 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfoEntity, Lo
 
 
 
+
+
 }
