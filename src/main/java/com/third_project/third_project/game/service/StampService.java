@@ -134,7 +134,7 @@ public class StampService {
             entity.setStampAva(ava);
             entity.setStampUse(use);
             sRepo.save(entity);
-            if(total == use){
+            if(use == total+1){
                 entity.setStampUse(0);
                 sRepo.save(entity);
             }

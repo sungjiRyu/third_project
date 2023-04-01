@@ -34,10 +34,10 @@ List<GetExerciseTimeVO> getExerciseTimeByPeriod(@Param("miSeq") Long miSeq, @Par
 // List<IndividualScoreEntity> getExerciseTimeByPeriod(@Param("miSeq") Long miSeq, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
   @Query(value = "select b.mi_nickname, c.et_name, sum(a.is_time) as total from individual_score a join member_info b on a.is_mi_seq = b.mi_seq join ex_type c "
-  +"on a.is_et_seq = c.et_seq where week(is_reg_dt) = week(now()) and mi_seq = :seq and et_name = :name", nativeQuery = true)
-  List<IsSumScoreVO> findSumScoreName(@Param("seq")Long seq, @Param("name")String name);
+  +"on a.is_et_seq = c.et_seq where week(is_reg_dt) = week(now()) and mi_seq = :seq group by et_name", nativeQuery = true)
+  List<IsSumScoreVO> findSumScoreName(@Param("seq")Long seq);
 
-  @Query(value = "select b.mi_nickname, date(a.is_reg_dt), sum(a.is_time) as total from individual_score a join member_info b on a.is_mi_seq = b.mi_seq join ex_type c "
-  +"on a.is_et_seq = c.et_seq where mi_seq = :seq and date(is_reg_dt) = :date", nativeQuery = true)
-  List<IsSumScoreVO> findSumScoreDate(@Param("seq")Long seq, @Param("date")LocalDate date);
+  @Query(value = "select mi_nickname, da, total from(select b.mi_nickname, date(a.is_reg_dt) as da, sum(a.is_time) as total from individual_score a join member_info b on a.is_mi_seq = b.mi_seq join ex_type c "
+  +"on a.is_et_seq = c.et_seq where week(is_reg_dt) = week(now()) and mi_seq = :seq group by date(is_reg_dt) order by date(is_reg_dt) desc limit 7) f order by da", nativeQuery = true)
+  List<IsSumScoreVO> findSumScoreDate(@Param("seq")Long seq);
 }

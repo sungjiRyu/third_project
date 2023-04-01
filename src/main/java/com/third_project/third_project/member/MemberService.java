@@ -155,6 +155,7 @@ public class MemberService {
         return responseVO;
     }
 
+    // 몸무게 정보 조회 기능
     public MemberListResponseVO getWeight(Long seq){
         MemberInfoEntity member = miRepo.findByMiSeq(seq);
         List<MemberWeightEntity> list = mwRepo.findByMember(member);
