@@ -2,9 +2,11 @@ package com.third_project.third_project.Detail.service;
 
 import com.third_project.third_project.Detail.vo.*;
 import com.third_project.third_project.entity.*;
+import com.third_project.third_project.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.aspectj.weaver.Lint;
@@ -24,13 +26,6 @@ import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
 import com.third_project.third_project.entity.ScoreRankListView;
 import com.third_project.third_project.entity.WeeklyScoreView;
-import com.third_project.third_project.repository.ExTypeRepository;
-import com.third_project.third_project.repository.IndividualScoreRankViewRepository;
-import com.third_project.third_project.repository.IndividualScoreRepository;
-import com.third_project.third_project.repository.MemberInfoRepository;
-import com.third_project.third_project.repository.ScoreListViewRepository;
-import com.third_project.third_project.repository.ScoreRankListViewRepository;
-import com.third_project.third_project.repository.WeeklyScoreViewRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +39,12 @@ public class IndividualScoreService {
   private final ScoreListViewRepository slRepo;
   private final WeeklyScoreViewRepository wsRepo;
   private final IndividualScoreRankViewRepository isrvRepo;
-  
+  private final SumScoreNameViewRepo sumScoreNameViewRepo;
+  private final SumScoreDateViewRepo sumScoreDateViewRepo;
 
-  public SumScoreNameVO getSumScoreName(Long seq, String name){
-    List<IsSumScoreVO> list = isRepo.findSumScoreName(seq, name);
+// 개인기록 운동 별 합산
+  public SumScoreNameVO getSumScoreName(Long seq){
+    List<SumScoreNameViewEntity> list = sumScoreNameViewRepo.findByMiSeq(seq);
     if(list.isEmpty()){
       SumScoreNameVO response = SumScoreNameVO.builder()
               .status(false)
@@ -56,19 +53,19 @@ public class IndividualScoreService {
               .build();
       return response;
     }
-
       SumScoreNameVO response = SumScoreNameVO.builder()
               .status(true)
-              .message("해당 일 기록 총합 조회!!")
+              .message("해당 종목 기록 총합 조회!!")
               .code(HttpStatus.OK)
-              .score(list.get(0).getTotal())
+              .score(list)
               .build();
       return response;
 
   }
 
-  public SumScoreDateVO getSumScoreDate(Long seq, LocalDate date){
-    List<IsSumScoreVO> list = isRepo.findSumScoreDate(seq,date);
+  // 개인 기록 날짜 별 합산
+  public SumScoreDateVO getSumScoreDate(Long seq){
+    List<SumScoreDateViewEntity> list = sumScoreDateViewRepo.findByMiSeq(seq);
     if(list.isEmpty()){
       SumScoreDateVO response = SumScoreDateVO.builder()
               .status(false)
@@ -77,12 +74,11 @@ public class IndividualScoreService {
               .build();
       return response;
     }
-
-      SumScoreDateVO response = SumScoreDateVO.builder()
+    SumScoreDateVO response = SumScoreDateVO.builder()
               .status(true)
               .message("해당 일 기록 총합 조회!!")
               .code(HttpStatus.OK)
-              .score(list.get(0).getTotal())
+              .score(list)
               .build();
       return response;
 
