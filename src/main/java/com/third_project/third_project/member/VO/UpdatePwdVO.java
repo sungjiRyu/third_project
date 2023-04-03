@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class UpdatePwdVO {
     private String pwd;
     private String confirmpwd;
-    private MemberImgEntity ming;
+//    private MemberImgEntity ming;
 }

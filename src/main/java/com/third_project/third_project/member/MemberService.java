@@ -451,39 +451,39 @@ public class MemberService {
     public MemberLoginResponseVO login (MemberLoginVO LoginVO) throws Exception {
         MemberInfoEntity miEntity = miRepo.findByMiIdAndMiPwd(LoginVO.getId(), AESAlgorithm.Encrypt(LoginVO.getPwd()));
 
-    if ( miEntity == null) {
+        if ( miEntity == null) {
+            MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
+                    //.mimgUrl(saveFilename)
+                    .status(false)
+                    .message("Id / Pwd 를 확인하세요.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(miEntity.getMiId(), miEntity.getMiPwd());
+        Authentication authentication = authBuilder
+                .getObject()
+                .authenticate(authenticationToken);
+
         MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
                 //.mimgUrl(saveFilename)
-                .status(false)
-                .message("Id / Pwd 를 확인하세요.")
-                .code(HttpStatus.BAD_REQUEST)
+                .miSeq(miEntity.getMiSeq())
+                .status(true)
+                .message("로그인 성공 하였습니다.")
+                .token(tokenProvider.generateToken(authentication))
+                .code(HttpStatus.ACCEPTED)
                 .build();
         return responseVO;
     }
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(miEntity.getMiId(), miEntity.getMiPwd());
-    Authentication authentication = authBuilder
-            .getObject()
-            .authenticate(authenticationToken);
 
-    MemberLoginResponseVO responseVO = MemberLoginResponseVO.builder()
-            //.mimgUrl(saveFilename)
-            .miSeq(miEntity.getMiSeq())
-            .status(true)
-            .message("로그인 성공 하였습니다.")
-            .token(tokenProvider.generateToken(authentication))
-            .code(HttpStatus.ACCEPTED)
-            .build();
-    return responseVO;
+    // logout
+    public MemberLogoutResponseVO logout() {
+        MemberLogoutResponseVO responseVO = MemberLogoutResponseVO.builder()
+                //.mimgUrl(saveFilename)
+                .status(true)
+                .message("로그아웃 완료.")
+                .code(HttpStatus.ACCEPTED)
+                .build();
+        return responseVO;
     }
-
-// logout
-public MemberLogoutResponseVO logout() {
-    MemberLogoutResponseVO responseVO = MemberLogoutResponseVO.builder()
-            //.mimgUrl(saveFilename)
-            .status(true)
-            .message("로그아웃 완료.")
-            .code(HttpStatus.ACCEPTED)
-            .build();
-    return responseVO;
-}
 }
