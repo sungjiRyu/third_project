@@ -8,16 +8,26 @@ import com.third_project.third_project.repository.*;
 import com.third_project.third_project.security.provider.JwtTokenProvider;
 import com.third_project.third_project.security.service.CustomUserDetailService;
 import com.third_project.third_project.utilities.AESAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.core.io.UrlResource;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +35,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+
+//import java.net.URLEncoder;
+
+
 
 
 @RequiredArgsConstructor
@@ -333,18 +347,18 @@ public class MemberService {
 
     // 이미지 변경
     @Transactional
-    public MemberImgResponseVO addMemberImg (Long seq, MultipartFile file) {
+    public ResponseEntity<Resource> addMemberImg (Long seq, MultipartFile file, HttpServletRequest request) throws Exception {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
 
-        if(!(findseq.isPresent())) {
-            MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
-                    .status(false)
-                    .message("존재하지 않는 seq 입니다.")
-                    .code(HttpStatus.BAD_REQUEST)
-                    .build();
-            return responseVO;
-        }
-        else {
+//        if(!(findseq.isPresent())) {
+//            MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
+//                    .status(false)
+//                    .message("존재하지 않는 seq 입니다.")
+//                    .code(HttpStatus.BAD_REQUEST)
+//                    .build();
+//            return responseVO;
+//        }
+//        else {
             MemberInfoEntity member = miRepo.findByMiSeq(seq);
             MemberImgEntity img = member.getMimg();
             String Url = img.getMimgUrl();
@@ -386,13 +400,13 @@ public class MemberService {
                 miRepo.save(miEntity);
 
 
-                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
-                        //.mimgUrl(saveFilename)
-                        .status(true)
-                        .message("파일이 저장되었습니다.")
-                        .code(HttpStatus.ACCEPTED)
-                        .build();
-                return mimgVO;
+//                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+//                        //.mimgUrl(saveFilename)
+//                        .status(true)
+//                        .message("파일이 저장되었습니다.")
+//                        .code(HttpStatus.ACCEPTED)
+//                        .build();
+//                return mimgVO;
             }
             else {
 
@@ -434,16 +448,39 @@ public class MemberService {
                     miRepo.save(miEntity);
 
 
-                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
-                        //.mimgUrl(saveFilename)
-                        .status(true)
-                        .message("파일이 저장되었습니다.")
-                        .code(HttpStatus.ACCEPTED)
-                        .build();
-                return mimgVO;
+//                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+//                        //.mimgUrl(saveFilename)
+//                        .status(true)
+//                        .message("파일이 저장되었습니다.")
+//                        .code(HttpStatus.ACCEPTED)
+//                        .build();
+//                return mimgVO;
+
+
+                Resource r = null;
+                String contentType = null;
+                try {
+                    r = new UrlResource(targetFile.toUri());
+                } catch (Exception e) {
+                    e.printStackTrace(); }
+
+                try {
+                    contentType = request.getServletContext().getMimeType(r.getFile().getAbsolutePath());
+                    if (contentType == null) {
+                        contentType = "application/octet-stream";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace(); }
+
+                return ResponseEntity.ok().
+                        contentType(MediaType.parseMediaType(contentType)).
+                        header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + URLEncoder.encode(saveFilename, "UTF-8") + "\"").
+                        body(r);
             }
+
+            return null;
         }
-    }
+//    }
 
 
 

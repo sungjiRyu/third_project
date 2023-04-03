@@ -3,9 +3,11 @@ package com.third_project.third_project.member;
 import com.third_project.third_project.member.VO.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,11 +66,18 @@ public class MemberController {
     }
 
     // http://localhost:8888/api/member/img/{seq}
+//    @Operation(summary = "멤버 이미지 업로드")
+//    @Transactional
+//    @PutMapping("/img/{seq}")
+//    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) throws Exception {
+//        return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
+//    }
+
     @Operation(summary = "멤버 이미지 업로드")
     @Transactional
     @PutMapping("/img/{seq}")
-    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) {
-        return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
+    public ResponseEntity<Resource> MemberImgAdd(@PathVariable Long seq, MultipartFile file, HttpServletRequest request) throws Exception {
+        return mService.addMemberImg(seq, file, request);
     }
 
 
@@ -97,4 +106,6 @@ public class MemberController {
         MemberListResponseVO response = mService.getWeight(seq);
         return new ResponseEntity<>(response, response.getCode());
     }
+
+
 }
