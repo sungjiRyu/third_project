@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .and().authorizeHttpRequests()
                 .requestMatchers(permitSettings.getPermitAllUrls()).permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                // .requestMatchers("/api/**").permitAll()
+                 .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 // .anyRequest().permitAll()
                 .and()

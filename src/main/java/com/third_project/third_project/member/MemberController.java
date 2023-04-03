@@ -66,18 +66,18 @@ public class MemberController {
     }
 
     // http://localhost:8888/api/member/img/{seq}
-//    @Operation(summary = "멤버 이미지 업로드")
-//    @Transactional
-//    @PutMapping("/img/{seq}")
-//    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) throws Exception {
-//        return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
-//    }
-
     @Operation(summary = "멤버 이미지 업로드")
     @Transactional
     @PutMapping("/img/{seq}")
-    public ResponseEntity<Resource> MemberImgAdd(@PathVariable Long seq, MultipartFile file, HttpServletRequest request) throws Exception {
-        return mService.addMemberImg(seq, file, request);
+    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) throws Exception {
+        return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
+    }
+
+    // http://localhost:8888/api/member/img/{seq}
+    @Operation(summary = "멤버 이미지 다운로드")
+    @GetMapping("/img/{imgname}")
+    public ResponseEntity<Resource> MemberImgDown(@PathVariable String imgname, HttpServletRequest request) throws Exception {
+        return mService.downMemberImg(imgname, request);
     }
 
 

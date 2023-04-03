@@ -347,18 +347,18 @@ public class MemberService {
 
     // 이미지 변경
     @Transactional
-    public ResponseEntity<Resource> addMemberImg (Long seq, MultipartFile file, HttpServletRequest request) throws Exception {
+    public MemberImgResponseVO addMemberImg (Long seq, MultipartFile file) throws Exception {
         Optional<MemberInfoEntity> findseq = miRepo.findById(seq);
 
-//        if(!(findseq.isPresent())) {
-//            MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
-//                    .status(false)
-//                    .message("존재하지 않는 seq 입니다.")
-//                    .code(HttpStatus.BAD_REQUEST)
-//                    .build();
-//            return responseVO;
-//        }
-//        else {
+        if(!(findseq.isPresent())) {
+            MemberImgResponseVO responseVO = MemberImgResponseVO.builder()
+                    .status(false)
+                    .message("존재하지 않는 seq 입니다.")
+                    .code(HttpStatus.BAD_REQUEST)
+                    .build();
+            return responseVO;
+        }
+        else {
             MemberInfoEntity member = miRepo.findByMiSeq(seq);
             MemberImgEntity img = member.getMimg();
             String Url = img.getMimgUrl();
@@ -400,13 +400,13 @@ public class MemberService {
                 miRepo.save(miEntity);
 
 
-//                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
-//                        //.mimgUrl(saveFilename)
-//                        .status(true)
-//                        .message("파일이 저장되었습니다.")
-//                        .code(HttpStatus.ACCEPTED)
-//                        .build();
-//                return mimgVO;
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                        //.mimgUrl(saveFilename)
+                        .status(true)
+                        .message("파일이 저장되었습니다.")
+                        .code(HttpStatus.ACCEPTED)
+                        .build();
+                return mimgVO;
             }
             else {
 
@@ -448,39 +448,48 @@ public class MemberService {
                     miRepo.save(miEntity);
 
 
-//                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
-//                        //.mimgUrl(saveFilename)
-//                        .status(true)
-//                        .message("파일이 저장되었습니다.")
-//                        .code(HttpStatus.ACCEPTED)
-//                        .build();
-//                return mimgVO;
-
-
-                Resource r = null;
-                String contentType = null;
-                try {
-                    r = new UrlResource(targetFile.toUri());
-                } catch (Exception e) {
-                    e.printStackTrace(); }
-
-                try {
-                    contentType = request.getServletContext().getMimeType(r.getFile().getAbsolutePath());
-                    if (contentType == null) {
-                        contentType = "application/octet-stream";
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace(); }
-
-                return ResponseEntity.ok().
-                        contentType(MediaType.parseMediaType(contentType)).
-                        header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + URLEncoder.encode(saveFilename, "UTF-8") + "\"").
-                        body(r);
+                MemberImgResponseVO mimgVO = MemberImgResponseVO.builder()
+                        //.mimgUrl(saveFilename)
+                        .status(true)
+                        .message("파일이 저장되었습니다.")
+                        .code(HttpStatus.ACCEPTED)
+                        .build();
+                return mimgVO;
             }
-
-            return null;
         }
-//    }
+    }
+
+    // 회원 이미지 다운로드
+    public ResponseEntity<Resource> downMemberImg (String imgname, HttpServletRequest request) throws Exception {
+
+        MemberImgEntity entity = mimgRepo.findByMimgUrl(imgname);
+        String searchname = entity.getMimgUrl();
+
+        Path folderLocation = Paths.get(member_image_path);
+
+        Path targetFile = folderLocation.resolve(searchname);
+        Resource r = null;
+        String contentType = null;
+
+        try {
+            r = new UrlResource(targetFile.toUri());
+        } catch (Exception e) {
+            e.printStackTrace(); }
+
+        try {
+            contentType = request.getServletContext().getMimeType(r.getFile().getAbsolutePath());
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); }
+
+        return ResponseEntity.ok().
+                contentType(MediaType.parseMediaType(contentType)).
+                header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + URLEncoder.encode(searchname, "UTF-8") + "\"").
+                body(r);
+    }
+
 
 
 
