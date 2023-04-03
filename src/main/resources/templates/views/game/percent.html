@@ -28,7 +28,7 @@
       </tr>
     </table>
     <div class="back">
-      <a th:href="@{/game/list(page=${page},keyword=${keyword})}">목록으로</a>
+      <a class="num" th:href="@{/game/list(page=${page},keyword=${keyword})}">목록으로</a>
     </div>
   </form>
 </th:block>
@@ -60,6 +60,6 @@
 
   footer{font-size: 35px; font-family: 'IM_Hyemin-Bold';}
   .back{font-size: 30px;font-family: 'IM_Hyemin-Bold'; text-align: right;}
-
+  .num{text-decoration: none; display: block; color: black; display: block; font-weight: bold; text-align: center; font-weight: bold;}
 </style>
 </html>

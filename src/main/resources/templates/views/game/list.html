@@ -16,13 +16,15 @@
       </center>
     </header>
   </section>
-  <hr>
+
   <nav>
-    <ul style="background-color: #fff;">
-    <a style="font-weight: bold;" href="/stamp">스탬프</a>
+    <ul>
+      <li>
+        <a class="link" href="/stamp">스탬프</a>
+      </li>
   </ul>
   </nav>
-  <hr>
+<br>
   <table>
     <h1>지난주 성적</h1>
     <thead>
@@ -41,7 +43,7 @@
         <td th:text="${score.gsSeq}"></td>
         <td th:text="${score.miNickName}"></td>
         <td> 
-        <a th:href="@{/percent(et_seq=${score.gsEtSeq},page=${result.currentPage},keyword=${keyword})}" th:text="${score.gsEtSeq}">
+        <a class="num" th:href="@{/percent(et_seq=${score.gsEtSeq},page=${result.currentPage},keyword=${keyword})}" th:text="${score.gsEtSeq}">
         </a> 
       </td>
         <td th:text="${score.etName}"></td>
@@ -96,15 +98,14 @@
   .game{text-align: right;}
   .endGame{text-align: right;}
   nav{text-align: center; font-size: 20px; font-family: 'IM_Hyemin-Bold';}
+  nav{text-align: center; font-size: 20px; font-family: 'IM_Hyemin-Bold';} 
+  ul li{ list-style: none; float: left; line-height: 30px; text-align: center;}
+  .link{width: 190px; text-decoration: none; display: block; color: black; display: block; 
+  font-weight: bold; text-align: center; font-weight: bold;}
+  .link :hover{background-color: #666; color: #ff42e7;}
+  .num{text-decoration: none; display: block; color: black; display: block; font-weight: bold; text-align: center; font-weight: bold;}
 </style>
 <script>
-// document.addEventListener("DOMContentLoaded",function(){
-//   document.getElementById("percent").addEventListener("click",function(){
-//     setPercent()
-//   })
-// })
-function percent(){
-  
-}
+
 </script>
 </html>
