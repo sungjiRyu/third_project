@@ -24,7 +24,7 @@
         <tr>
           <th>제목</th>
           <td>
-            <input type="text" name="gnTitle">
+            <input type="text" name="gnTitle" placeholder="제목">
           </td>
           <br>
         </tbody>
@@ -71,11 +71,19 @@
     <td>
       <button>저장</button><br>
       <!-- <input type="submit" value="저장"><br> -->
-      <td>
-        <a href="/">메인으로</a>
-      </td>
+      <div class="list">
+        <a class="main" href="/">메인으로</a>
+      </div>
     </td>
   </div>
+  <hr>
+  <footer>
+    <center>
+        <small> Copyrightⓒ(주)쿨피스 All right reserved. 
+          대표이사 : 류 승 지
+        </small> 
+    </center>
+  </footer>
     </form>
   </body>
   <style>
@@ -92,8 +100,8 @@
     font-size: 25px;}
     .add_box{text-align: center;}
     .save{text-align: right;}
-    a{text-align: right; font-family: 'IM_Hyemin-Bold';
-    font-size: 25px;}
-    
+    .main{text-decoration: none; display: block; color: black; display: block; 
+    font-weight: bold;font-weight: bold; text-align: right;}
+    footer{font-size: 35px; font-family: 'IM_Hyemin-Bold';}
     </style>
 </html>
