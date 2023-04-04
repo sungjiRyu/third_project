@@ -130,19 +130,104 @@ public class MemberService {
 //        }
         else {
             MemberInfoEntity miEntity = miRepo.findByMiSeq(seq);
-//            miEntity.setMiNickname(data.getNickname());
-            miEntity.setMiTall(data.getTall());
-            miEntity.setMiWeight(data.getWeight());
-            miEntity.setMiClassNum(data.getClassNum());
-            miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
-            miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
-            miRepo.save(miEntity);
-            MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
-                    .status(true)
-                    .message("정보가 수정되었습니다.")
-                    .code(HttpStatus.OK)
-                    .build();
-            return responseVO;
+
+            if ( miEntity.getGen().getGiSeq() == 1) { // 남자
+                if ( miEntity.getExStatus().getEsSeq() == 1 ) { // 다이어트
+                    // miEntity.setMiNickname(data.getNickname());
+                    miEntity.setMiTall(data.getTall());
+                    miEntity.setMiWeight(data.getWeight());
+                    miEntity.setMiClassNum(data.getClassNum());
+                    miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
+                    miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
+                    miEntity.setMimg(mimgRepo.findByMimgSeq(2L));
+                    miRepo.save(miEntity);
+
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(true)
+                            .message(" 남자/다이어터 등록 완료. ")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+                else if ( miEntity.getExStatus().getEsSeq() == 2 ) { // 웨이터
+                    // miEntity.setMiNickname(data.getNickname());
+                    miEntity.setMiTall(data.getTall());
+                    miEntity.setMiWeight(data.getWeight());
+                    miEntity.setMiClassNum(data.getClassNum());
+                    miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
+                    miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
+                    miEntity.setMimg(mimgRepo.findByMimgSeq(3L));
+                    miRepo.save(miEntity);
+
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(true)
+                            .message(" 남자/웨이터 등록 완료. ")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+                else {
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(false)
+                            .message(" 운동 타입 입력을 확인해 주세요. ")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+            }
+
+            else if ( miEntity.getGen().getGiSeq() == 2) { // 여자
+                if ( miEntity.getExStatus().getEsSeq() == 1 ) { // 다이어트
+                    // miEntity.setMiNickname(data.getNickname());
+                    miEntity.setMiTall(data.getTall());
+                    miEntity.setMiWeight(data.getWeight());
+                    miEntity.setMiClassNum(data.getClassNum());
+                    miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
+                    miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
+                    miEntity.setMimg(mimgRepo.findByMimgSeq(4L));
+                    miRepo.save(miEntity);
+
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(true)
+                            .message(" 여자/다이어터 등록 완료. ")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+                else if ( miEntity.getExStatus().getEsSeq() == 2 ) { // 웨이터
+                    // miEntity.setMiNickname(data.getNickname());
+                    miEntity.setMiTall(data.getTall());
+                    miEntity.setMiWeight(data.getWeight());
+                    miEntity.setMiClassNum(data.getClassNum());
+                    miEntity.setGen(giRepo.findByGiSeq(data.getGiSeq()));
+                    miEntity.setExStatus(esRepo.findByEsSeq(data.getEsSeq()));
+                    miEntity.setMimg(mimgRepo.findByMimgSeq(5L));
+                    miRepo.save(miEntity);
+
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(true)
+                            .message(" 여자/웨이터 등록 완료. ")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+                else {
+                    MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                            .status(false)
+                            .message(" 운동 타입 입력을 확인해 주세요.")
+                            .code(HttpStatus.OK)
+                            .build();
+                    return responseVO;
+                }
+            }
+            else {
+                MemberAddInfoResponseVO responseVO = MemberAddInfoResponseVO.builder()
+                        .status(false)
+                        .message(" 성별 입력을 확인해 주세요.")
+                        .code(HttpStatus.OK)
+                        .build();
+                return responseVO;
+            }
         }
     }
 
@@ -363,7 +448,7 @@ public class MemberService {
             MemberImgEntity img = member.getMimg();
             String Url = img.getMimgUrl();
 
-            if( img.getMimgSeq() == 1 ) {
+            if( img.getMimgSeq() == 1 || img.getMimgSeq() == 2 || img.getMimgSeq() == 3 || img.getMimgSeq() == 4 || img.getMimgSeq() == 5) {
                 Path folderLocation = null;
                 folderLocation = Paths.get(member_image_path);
 

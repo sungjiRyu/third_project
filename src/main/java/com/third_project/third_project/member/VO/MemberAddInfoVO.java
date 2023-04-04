@@ -1,5 +1,6 @@
 package com.third_project.third_project.member.VO;
 
+import com.third_project.third_project.entity.MemberImgEntity;
 import com.third_project.third_project.entity.MemberInfoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +19,5 @@ public class MemberAddInfoVO {
             private String ClassNum;
             private Long giSeq;
             private Long esSeq;
+            private MemberImgEntity ming;
 }

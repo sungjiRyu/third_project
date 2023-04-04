@@ -74,7 +74,7 @@ public class MemberController {
         return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
     }
 
-    // http://localhost:8888/api/member/img/{seq}
+    // http://localhost:8888/api/member/img/{imgname}
     @Operation(summary = "멤버 이미지 다운로드")
     @GetMapping("/img/{imgname}")
     public ResponseEntity<Resource> MemberImgDown(@PathVariable String imgname, HttpServletRequest request) throws Exception {
