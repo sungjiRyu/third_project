@@ -45,7 +45,7 @@ public class ScoreAPIController {
     @Operation(summary = "회원 게임성적 상위 % 조회", description = "운동 번호와 회원 번호를 통해 저번 주 게임 성적 상위 % 조회 기능")
     @GetMapping("/percent/{seq}/{miSeq}")
     public ResponseEntity<ScorePercentResponseVO> getMemberPercent(@Parameter(description = "운동 번호", example = "1") @PathVariable Long seq,
-                                                                   @Parameter(description = "회원 번호", example = "1") @PathVariable Long miSeq){
+                                                                    @Parameter(description = "회원 번호", example = "1") @PathVariable Long miSeq){
         ScorePercentResponseVO response = scoreService.getMemberPercent(seq, miSeq);
         return new ResponseEntity<>(response, response.getCode());
     }

@@ -1,13 +1,19 @@
 package com.third_project.third_project.Detail.service;
 
+import com.third_project.third_project.Detail.vo.*;
+import com.third_project.third_project.entity.*;
+import com.third_project.third_project.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.aspectj.weaver.Lint;
 import org.springframework.http.HttpStatus;
 
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreListVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
@@ -16,16 +22,10 @@ import com.third_project.third_project.Detail.vo.WeeklyScoreViewVO;
 import com.third_project.third_project.Detail.vo.updateIndividualScoreInsertVO;
 import com.third_project.third_project.entity.IndividualScoreEntity;
 import com.third_project.third_project.entity.IndividualScoreRankView;
+import com.third_project.third_project.entity.MemberInfoEntity;
 import com.third_project.third_project.entity.ScoreListView;
 import com.third_project.third_project.entity.ScoreRankListView;
 import com.third_project.third_project.entity.WeeklyScoreView;
-import com.third_project.third_project.repository.ExTypeRepository;
-import com.third_project.third_project.repository.IndividualScoreRankViewRepository;
-import com.third_project.third_project.repository.IndividualScoreRepository;
-import com.third_project.third_project.repository.MemberInfoRepository;
-import com.third_project.third_project.repository.ScoreListViewRepository;
-import com.third_project.third_project.repository.ScoreRankListViewRepository;
-import com.third_project.third_project.repository.WeeklyScoreViewRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,50 @@ public class IndividualScoreService {
   private final ScoreListViewRepository slRepo;
   private final WeeklyScoreViewRepository wsRepo;
   private final IndividualScoreRankViewRepository isrvRepo;
-  
+  private final SumScoreNameViewRepo sumScoreNameViewRepo;
+  private final SumScoreDateViewRepo sumScoreDateViewRepo;
+
+// 개인기록 운동 별 합산
+  public SumScoreNameVO getSumScoreName(Long seq){
+    List<SumScoreNameViewEntity> list = sumScoreNameViewRepo.findByMiSeq(seq);
+    if(list.isEmpty()){
+      SumScoreNameVO response = SumScoreNameVO.builder()
+              .status(false)
+              .message("조회된 정보가 없습니다.")
+              .code(HttpStatus.BAD_REQUEST)
+              .build();
+      return response;
+    }
+      SumScoreNameVO response = SumScoreNameVO.builder()
+              .status(true)
+              .message("해당 종목 기록 총합 조회!!")
+              .code(HttpStatus.OK)
+              .score(list)
+              .build();
+      return response;
+
+  }
+
+  // 개인 기록 날짜 별 합산
+  public SumScoreDateVO getSumScoreDate(Long seq){
+    List<SumScoreDateViewEntity> list = sumScoreDateViewRepo.findByMiSeq(seq);
+    if(list.isEmpty()){
+      SumScoreDateVO response = SumScoreDateVO.builder()
+              .status(false)
+              .message("조회된 정보가 없습니다.")
+              .code(HttpStatus.BAD_REQUEST)
+              .build();
+      return response;
+    }
+    SumScoreDateVO response = SumScoreDateVO.builder()
+              .status(true)
+              .message("해당 일 기록 총합 조회!!")
+              .code(HttpStatus.OK)
+              .score(list)
+              .build();
+      return response;
+
+  }
 
   //개인 기록 추가
   public IndividualScoreResponseVO addIndividualScore(IndividualScoreInsertVO data){
@@ -94,7 +137,7 @@ public class IndividualScoreService {
 
  //개인 기록 조회
 public ScoreListViewResponseVO getListScore(Long memberNo){
-List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
+  List<ScoreListView> member = slRepo.findByIsMiSeq(memberNo);
   // ScoreListView member = slRepo.findByIsMiSeq(memberNo);
   if(member.isEmpty()){
     ScoreListViewResponseVO response = ScoreListViewResponseVO.builder()

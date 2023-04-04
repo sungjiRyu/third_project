@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,9 @@
   <section>
     <header>
       <center>
-        <img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2018/05/web-20180530030449087616.png" width="150" height="200" alt="쿨피스">
+        <a href="/">
+          <img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2018/05/web-20180530030449087616.png" width="150" height="200" alt="쿨피스">
+        </a>
       </center>
     </header>
   </section>
@@ -22,58 +24,67 @@
         <tr>
           <th>제목</th>
           <td>
-            <input type="text" name="title">
+            <input type="text" name="gnTitle" placeholder="제목">
           </td>
           <br>
         </tbody>
-
         <tbody>
           <th>회원번호</th>
           <td>
-            <input type="text">
+            <input type="text" name="gnMiSeq">
           </td>
         </tbody>
         <tbody>
-            <th>영상</th>
+            <th>영상번호</th>
             <td>
-              <input type="file">
+              <input type="text"  name="gnEvSeq">
             </td> 
           </tbody>
           <tbody>
             <th>운동타입</th>
             <td>
-              <select>
-                <option value="0">선택안함</option>
-                <option value="1">오래달리기</option>
-                <option value="2">걷기</option>
-                <option value="3">줄넘기</option>
-                <option value="6">사이클링</option>
-                <option value="7">요가</option>
-                <option value="8">댄스</option>
-                <option value="9">코어트레이닝</option>
-                <option value="10">필라테스</option>
-                <option value="11">수영</option>
-                <option value="12">하이킹</option>
+              <select name="gnEtSeq">
+                <option value="0" >선택안함</option>
+                <option value="1" >오래달리기</option>
+                <option value="2" >걷기</option>
+                <option value="3" >줄넘기</option>
+                <option value="6" >사이클링</option>
+                <option value="7" >요가</option>
+                <option value="8" >댄스</option>
+                <option value="9" >코어트레이닝</option>
+                <option value="10" >필라테스</option>
+                <option value="11" >수영</option>
+                <option value="12" >하이킹</option>
               </select>
             </td>
           </tbody>
         <tbody>
           <th>내용</th>
           <td>
-            <textarea rows="5" cols="50"> </textarea>
+            <textarea rows="5" cols="50" name="gnContent"> </textarea>
           </td>
         </tbody>  
-        <div>
-          <td>
-            <input type="submit" value="저장">
-          </td>
-        </div>
-          </tr>
-  
-      </div>
+      </tr>
+    </div>
   </table>
+  <div class="save">
+    <td>
+      <button>저장</button><br>
+      <!-- <input type="submit" value="저장"><br> -->
+      <div class="list">
+        <a class="main" href="/">메인으로</a>
+      </div>
+    </td>
+  </div>
+  <hr>
+  <footer>
+    <center>
+        <small> Copyrightⓒ(주)쿨피스 All right reserved. 
+          대표이사 : 류 승 지
+        </small> 
+    </center>
+  </footer>
     </form>
-    <a href="/">메인으로</a>
   </body>
   <style>
       @font-face {
@@ -83,9 +94,14 @@
     font-style: normal;
 }
   h1{text-align: center;}
-  .add_box{text-align: center;}
+  body{border-collapse: collapse; width: 1200px;  margin: 10px auto;}
   table{border-collapse: collapse; width: 1200px; margin: 10px auto; background-color: #fff;
-      font-family: 'IM_Hyemin-Bold';
-      font-size: 25px;}
+    font-family: 'IM_Hyemin-Bold';
+    font-size: 25px;}
+    .add_box{text-align: center;}
+    .save{text-align: right;}
+    .main{text-decoration: none; display: block; color: black; display: block; 
+    font-weight: bold;font-weight: bold; text-align: right;}
+    footer{font-size: 35px; font-family: 'IM_Hyemin-Bold';}
     </style>
 </html>

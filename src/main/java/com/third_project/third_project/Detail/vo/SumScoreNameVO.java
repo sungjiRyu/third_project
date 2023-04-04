@@ -1,22 +1,21 @@
-package com.third_project.third_project.member.VO;
+package com.third_project.third_project.Detail.vo;
 
-import com.third_project.third_project.security.vo.TokenVO;
+import com.third_project.third_project.entity.SumScoreNameViewEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import com.third_project.third_project.security.vo.TokenVO;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberLoginResponseVO {
+public class SumScoreNameVO {
     private Boolean status;
     private String message;
     private HttpStatus code;
-    private Long miSeq;
-    private TokenVO token;
+    private List<SumScoreNameViewEntity> score;
 }

@@ -19,11 +19,11 @@ import java.time.LocalDate;
 @DynamicInsert
 public class MemberWeightEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "mw_seq")            private Long mwSeq;
-
-
+    @Column(name = "mw_seq")                private Long mwSeq;
     @ManyToOne
-    @JoinColumn(name = "mw_mi_seq")   @JsonIgnore       private MemberInfoEntity member;
-    @Column(name = "mw_reg_dt")       @ColumnDefault("CURRENT_TIMESTAMP")  private LocalDate mwRegDt;
-    @Column(name = "mw_weight")     private Integer mwWeight;
+    @JoinColumn(name = "mw_mi_seq")
+    @JsonIgnore                             private MemberInfoEntity member;
+    @Column(name = "mw_reg_dt")
+    @ColumnDefault("CURRENT_TIMESTAMP")     private LocalDate mwRegDt;
+    @Column(name = "mw_weight")             private Integer mwWeight;
 }

@@ -3,9 +3,12 @@ package com.third_project.third_project.member;
 import com.third_project.third_project.member.VO.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +38,25 @@ public class MemberController {
     }
 
 
-    // http://localhost:8888/api/member/{seq}
-    @Operation(summary = "멤버 정보 수정")
-    @PatchMapping("/{seq}")
-    public ResponseEntity<MemberUpdateResponseVO> updateMember(@PathVariable Long seq, @RequestBody MemberUpdateVO data) {
-        return new ResponseEntity<>(mService.updateMember(seq, data), HttpStatus.OK);
+    // http://localhost:8888/api/pwd/member/{seq}
+    @Operation(summary = "멤버 pwd 수정")
+    @PatchMapping("/pwd/{seq}")
+    public ResponseEntity<UpdatePwdResponseVO> updatePwd(@PathVariable Long seq, @RequestBody UpdatePwdVO data) {
+        return new ResponseEntity<>(mService.updatePwd(seq, data), HttpStatus.OK);
+    }
+
+    // http://localhost:8888/api/member/nickname/{seq}
+    @Operation(summary = "멤버 nickname 수정")
+    @PatchMapping("/nickname/{seq}")
+    public ResponseEntity<UpdateNickNameResponseVO> updateNickname(@PathVariable Long seq, @RequestBody UpdateNickNameVO data) {
+        return new ResponseEntity<>(mService.updateNickname(seq, data), HttpStatus.OK);
     }
 
     // http://localhost:8888/api/member/{seq}
     @Operation(summary = "멤버 탈퇴")
     @Transactional
     @DeleteMapping("/{seq}")
-    public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) {
+    public ResponseEntity<MemberDeleteResponseVO> deleteMember(@PathVariable Long seq, @RequestBody MemberDeleteVO data) throws Exception {
         return new ResponseEntity<>(mService.deleteMember(seq, data), HttpStatus.OK);
     }
 
@@ -60,8 +70,15 @@ public class MemberController {
     @Operation(summary = "멤버 이미지 업로드")
     @Transactional
     @PutMapping("/img/{seq}")
-    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) {
+    public ResponseEntity<MemberImgResponseVO> MemberImgAdd(@PathVariable Long seq, MultipartFile file) throws Exception {
         return new ResponseEntity<>(mService.addMemberImg(seq, file), HttpStatus.OK);
+    }
+
+    // http://localhost:8888/api/member/img/{imgname}
+    @Operation(summary = "멤버 이미지 다운로드")
+    @GetMapping("/img/{imgname}")
+    public ResponseEntity<Resource> MemberImgDown(@PathVariable String imgname, HttpServletRequest request) throws Exception {
+        return mService.downMemberImg(imgname, request);
     }
 
 

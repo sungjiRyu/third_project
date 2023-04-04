@@ -51,6 +51,7 @@ public class MemberInfoEntity implements UserDetails {
         roles.add(new SimpleGrantedAuthority(this.miRole));
         return roles;
     }
+
     @Override @JsonIgnore
     public String getPassword() { return this.miPwd; }
     @Override @JsonIgnore

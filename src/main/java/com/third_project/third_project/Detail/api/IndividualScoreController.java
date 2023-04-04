@@ -3,6 +3,7 @@ package com.third_project.third_project.Detail.api;
 
 import java.time.LocalDate;
 
+import com.third_project.third_project.Detail.vo.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.third_project.third_project.Detail.service.IndividualScoreService;
 import com.third_project.third_project.Detail.vo.IndividualScoreInsertVO;
+import com.third_project.third_project.Detail.vo.IndividualScoreListVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreRankViewResposeVO;
 import com.third_project.third_project.Detail.vo.IndividualScoreResponseVO;
 import com.third_project.third_project.Detail.vo.ScoreListViewResponseVO;
@@ -83,6 +85,20 @@ public ResponseEntity<IndividualScoreRankViewResposeVO> getPercentScore(
 ){
   return new ResponseEntity<IndividualScoreRankViewResposeVO>(isService.getScoreRank(memberNo),HttpStatus.OK);
 }
+
+@Operation(summary = "해당 일 성적 합산")
+  @GetMapping("/sum/date/{seq}")
+  public ResponseEntity<SumScoreDateVO> getSumScoreDate(@Parameter(description = "회원번호", example = "1")@PathVariable Long seq){
+    SumScoreDateVO response = isService.getSumScoreDate(seq);
+    return new ResponseEntity<>(response, response.getCode());
+}
+
+  @Operation(summary = "해당 종목 성적 합산")
+  @GetMapping("/sum/name/{seq}")
+  public ResponseEntity<SumScoreNameVO> getSumScoreName(@Parameter(description = "회원번호", example = "1")@PathVariable Long seq){
+    SumScoreNameVO response = isService.getSumScoreName(seq);
+    return new ResponseEntity<>(response, response.getCode());
+  }
 }
 
 
