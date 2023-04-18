@@ -1,7 +1,8 @@
-# SUTABUKS
+# 쿨피스(School Fitness)
 
->스타벅스를 벤치마킹한 음식배달서비스
+>학생 대상 체력관리 서비스
 ><br> 프로젝트 개요 -> <a href="https://www.canva.com/design/DAFZamFxwmY/80jjBzyxkYYnk9qE58kZ1g/view?utm_content=DAFZamFxwmY&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" target="_blank"><img src="https://img.shields.io/badge/PPT-F46D01?style=flat&logo=PPT&logoColor=white" /></a>
+[3차prj.pdf](https://github.com/sungjiRyu/third_project/files/11264367/3.prj.pdf)
 
 
 <br>
