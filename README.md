@@ -1,15 +1,24 @@
 # 쿨피스(School Fitness)
 
->학생 대상 체력관리 서비스
+학생 대상 체력관리 서비스 입니다.
+
+## 소개
+성별, 운동목적에 따라 맞춤형 운동을 제공합니다.
+이벤트를 통한 스템프 지급으로 운동 동기부여를 유발합니다.
+
 ><br> 프로젝트 개요 -> <a href="https://github.com/sungjiRyu/third_project/files/11264367/3.prj.pdf"><img src="https://img.shields.io/badge/PPT-F46D01?style=flat&logo=PPT&logoColor=white" /></a>
 <a href="https://www.canva.com/design/DAFZamFxwmY/80jjBzyxkYYnk9qE58kZ1g/view?utm_content=DAFZamFxwmY&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" target="_blank">
 
-
 <br>
 
+
+https://github.com/sungjiRyu/third_project/assets/116089824/1698774d-dafc-4599-8a1a-65fd0868218f
+
+
+  
 ## 목차
 1. [제작 기간 & 제작 인원](#1-제작-기간--제작-인원)
-2. [멤버 구성](#2-멤버 구성)
+2. [멤버 구성](#2-멤버-구성)
 3. [사용 기술](#3-사용-기술)
 4. [ERD 설계](#4-erd-설계)
 
