@@ -39,14 +39,14 @@ https://github.com/sungjiRyu/third_project/assets/116089824/1698774d-dafc-4599-8
 ## 2. 담당 기능
 
 
-- 운동종목 CRUD  
-  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/26ba3fad9d37e2dc410ecfbd0e07a56736aadf2e/src/main/java/com/readers/be3/service/ArticleService.java#L66)
+- 운동종목 조회 및 저장
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/main/service/ExcriseService.java#L34)
  
-- 공지사항 CRUD  
-  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/a0a84a36dcb42acb6e057a1e1eae5c698c25d870/src/main/java/com/readers/be3/service/ArticleService.java#L310)
+- 공지사항 조회 및 추가
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/Admin/service/NoticeAdminService.java#L23)
 
-- 운동종목 조회  
-  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/a0a84a36dcb42acb6e057a1e1eae5c698c25d870/src/main/java/com/readers/be3/service/ArticleService.java#L169)
+- 회원에 맞는 운동종목 조회
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/main/service/LevelExService.java#L27)
   
 
 <br><br><br>
