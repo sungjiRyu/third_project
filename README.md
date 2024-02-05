@@ -22,7 +22,7 @@ https://github.com/sungjiRyu/third_project/assets/116089824/1698774d-dafc-4599-8
   
 ## 목차
 1. [제작 기간 & 제작 인원](#1-제작-기간--제작-인원)
-2. [멤버 구성](#2-멤버-구성)
+2. [담당 기능](#2-담당-기능)
 3. [사용 기술](#3-사용-기술)
 4. [ERD 설계](#4-erd-설계)
 
@@ -36,17 +36,18 @@ https://github.com/sungjiRyu/third_project/assets/116089824/1698774d-dafc-4599-8
 
 <br><br><br>
 
-## 2. 멤버 구성
-- 프론트엔드 팀장 : 이예은 - typescript 셋팅, 게임 성적, 게임 영상제출, 스탬프찍기, 게임 공지사항
-- 프론트엔드 팀원1 : 김주영 - 피그마 UI 작업, 전체적 디자인 
-- 프론트엔드 팀원2 : 손현지 - 헬스리포트, 더보기페이지, Navigation기능
-- 프론트엔드 팀원3 : 하경미 - 개인 운동 기록, 레벨별 운동기록 
-- 프론트엔드 팀원4 : 허강현 - 회원 가입, 로그인, 로그아웃, 회원탈퇴, 회원정보수정, 메인페이지 
+## 2. 담당 기능
 
-- PM : 류승지 - 개인 운동 CRUD, 공지사항 CRUD,레벨별 운동 조회
-- 백엔드 팀장 : 이호진 - 회원 페이지
-- 백엔드 팀원1 : 김한수 - 상세 페이지
-- 백엔드 팀원2 : 정인원 - 게임 성적 관리 기능, 스탬프 정보 관리 기능, 날짜/종목 별 합산 기능, 몸무게 정보 관리 기능
+
+- 운동종목 CRUD
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/26ba3fad9d37e2dc410ecfbd0e07a56736aadf2e/src/main/java/com/readers/be3/service/ArticleService.java#L66)
+ 
+- 공지사항 CRUD  
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/a0a84a36dcb42acb6e057a1e1eae5c698c25d870/src/main/java/com/readers/be3/service/ArticleService.java#L310)
+
+- 운동종목 조회
+  [▶ 코드 보러가기](https://github.com/sungjiRyu/Prj02/blob/a0a84a36dcb42acb6e057a1e1eae5c698c25d870/src/main/java/com/readers/be3/service/ArticleService.java#L169)
+  
 
 <br><br><br>
 
