@@ -39,13 +39,13 @@ https://github.com/sungjiRyu/third_project/assets/116089824/1698774d-dafc-4599-8
 ## 2. 담당 기능
 
 
-- 운동종목 조회 및 저장
+- 운동종목 조회 및 저장  
   [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/main/service/ExcriseService.java#L34)
  
-- 공지사항 조회 및 추가
+- 공지사항 조회 및 추가  
   [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/Admin/service/NoticeAdminService.java#L23)
 
-- 회원에 맞는 운동종목 조회
+- 회원에 맞는 운동종목 조회  
   [▶ 코드 보러가기](https://github.com/sungjiRyu/third_project/blob/6b8f97807ddfd4a270b5923ab340fdfd7a7022b4/src/main/java/com/third_project/third_project/main/service/LevelExService.java#L27)
   
 
